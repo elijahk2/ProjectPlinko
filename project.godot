@@ -19,6 +19,14 @@ config/features=PackedStringArray("4.5", "Forward Plus")
 window/size/viewport_width=375
 window/size/viewport_height=750
 
+[global_group]
+
+pegs=""
+
+[gui]
+
+theme/custom_font="uid://c8ui4dxp5byvt"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

@@ -1,9 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://dgqecseoat4ms"]
+[gd_scene load_steps=9 format=3 uid="uid://dgqecseoat4ms"]
 
+[ext_resource type="FontFile" uid="uid://c8ui4dxp5byvt" path="res://Assets/Art/m5x7.ttf" id="1_3dryh"]
 [ext_resource type="PackedScene" uid="uid://cbflfmyvv77qh" path="res://Scenes/ball.tscn" id="1_ebmjs"]
 [ext_resource type="PackedScene" uid="uid://ccwkowvhnl108" path="res://Scenes/peg.tscn" id="1_qxrlw"]
 [ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/black_bg.png" id="2_wrm1d"]
-[ext_resource type="AudioStream" uid="uid://c5i7yywg5rtl1" path="res://Assets/Sound/Falling Track.mp3" id="4_3dryh"]
+
+[sub_resource type="GDScript" id="GDScript_3dryh"]
+script/source = "extends Node2D
+"
 
 [sub_resource type="GDScript" id="GDScript_wrm1d"]
 
@@ -15,17 +19,28 @@ distance = 75.0
 normal = Vector2(-1, 0)
 
 [node name="Game" type="Node2D"]
+script = SubResource("GDScript_3dryh")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="Background Control" type="CanvasLayer" parent="."]
 layer = -100
 
-[node name="Background" type="Sprite2D" parent="CanvasLayer"]
+[node name="Background" type="Sprite2D" parent="Background Control"]
 z_index = -100
-position = Vector2(-5.0000057, -7.4999695)
-scale = Vector2(5.5, 9.78125)
+position = Vector2(9, -53)
+scale = Vector2(5.5, 10.746876)
 texture = ExtResource("2_wrm1d")
 
+[node name="ScoreDisplay" type="Label" parent="Background Control"]
+offset_left = -366.0
+offset_top = -841.0
+offset_right = -161.0
+offset_bottom = -777.0
+theme_override_fonts/font = ExtResource("1_3dryh")
+theme_override_font_sizes/font_size = 80
+text = "Score: 0"
+
 [node name="Player" parent="." instance=ExtResource("1_ebmjs")]
+position = Vector2(0, -103)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(0.5, 0.5)
@@ -33,14 +48,10 @@ limit_left = 0
 limit_right = 0
 script = SubResource("GDScript_wrm1d")
 
-[node name="Background Music Player" type="AudioStreamPlayer2D" parent="Player/Camera2D"]
-stream = ExtResource("4_3dryh")
-autoplay = true
-
 [node name="Pegs" type="Node" parent="."]
 
 [node name="StaticBody2D" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-1, 268)
+position = Vector2(-44, 278)
 
 [node name="StaticBody2D2" parent="Pegs" instance=ExtResource("1_qxrlw")]
 position = Vector2(-230, 435)
@@ -68,6 +79,51 @@ position = Vector2(-227, 993)
 
 [node name="StaticBody2D10" parent="Pegs" instance=ExtResource("1_qxrlw")]
 position = Vector2(221, 1072)
+
+[node name="StaticBody2D11" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(-61, 1164)
+
+[node name="StaticBody2D12" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(169, 1403)
+
+[node name="StaticBody2D13" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(-244, 1482)
+
+[node name="StaticBody2D14" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(-75, 1644)
+
+[node name="StaticBody2D15" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(92, 1767)
+
+[node name="StaticBody2D16" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(-214, 1956)
+
+[node name="StaticBody2D17" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(-86, 2206)
+
+[node name="StaticBody2D18" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(14, 2200)
+
+[node name="StaticBody2D19" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(-47, 2111)
+
+[node name="StaticBody2D20" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(-192, 2495)
+
+[node name="StaticBody2D21" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(-41, 2806)
+
+[node name="StaticBody2D22" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(-130, 2651)
+
+[node name="StaticBody2D23" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(120, 2484)
+
+[node name="StaticBody2D24" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(114, 171)
+
+[node name="StaticBody2D25" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(-147, 221)
 
 [node name="World Bounds" type="StaticBody2D" parent="."]
 position = Vector2(-121, -1)
