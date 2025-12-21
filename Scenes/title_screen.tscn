@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=3 uid="uid://bc8bwi8ckrrqd"]
+
+[ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/black_bg.png" id="1_klylv"]
+
+[sub_resource type="GDScript" id="GDScript_rxejw"]
+resource_name = "titlescreen"
+script/source = "extends Control
+
+func _on_StartButton_pressed():
+	get_tree().change_scene_to_file(\"res://Scenes/game.tscn\")
+	pass
+func _on_QuitButton_pressed():
+	get_tree().quit()
+	pass
+"
+
+[node name="Title Screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_rxejw")
+
+[node name="BlackBg" type="Sprite2D" parent="."]
+position = Vector2(185, 365.5)
+scale = Vector2(2.925, 5.11875)
+texture = ExtResource("1_klylv")
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.246
+anchor_bottom = 0.045
+offset_left = 103.0
+offset_top = 398.0
+offset_right = 189.75
+offset_bottom = 436.25
+theme_override_font_sizes/font_size = 80
+text = "DROP"
+
+[node name="QuitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 153.0
+offset_top = 500.0
+offset_right = 233.0
+offset_bottom = 553.0
+theme_override_font_sizes/font_size = 48
+text = "QUIT"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 117.0
+offset_right = 353.0
+offset_bottom = 181.0
+theme_override_font_sizes/font_size = 80
+text = "ProjectPlinko"
+
+[connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_QuitButton_pressed"]
