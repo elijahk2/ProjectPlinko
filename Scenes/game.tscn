@@ -1,0 +1,81 @@
+[gd_scene load_steps=8 format=3 uid="uid://dgqecseoat4ms"]
+
+[ext_resource type="PackedScene" uid="uid://cbflfmyvv77qh" path="res://Scenes/ball.tscn" id="1_ebmjs"]
+[ext_resource type="PackedScene" uid="uid://ccwkowvhnl108" path="res://Scenes/peg.tscn" id="1_qxrlw"]
+[ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/black_bg.png" id="2_wrm1d"]
+[ext_resource type="AudioStream" uid="uid://c5i7yywg5rtl1" path="res://Assets/Sound/Falling Track.mp3" id="4_3dryh"]
+
+[sub_resource type="GDScript" id="GDScript_wrm1d"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qxrlw"]
+normal = Vector2(1, 0)
+distance = 75.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wrm1d"]
+normal = Vector2(-1, 0)
+
+[node name="Game" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -100
+
+[node name="Background" type="Sprite2D" parent="CanvasLayer"]
+z_index = -100
+position = Vector2(-5.0000057, -7.4999695)
+scale = Vector2(5.5, 9.78125)
+texture = ExtResource("2_wrm1d")
+
+[node name="Player" parent="." instance=ExtResource("1_ebmjs")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(0.5, 0.5)
+limit_left = 0
+limit_right = 0
+script = SubResource("GDScript_wrm1d")
+
+[node name="Background Music Player" type="AudioStreamPlayer2D" parent="Player/Camera2D"]
+stream = ExtResource("4_3dryh")
+autoplay = true
+
+[node name="Pegs" type="Node" parent="."]
+
+[node name="StaticBody2D" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(-1, 268)
+
+[node name="StaticBody2D2" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(-230, 435)
+
+[node name="StaticBody2D3" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(247, 149)
+
+[node name="StaticBody2D4" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(-271, 185)
+
+[node name="StaticBody2D5" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(163, 395)
+
+[node name="StaticBody2D6" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(-139, 656)
+
+[node name="StaticBody2D7" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(127, 713)
+
+[node name="StaticBody2D8" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(-2, 950)
+
+[node name="StaticBody2D9" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(-227, 993)
+
+[node name="StaticBody2D10" parent="Pegs" instance=ExtResource("1_qxrlw")]
+position = Vector2(221, 1072)
+
+[node name="World Bounds" type="StaticBody2D" parent="."]
+position = Vector2(-121, -1)
+
+[node name="Left Bound" type="CollisionShape2D" parent="World Bounds"]
+position = Vector2(-331, -1)
+shape = SubResource("WorldBoundaryShape2D_qxrlw")
+
+[node name="Right Bound" type="CollisionShape2D" parent="World Bounds"]
+position = Vector2(498, 2)
+shape = SubResource("WorldBoundaryShape2D_wrm1d")

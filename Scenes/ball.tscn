@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbflfmyvv77qh"]
+
+[ext_resource type="Texture2D" uid="uid://cun0x6nvof6bx" path="res://Assets/Art/plinko_ball.png" id="1_d60mj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d60mj"]
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d60mj"]
+radius = 79.101204
+
+[node name="RigidBody2D" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_d60mj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_d60mj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_d60mj")
