@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dgqecseoat4ms"]
+[gd_scene load_steps=21 format=3 uid="uid://dgqecseoat4ms"]
 
 [ext_resource type="FontFile" uid="uid://c8ui4dxp5byvt" path="res://Assets/Art/m5x7.ttf" id="1_3dryh"]
 [ext_resource type="PackedScene" uid="uid://cbflfmyvv77qh" path="res://Scenes/ball.tscn" id="1_ebmjs"]
@@ -89,6 +89,9 @@ distance = 75.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wrm1d"]
 normal = Vector2(-1, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rku1e"]
+size = Vector2(1066, 166)
 
 [node name="Game" type="Node2D"]
 script = SubResource("GDScript_3dryh")
@@ -198,69 +201,6 @@ position = Vector2(114, 171)
 [node name="StaticBody2D25" parent="Pegs" instance=ExtResource("1_qxrlw")]
 position = Vector2(-147, 221)
 
-[node name="StaticBody2D47" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-330, 6256)
-
-[node name="StaticBody2D48" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-241, 6250)
-
-[node name="StaticBody2D49" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-230, 6344)
-
-[node name="StaticBody2D50" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-158, 6283)
-
-[node name="StaticBody2D51" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-174, 6172)
-
-[node name="StaticBody2D52" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-86, 6228)
-
-[node name="StaticBody2D53" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-308, 6356)
-
-[node name="StaticBody2D54" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-102, 6150)
-
-[node name="StaticBody2D55" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-69, 6322)
-
-[node name="StaticBody2D56" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-147, 6378)
-
-[node name="StaticBody2D57" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-13, 6167)
-
-[node name="StaticBody2D58" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(3, 6278)
-
-[node name="StaticBody2D59" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-397, 6322)
-
-[node name="StaticBody2D60" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-275, 6161)
-
-[node name="StaticBody2D61" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-375, 6178)
-
-[node name="StaticBody2D62" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-452, 6233)
-
-[node name="StaticBody2D63" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-491, 6333)
-
-[node name="StaticBody2D64" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(82, 6294)
-
-[node name="StaticBody2D65" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(-452, 6139)
-
-[node name="StaticBody2D66" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(81, 6194)
-
-[node name="StaticBody2D67" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(3, 6383)
-
 [node name="StaticBody2D26" parent="Pegs" instance=ExtResource("1_qxrlw")]
 position = Vector2(-165, 3128)
 
@@ -321,9 +261,6 @@ position = Vector2(-293, 3011)
 [node name="StaticBody2D45" parent="Pegs" instance=ExtResource("1_qxrlw")]
 position = Vector2(240, 3066)
 
-[node name="StaticBody2D46" parent="Pegs" instance=ExtResource("1_qxrlw")]
-position = Vector2(162, 3255)
-
 [node name="Player" parent="." instance=ExtResource("1_ebmjs")]
 position = Vector2(0, -103)
 
@@ -344,3 +281,9 @@ shape = SubResource("WorldBoundaryShape2D_qxrlw")
 [node name="Right Bound" type="CollisionShape2D" parent="World Bounds"]
 position = Vector2(498, 2)
 shape = SubResource("WorldBoundaryShape2D_wrm1d")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="Endzone" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 3432)
+shape = SubResource("RectangleShape2D_rku1e")

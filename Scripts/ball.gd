@@ -3,6 +3,7 @@ extends RigidBody2D
 @onready var hit_sound = $AudioStreamPlayer # Path to your sound node
 @onready var score_display: Label = $"../Background Control/ScoreDisplay"
 @onready var animated_bg: AnimatedSprite2D = $"../Background Control/Background/AnimatedSprite2D"
+@onready var endzone: CollisionShape2D = $"../Area2D/Endzone"
 
 var dash_ready = 1
 
@@ -28,6 +29,8 @@ func _on_body_entered(body):
 		body.set_collision_layer_value(2, true)
 		body.collision_mask = 0
 		score_display.score += 1
+	if body == endzone:
+		get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
 		
 func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("push") and dash_ready == 1 and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
