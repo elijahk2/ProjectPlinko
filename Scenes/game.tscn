@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dgqecseoat4ms"]
+[gd_scene load_steps=22 format=3 uid="uid://dgqecseoat4ms"]
 
 [ext_resource type="FontFile" uid="uid://c8ui4dxp5byvt" path="res://Assets/Art/m5x7.ttf" id="1_3dryh"]
 [ext_resource type="PackedScene" uid="uid://cbflfmyvv77qh" path="res://Scenes/ball.tscn" id="1_ebmjs"]
@@ -15,6 +15,10 @@
 
 [sub_resource type="GDScript" id="GDScript_3dryh"]
 script/source = "extends Node2D
+
+
+func _on_endzone_body_entered(body: RigidBody2D) -> void:
+	get_tree().change_scene_to_file(\"res://Scenes/title_screen.tscn\")
 "
 
 [sub_resource type="GDScript" id="GDScript_v158k"]
@@ -90,8 +94,13 @@ distance = 75.0
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wrm1d"]
 normal = Vector2(-1, 0)
 
+[sub_resource type="GDScript" id="GDScript_rku1e"]
+resource_name = "endzone"
+script/source = "extends Area2D
+"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rku1e"]
-size = Vector2(1066, 166)
+size = Vector2(1798, 613)
 
 [node name="Game" type="Node2D"]
 script = SubResource("GDScript_3dryh")
@@ -282,8 +291,11 @@ shape = SubResource("WorldBoundaryShape2D_qxrlw")
 position = Vector2(498, 2)
 shape = SubResource("WorldBoundaryShape2D_wrm1d")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Endzone" type="Area2D" parent="."]
+script = SubResource("GDScript_rku1e")
 
-[node name="Endzone" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, 3432)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Endzone"]
+position = Vector2(1, 4193)
 shape = SubResource("RectangleShape2D_rku1e")
+
+[connection signal="body_entered" from="Endzone" to="." method="_on_endzone_body_entered"]
