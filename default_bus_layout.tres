@@ -1,8 +1,11 @@
-[gd_resource type="AudioBusLayout" load_steps=4 format=3 uid="uid://cru6autotisje"]
+[gd_resource type="AudioBusLayout" load_steps=6 format=3 uid="uid://cru6autotisje"]
 
 [sub_resource type="AudioEffectChorus" id="AudioEffectChorus_j3pel"]
 resource_name = "Chorus"
 voice_count = 1
+
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_g28q7"]
+resource_name = "Limiter"
 
 [sub_resource type="AudioEffectAmplify" id="AudioEffectAmplify_j3pel"]
 resource_name = "Amplify"
@@ -11,10 +14,15 @@ resource_name = "Amplify"
 resource_name = "Reverb"
 spread = 0.5
 
+[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_j3pel"]
+resource_name = "Limiter"
+
 [resource]
 bus/0/volume_db = -5.042245
 bus/0/effect/0/effect = SubResource("AudioEffectChorus_j3pel")
 bus/0/effect/0/enabled = false
+bus/0/effect/1/effect = SubResource("AudioEffectLimiter_g28q7")
+bus/0/effect/1/enabled = true
 bus/1/name = &"Bounce SFX"
 bus/1/solo = false
 bus/1/mute = false
@@ -27,3 +35,5 @@ bus/1/effect/1/effect = SubResource("AudioEffectAmplify_j3pel")
 bus/1/effect/1/enabled = true
 bus/1/effect/2/effect = SubResource("AudioEffectReverb_j3pel")
 bus/1/effect/2/enabled = true
+bus/1/effect/3/effect = SubResource("AudioEffectLimiter_j3pel")
+bus/1/effect/3/enabled = false
