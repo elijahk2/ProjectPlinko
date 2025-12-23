@@ -1,6 +1,7 @@
-[gd_scene load_steps=21 format=3 uid="uid://dgqecseoat4ms"]
+[gd_scene load_steps=22 format=3 uid="uid://dgqecseoat4ms"]
 
 [ext_resource type="PackedScene" uid="uid://cbflfmyvv77qh" path="res://Scenes/ball.tscn" id="1_ebmjs"]
+[ext_resource type="PackedScene" uid="uid://ccwkowvhnl108" path="res://Scenes/peg.tscn" id="1_qxrlw"]
 [ext_resource type="Script" uid="uid://d1evh0y4dcen6" path="res://Scripts/game.tres.gd" id="1_rfjv2"]
 [ext_resource type="Texture2D" uid="uid://bf7v4rfynocwf" path="res://Assets/Art/Background/red_bg.png" id="2_i6g32"]
 [ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="2_wrm1d"]
@@ -152,12 +153,41 @@ position = Vector2(498, 2)
 shape = SubResource("WorldBoundaryShape2D_wrm1d")
 
 [node name="Endzone" type="Area2D" parent="."]
-collision_layer = 128
-collision_mask = 128
 script = SubResource("GDScript_rku1e")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Endzone"]
 position = Vector2(1, 4193)
 shape = SubResource("RectangleShape2D_rku1e")
+
+[node name="StaticBody2D" parent="." instance=ExtResource("1_qxrlw")]
+position = Vector2(-338, 139)
+script = null
+
+[node name="StaticBody2D2" parent="." instance=ExtResource("1_qxrlw")]
+position = Vector2(-267, 140)
+
+[node name="StaticBody2D3" parent="." instance=ExtResource("1_qxrlw")]
+position = Vector2(-195, 140)
+
+[node name="StaticBody2D4" parent="." instance=ExtResource("1_qxrlw")]
+position = Vector2(-123, 142)
+
+[node name="StaticBody2D5" parent="." instance=ExtResource("1_qxrlw")]
+position = Vector2(-50, 137)
+
+[node name="StaticBody2D6" parent="." instance=ExtResource("1_qxrlw")]
+position = Vector2(23, 140)
+
+[node name="StaticBody2D7" parent="." instance=ExtResource("1_qxrlw")]
+position = Vector2(95, 143)
+
+[node name="StaticBody2D8" parent="." instance=ExtResource("1_qxrlw")]
+position = Vector2(167, 142)
+
+[node name="StaticBody2D9" parent="." instance=ExtResource("1_qxrlw")]
+position = Vector2(239, 140)
+
+[node name="StaticBody2D10" parent="." instance=ExtResource("1_qxrlw")]
+position = Vector2(313, 140)
 
 [connection signal="body_entered" from="Endzone" to="." method="_on_endzone_body_entered"]
