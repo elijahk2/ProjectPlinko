@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 func _process(delta):
+	#Manage peg break special effect when ball.gd modifies collision_layer property of peg hit
 	if self.collision_layer == 2:
 		modulate.a -= delta * 2
 		if modulate.a <= 0:

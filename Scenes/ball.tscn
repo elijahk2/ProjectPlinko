@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cun0x6nvof6bx" path="res://Assets/Art/plinko_ball.png" id="1_d60mj"]
 [ext_resource type="Script" uid="uid://gobi7yyesavl" path="res://Scripts/ball.gd" id="1_ij5cq"]
-[ext_resource type="AudioStream" uid="uid://cxl5drgm078p0" path="res://Assets/Sound/SFX/BounceSFX.mp3" id="3_376qj"]
+[ext_resource type="AudioStream" uid="uid://g2eobh7xpvig" path="res://Assets/Sound/SFX/bounce-effect-elliot-3.wav" id="3_376qj"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d60mj"]
 bounce = 1.0

@@ -12,7 +12,12 @@ resource_name = "Amplify"
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_j3pel"]
 resource_name = "Reverb"
+room_size = 0.35
+damping = 1.0
 spread = 0.5
+hipass = 0.45
+dry = 0.9
+wet = 0.7
 
 [sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_j3pel"]
 resource_name = "Limiter"
