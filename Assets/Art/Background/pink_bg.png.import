@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dins4rvfc26ry"
-path="res://.godot/imported/green_bg.png-080e7a0a5b6568cb39c6a3eba45b9785.ctex"
+uid="uid://b6am1f5l1onb1"
+path="res://.godot/imported/pink_bg.png-ceefe77122be2926162ca42d52bfbcab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/green_bg.png"
-dest_files=["res://.godot/imported/green_bg.png-080e7a0a5b6568cb39c6a3eba45b9785.ctex"]
+source_file="res://Assets/Art/Background/pink_bg.png"
+dest_files=["res://.godot/imported/pink_bg.png-ceefe77122be2926162ca42d52bfbcab.ctex"]
 
 [params]
 

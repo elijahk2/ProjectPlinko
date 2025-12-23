@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dlv8hjuacyx4n"
-path="res://.godot/imported/light_blue_bg.png-46669218acf913c39bbe092ae252f8c4.ctex"
+uid="uid://cj2casl7hnvba"
+path="res://.godot/imported/Vector_Ball(WhiteBorder).png-8583bd055b89eccac67f9e45918315a8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/light_blue_bg.png"
-dest_files=["res://.godot/imported/light_blue_bg.png-46669218acf913c39bbe092ae252f8c4.ctex"]
+source_file="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png"
+dest_files=["res://.godot/imported/Vector_Ball(WhiteBorder).png-8583bd055b89eccac67f9e45918315a8.ctex"]
 
 [params]
 

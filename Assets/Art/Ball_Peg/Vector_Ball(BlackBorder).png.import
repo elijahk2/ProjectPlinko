@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6am1f5l1onb1"
-path="res://.godot/imported/pink_bg.png-c85ebdf008b292c09124caa5b8d1e703.ctex"
+uid="uid://di1dbjsx7oxv2"
+path="res://.godot/imported/Vector_Ball(BlackBorder).png-b53e0ad25964fa57efcaa8e5547d45ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/pink_bg.png"
-dest_files=["res://.godot/imported/pink_bg.png-c85ebdf008b292c09124caa5b8d1e703.ctex"]
+source_file="res://Assets/Art/Ball_Peg/Vector_Ball(BlackBorder).png"
+dest_files=["res://.godot/imported/Vector_Ball(BlackBorder).png-b53e0ad25964fa57efcaa8e5547d45ce.ctex"]
 
 [params]
 

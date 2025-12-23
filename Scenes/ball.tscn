@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cbflfmyvv77qh"]
 
-[ext_resource type="Texture2D" uid="uid://cun0x6nvof6bx" path="res://Assets/Art/plinko_ball.png" id="1_d60mj"]
 [ext_resource type="Script" uid="uid://gobi7yyesavl" path="res://Scripts/ball.gd" id="1_ij5cq"]
+[ext_resource type="Texture2D" uid="uid://cj2casl7hnvba" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="2_376qj"]
 [ext_resource type="AudioStream" uid="uid://g2eobh7xpvig" path="res://Assets/Sound/SFX/bounce-effect-elliot-3.wav" id="3_376qj"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d60mj"]
@@ -17,9 +17,9 @@ max_contacts_reported = 5
 script = ExtResource("1_ij5cq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-3.8146973e-06, -9.536743e-07)
-scale = Vector2(0.725, 0.725)
-texture = ExtResource("1_d60mj")
+position = Vector2(-4.500005, -4.4107437e-06)
+scale = Vector2(0.17161915, 0.17343578)
+texture = ExtResource("2_376qj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_d60mj")

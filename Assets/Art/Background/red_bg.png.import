@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cun0x6nvof6bx"
-path="res://.godot/imported/plinko_ball.png-572acabee58ca6ef79aac35b5aff0bfc.ctex"
+uid="uid://bf7v4rfynocwf"
+path="res://.godot/imported/red_bg.png-62052169c6ccd6b07765ac24fe398060.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/plinko_ball.png"
-dest_files=["res://.godot/imported/plinko_ball.png-572acabee58ca6ef79aac35b5aff0bfc.ctex"]
+source_file="res://Assets/Art/Background/red_bg.png"
+dest_files=["res://.godot/imported/red_bg.png-62052169c6ccd6b07765ac24fe398060.ctex"]
 
 [params]
 

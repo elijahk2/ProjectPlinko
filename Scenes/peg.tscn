@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://ccwkowvhnl108"]
 
-[ext_resource type="Texture2D" uid="uid://cun0x6nvof6bx" path="res://Assets/Art/plinko_ball.png" id="1_e5a35"]
 [ext_resource type="Script" uid="uid://cdys0fiqyqfxt" path="res://Scripts/peg.gd" id="1_p4b2k"]
+[ext_resource type="Texture2D" uid="uid://cj2casl7hnvba" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="2_p4b2k"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qwx1w"]
 
@@ -14,9 +14,9 @@ physics_material_override = SubResource("PhysicsMaterial_qwx1w")
 script = ExtResource("1_p4b2k")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(1.1920929e-07, -1.1920929e-07)
-scale = Vector2(0.4625, 0.45)
-texture = ExtResource("1_e5a35")
+position = Vector2(-2.800054, 2.861023e-06)
+scale = Vector2(0.12104313, 0.11855105)
+texture = ExtResource("2_p4b2k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_e5a35")
