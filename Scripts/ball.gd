@@ -9,7 +9,9 @@ var dash_ready = 1
 const dash_power = 1200
 const tap_power = 2
 
-const init_pitch_scale = 0.8
+# scale settings
+const octave_limit = 3.0
+const init_pitch_scale = 0.7
 var scale_degree = 0
 
 func _ready():
@@ -56,27 +58,23 @@ func _physics_process(delta: float) -> void:
 		
 # major scale
 func pitch_multiplier_power(degree: int) -> float:
+	# major scale
 	# const scale = [1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 0.5]
-	var octaves = degree / 7
-	degree %= 7;  
-	var power_part = 0.0;
-	if degree == 0:
-		power_part = 0.0
-	if degree == 1:
-		power_part = 1.0/6.0
-	if degree == 2:
-		power_part = 2.0/6.0
-	if degree == 3:
-		power_part = 5.0/12.0
-	if degree == 4:
-		power_part = 7.0/12.0
-	if degree == 5:
-		power_part = 9.0/12.0
-	if degree == 6:
-		power_part = 11.0/12.0
+	# minor scale
+	# const scale = [1.0, 0.5, 1.0, 1.0, 0.5, 1.0, 1.0]
+	# pentatonic scale
+	const scale = [1.0, 1.0, 1.5, 1.0, 1.5]
+	var octaves = degree / scale.size()
+	degree %= scale.size()
+	var power_part = 0.0
+	var sum = 0
+	for i in range(0, scale.size()):
+		if degree == i:
+			power_part = sum / 6.0
+		sum += scale[i]
 	var power = power_part + octaves
-	#stops at two octaves higher
-	if power > 2.0:
-		return 2.0
+	#stops ascending at octave_limit
+	if power > octave_limit:
+		return octave_limit
 	else:
 		return power
