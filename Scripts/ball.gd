@@ -15,6 +15,7 @@ const init_pitch_scale = 0.7
 var scale_degree = 0
 
 func _ready():
+	#Set random x position, reset pitch, reset collision management
 	position.x = randi_range(-200, 200)
 	hit_sound.pitch_scale = 1
 	self.set_collision_mask_value(1, true)
@@ -39,6 +40,8 @@ func _on_body_entered(body):
 		score_display.score += 1
 		
 func _physics_process(delta: float) -> void:
+	
+	#Manage key presses
 	if Input.is_action_pressed("push") and dash_ready == 1 and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
 		apply_impulse(Vector2(0,(-1 * dash_power)), Vector2(0,0))
 		dash_ready = 0
