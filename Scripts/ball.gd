@@ -62,11 +62,11 @@ func _physics_process(delta: float) -> void:
 # major scale
 func pitch_multiplier_power(degree: int) -> float:
 	# major scale
-	# const scale = [1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 0.5]
+	const scale = [1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 0.5]
 	# minor scale
 	# const scale = [1.0, 0.5, 1.0, 1.0, 0.5, 1.0, 1.0]
 	# pentatonic scale
-	const scale = [1.0, 1.0, 1.5, 1.0, 1.5]
+	# const scale = [1.0, 1.0, 1.5, 1.0, 1.5]
 	var octaves = degree / scale.size()
 	degree %= scale.size()
 	var power_part = 0.0
