@@ -23,7 +23,10 @@ func _ready():
 	body_entered.connect(_on_body_entered)
 
 func _on_body_entered(body):
-	if body.is_in_group("pegs"):
+	if body.is_in_group("all_pegs") and body.collision_layer == 1: #Check for re-collisions
+		body.set_collision_layer_value(1, false) #Prevent re-colliding during fadeout animation
+		body.set_collision_layer_value(2, true)
+		#For some reason, collision layers of 2 were being registered as hits by mask 1 ball, so multiple safety checks are in place to prevent that.
 		var frame_count = animated_bg.sprite_frames.get_frame_count("BG Color Shift")
 		animated_bg.frame = (animated_bg.frame + 1) % frame_count
 		if animated_bg.frame == 0:
@@ -34,13 +37,12 @@ func _on_body_entered(body):
 		hit_sound.pitch_scale = init_pitch_scale * 2**(pitch_multiplier_power(scale_degree))
 		scale_degree += 1
 		
-		body.set_collision_layer_value(1, false)
-		body.set_collision_layer_value(2, true)
-		body.collision_mask = 0
-		score_display.score += 1
+		if body.is_in_group("golden_pegs"):
+			score_display.score += 5
+		else:
+			score_display.score += 1
 		
 func _physics_process(delta: float) -> void:
-	
 	#Manage key presses
 	if Input.is_action_pressed("push") and dash_ready == 1 and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
 		apply_impulse(Vector2(0,(-1 * dash_power)), Vector2(0,0))

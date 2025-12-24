@@ -18,10 +18,14 @@ config/features=PackedStringArray("4.5", "Forward Plus")
 
 window/size/viewport_width=375
 window/size/viewport_height=750
+window/size/resizable=false
+window/stretch/mode="viewport"
 
 [global_group]
 
-pegs=""
+normal_pegs=""
+golden_pegs=""
+all_pegs=""
 
 [gui]
 
