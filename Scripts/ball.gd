@@ -3,8 +3,9 @@ extends RigidBody2D
 @onready var hit_sound = $AudioStreamPlayer # Path to your sound node
 @onready var score_display: Label = $"../Background Control/ScoreDisplay"
 @onready var animated_bg: AnimatedSprite2D = $"../Background Control/Background/AnimatedSprite2D"
+@onready var charge_display: Label = $"../Background Control/ChargeDisplay"
 
-var dash_ready = 1
+var dash_ready = 1.0
 
 const dash_power = 1200
 const tap_power = 2
@@ -21,6 +22,7 @@ func _ready():
 	self.set_collision_mask_value(1, true)
 	self.set_collision_mask_value(2, false)
 	body_entered.connect(_on_body_entered)
+	charge_display.text = str(100 * dash_ready) + "%" 
 
 func _on_body_entered(body):
 	if body.is_in_group("all_pegs") and body.collision_layer == 1: #Check for re-collisions
@@ -45,20 +47,23 @@ func _on_body_entered(body):
 			score_display.score += 5
 		else:
 			score_display.score += 1
+		if dash_ready < 0.9:
+			dash_ready += 0.1
 		
 func _physics_process(delta: float) -> void:
-	#Manage key presses
-	if Input.is_action_pressed("push") and dash_ready == 1 and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
+	charge_display.text = str(100 * dash_ready) + "%" 
+	#Manage key presses (>= 0.99 is used to prevent non-exact values for dash_ready)
+	if Input.is_action_pressed("push") and dash_ready >= 0.99 and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
 		apply_impulse(Vector2(0,(-1 * dash_power)), Vector2(0,0))
 		dash_ready = 0
-	if Input.is_action_pressed("left") and dash_ready == 1:
+	if Input.is_action_pressed("left") and dash_ready >= 0.99:
 		if Input.is_action_pressed("push"):
 			apply_impulse(Vector2((-1 * dash_power), 0),Vector2(0,0))
 			dash_ready = 0
 		else:
 			apply_impulse(Vector2((-1 * tap_power),0),Vector2(0,0))
 	if Input.is_action_pressed("right"):
-		if Input.is_action_pressed("push") and dash_ready ==1:
+		if Input.is_action_pressed("push") and dash_ready >= 0.99:
 			apply_impulse(Vector2(dash_power, 0),Vector2(0,0))
 			dash_ready = 0
 		else:
