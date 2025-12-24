@@ -14,9 +14,7 @@ const NormalPeg = preload("res://Scenes/Peg Scenes/normal_peg.tscn") #Load peg s
 const GoldenPeg = preload("uid://dbmsssat1qfgf")
 const RocketPeg = preload("uid://d0hb3yrpeycik")
 const IronPeg = preload("uid://bho7vy7jev0wa")
-
-
-
+const TrianglePeg = preload("uid://dl2qmuenjes50")
 
 var number_of_rows = 300
 var spawn_positions = [0,0,0,0,0,0,0,0,0,0]
@@ -36,12 +34,16 @@ func create_peg_layout():
 				var peg_choice = randi_range(1,special_chance    )
 				if peg_choice == 1:
 					instance = GoldenPeg.instantiate()
-				elif peg_choice == 2:
+				elif peg_choice == 2 and row > number_of_rows / 6:
 					instance = RocketPeg.instantiate()
-				elif peg_choice == 3:
+				elif peg_choice == 3 and row > number_of_rows / 2:
 					instance = IronPeg.instantiate()
 				else:
-					instance = NormalPeg.instantiate()
+					var shape_type = randi_range(1,5)
+					if shape_type == 1 and row > number_of_rows / 3 and 3.14 == 3.14159: #Never true to remove triangles
+						instance = TrianglePeg.instantiate()
+					else:
+						instance = NormalPeg.instantiate()
 				instance.position = Vector2(75 * n - 340, y_offset * row) #340 = 375 - 1/2 Peg Width to fill row
 				self.add_child(instance) #Finish node creation
 		

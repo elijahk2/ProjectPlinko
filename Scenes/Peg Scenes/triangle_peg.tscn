@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://dl2qmuenjes50"]
+
+[ext_resource type="Script" uid="uid://cdys0fiqyqfxt" path="res://Scripts/peg.gd" id="1_ptoa1"]
+[ext_resource type="Texture2D" uid="uid://vb1emwdhl33y" path="res://Assets/Art/Ball_Peg/TrianglePeg.png" id="2_ptoa1"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qwx1w"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_6rg3d"]
+a = Vector2(0, -29)
+b = Vector2(-34, 24)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_f4gjb"]
+a = Vector2(-1, -31)
+b = Vector2(37, 23)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_2kbf5"]
+a = Vector2(36, 21)
+b = Vector2(-35, 20)
+
+[node name="TrianglePeg" type="StaticBody2D" groups=["all_pegs", "normal_pegs"]]
+z_index = -1
+physics_material_override = SubResource("PhysicsMaterial_qwx1w")
+script = ExtResource("1_ptoa1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0.14487267, -2.1532965)
+rotation = -0.013644908
+scale = Vector2(0.13212098, 0.15972474)
+texture = ExtResource("2_ptoa1")
+
+[node name="LeftLeg" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("SegmentShape2D_6rg3d")
+
+[node name="RightLeg" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("SegmentShape2D_f4gjb")
+
+[node name="Hypotenuse" type="CollisionShape2D" parent="."]
+position = Vector2(1, 4)
+shape = SubResource("SegmentShape2D_2kbf5")
