@@ -1,3 +1,8 @@
+# How to add a new peg type:
+# 1) Upload the image to the Ball_Peg assets folder, duplicate the normal_peg scene, and change the Sprite2D texture to the new image.
+# 2) Rename the nodes accordingly, and make a new group to add the StaticBody2D to. Make sure you do this!
+# 3) Modify create_peg_layout() function to account for the new peg's mechanics, and add a new elif to add it to procedural generation!
+
 extends Node2D
 
 func _on_endzone_body_entered(body: RigidBody2D) -> void:
@@ -5,13 +10,18 @@ func _on_endzone_body_entered(body: RigidBody2D) -> void:
 	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
 
 #Procedural Peg Generation
-const NormalPeg = preload("res://Scenes/Peg Scenes/normal_peg.tscn") #Load NormalPeg to spawn in
+const NormalPeg = preload("res://Scenes/Peg Scenes/normal_peg.tscn") #Load peg scenes to spawn in
 const GoldenPeg = preload("uid://dbmsssat1qfgf")
+const RocketPeg = preload("uid://d0hb3yrpeycik")
+const IronPeg = preload("uid://bho7vy7jev0wa")
+
+
 
 
 var number_of_rows = 300
 var spawn_positions = [0,0,0,0,0,0,0,0,0,0]
 var spawn_chance = 5 # 1/spawn_chance = probability of spawning a peg on any given tile of a row
+var special_chance = 20 # 1/special_chance = probability a peg will have a modifier
 var row = 0 #Define iteration var
 var y_offset = 200 #Y distance between each row of 
 var instance = 0 #Clear var for storing node to spawn
@@ -23,10 +33,15 @@ func create_peg_layout():
 		for n in spawn_positions.size():
 			if randi_range(1,spawn_chance) == 1: #Randomly choose peg or empty
 				spawn_positions[n] = 1 #Fill spawn map with choice in location
-				if randi_range(1,10) == 1:
+				var peg_choice = randi_range(1,special_chance    )
+				if peg_choice == 1:
 					instance = GoldenPeg.instantiate()
+				elif peg_choice == 2:
+					instance = RocketPeg.instantiate()
+				elif peg_choice == 3:
+					instance = IronPeg.instantiate()
 				else:
-					instance = NormalPeg.instantiate() #Create a new peg
+					instance = NormalPeg.instantiate()
 				instance.position = Vector2(75 * n - 340, y_offset * row) #340 = 375 - 1/2 Peg Width to fill row
 				self.add_child(instance) #Finish node creation
 		

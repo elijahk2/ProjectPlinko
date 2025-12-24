@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cun0x6nvof6bx"
-path="res://.godot/imported/pixel_ball.png-dc3ed483c4a52ba1f49fcd01c8bbe019.ctex"
+uid="uid://d081t0ufl8qtd"
+path="res://.godot/imported/RocketPeg.png-68c0de74d7c604eace073bc663ea7a44.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/Ball_Peg/pixel_ball.png"
-dest_files=["res://.godot/imported/pixel_ball.png-dc3ed483c4a52ba1f49fcd01c8bbe019.ctex"]
+source_file="res://Assets/Art/Ball_Peg/RocketPeg.png"
+dest_files=["res://.godot/imported/RocketPeg.png-68c0de74d7c604eace073bc663ea7a44.ctex"]
 
 [params]
 

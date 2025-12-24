@@ -26,6 +26,8 @@ window/stretch/mode="viewport"
 normal_pegs=""
 golden_pegs=""
 all_pegs=""
+rocket_pegs=""
+iron_pegs=""
 
 [gui]
 

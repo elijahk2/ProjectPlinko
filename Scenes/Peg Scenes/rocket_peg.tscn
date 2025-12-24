@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://d0hb3yrpeycik"]
+
+[ext_resource type="Script" uid="uid://cdys0fiqyqfxt" path="res://Scripts/peg.gd" id="1_e28eq"]
+[ext_resource type="Texture2D" uid="uid://d081t0ufl8qtd" path="res://Assets/Art/Ball_Peg/RocketPeg.png" id="2_e28eq"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qwx1w"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e5a35"]
+radius = 35.014282
+
+[node name="RocketPeg" type="StaticBody2D" groups=["all_pegs", "rocket_pegs"]]
+z_index = -1
+physics_material_override = SubResource("PhysicsMaterial_qwx1w")
+script = ExtResource("1_e28eq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-2.800054, 2.861023e-06)
+scale = Vector2(0.12104313, 0.11855105)
+texture = ExtResource("2_e28eq")
+
+[node name="rocket_peg_collider" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_e5a35")

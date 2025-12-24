@@ -24,8 +24,9 @@ func _ready():
 
 func _on_body_entered(body):
 	if body.is_in_group("all_pegs") and body.collision_layer == 1: #Check for re-collisions
-		body.set_collision_layer_value(1, false) #Prevent re-colliding during fadeout animation
-		body.set_collision_layer_value(2, true)
+		if not body.is_in_group("iron_pegs"): #Safeguard against deleting iron pegs
+			body.set_collision_layer_value(1, false) #Prevent re-colliding during fadeout animation
+			body.set_collision_layer_value(2, true)
 		#For some reason, collision layers of 2 were being registered as hits by mask 1 ball, so multiple safety checks are in place to prevent that.
 		var frame_count = animated_bg.sprite_frames.get_frame_count("BG Color Shift")
 		animated_bg.frame = (animated_bg.frame + 1) % frame_count
@@ -36,6 +37,9 @@ func _on_body_entered(body):
 		hit_sound.play()
 		hit_sound.pitch_scale = init_pitch_scale * 2**(pitch_multiplier_power(scale_degree))
 		scale_degree += 1
+		
+		if body.is_in_group("rocket_pegs"):
+			apply_impulse(Vector2(0, -2500), Vector2(0,0))
 		
 		if body.is_in_group("golden_pegs"):
 			score_display.score += 5
