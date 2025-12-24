@@ -109,6 +109,7 @@ texture = ExtResource("2_wrm1d")
 script = SubResource("GDScript_v158k")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Background Control/Background"]
+position = Vector2(-1.6363637, 4.7455654)
 sprite_frames = SubResource("SpriteFrames_h4fw4")
 animation = &"BG Color Shift"
 frame_progress = 0.09284252
@@ -130,6 +131,17 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = SubResource("GDScript_wowpa")
 
+[node name="ChargeDisplay" type="Label" parent="Background Control"]
+offset_left = 112.0
+offset_top = 23.0
+offset_right = 273.0
+offset_bottom = 109.0
+theme_override_fonts/font = ExtResource("11_rfjv2")
+theme_override_font_sizes/font_size = 32
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Player" parent="." instance=ExtResource("1_ebmjs")]
 position = Vector2(0, -103)
 
@@ -144,7 +156,7 @@ script = SubResource("GDScript_wrm1d")
 position = Vector2(-121, -1)
 
 [node name="Left Bound" type="CollisionShape2D" parent="World Bounds"]
-position = Vector2(-331, -1)
+position = Vector2(-329, 1)
 shape = SubResource("WorldBoundaryShape2D_qxrlw")
 
 [node name="Right Bound" type="CollisionShape2D" parent="World Bounds"]
@@ -152,6 +164,7 @@ position = Vector2(498, 2)
 shape = SubResource("WorldBoundaryShape2D_wrm1d")
 
 [node name="Endzone" type="Area2D" parent="."]
+position = Vector2(2, 0)
 collision_layer = 128
 collision_mask = 128
 script = SubResource("GDScript_rku1e")

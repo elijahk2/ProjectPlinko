@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bho7vy7jev0wa"]
+
+[ext_resource type="Script" uid="uid://cdys0fiqyqfxt" path="res://Scripts/peg.gd" id="1_j3jrj"]
+[ext_resource type="Texture2D" uid="uid://picxtttkm6tx" path="res://Assets/Art/Ball_Peg/IronPeg.png" id="2_j3jrj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qwx1w"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e5a35"]
+radius = 35.014282
+
+[node name="IronPeg" type="StaticBody2D" groups=["all_pegs", "iron_pegs"]]
+z_index = -1
+physics_material_override = SubResource("PhysicsMaterial_qwx1w")
+script = ExtResource("1_j3jrj")
+
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["iron_pegs"]]
+position = Vector2(-2.800054, 2.861023e-06)
+scale = Vector2(0.12104313, 0.11855105)
+texture = ExtResource("2_j3jrj")
+
+[node name="iron_peg_collider" type="CollisionShape2D" parent="." groups=["iron_pegs"]]
+shape = SubResource("CircleShape2D_e5a35")

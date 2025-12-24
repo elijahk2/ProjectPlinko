@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://di1dbjsx7oxv2"
-path="res://.godot/imported/Vector_Ball(BlackBorder).png-b53e0ad25964fa57efcaa8e5547d45ce.ctex"
+uid="uid://cm10gmaqrajmw"
+path="res://.godot/imported/GoldenPeg.png-4ab4427c712efb8bf23241c04ea82614.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/Ball_Peg/Vector_Ball(BlackBorder).png"
-dest_files=["res://.godot/imported/Vector_Ball(BlackBorder).png-b53e0ad25964fa57efcaa8e5547d45ce.ctex"]
+source_file="res://Assets/Art/Ball_Peg/GoldenPeg.png"
+dest_files=["res://.godot/imported/GoldenPeg.png-4ab4427c712efb8bf23241c04ea82614.ctex"]
 
 [params]
 
