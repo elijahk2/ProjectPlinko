@@ -4,7 +4,9 @@ extends RigidBody2D
 @onready var score_display: Label = $"../Background Control/ScoreDisplay"
 @onready var animated_bg: AnimatedSprite2D = $"../Background Control/Background/AnimatedSprite2D"
 @onready var charge_display: Label = $"../Background Control/ChargeDisplay"
+const MiniBullet = preload("uid://csblsch6lhyfy")
 
+var is_spent = false
 var dash_ready = 1.0
 
 const dash_power = 1200
@@ -26,6 +28,9 @@ func _ready():
 
 func _on_body_entered(body):
 	if body.is_in_group("all_pegs") and body.collision_layer == 1: #Check for re-collisions
+		if body.get("is_spent") == true: #Manage ONE and ONE ONLY iteration of code for each peg
+			return
+		body.set("is_spent", true)
 		if not body.is_in_group("iron_pegs"): #Safeguard against deleting iron pegs
 			body.set_collision_layer_value(1, false) #Prevent re-colliding during fadeout animation
 			body.set_collision_layer_value(2, true)
@@ -40,11 +45,21 @@ func _on_body_entered(body):
 		hit_sound.pitch_scale = init_pitch_scale * 2**(pitch_multiplier_power(scale_degree))
 		scale_degree += 1
 		
-		if body.is_in_group("rocket_pegs"):
+		if body.is_in_group("rocket_pegs"): #Management for impulse on impact with Rocket Pegs
 			apply_impulse(Vector2(0, -2500), Vector2(0,0))
+			
+		if body.is_in_group("bullet_pegs"): #Management for bullet instantiation
+			set_deferred("collision_layer", 0)
+			var bullet = MiniBullet.instantiate()
+			get_parent().add_child(bullet)
+			bullet.global_position = self.global_position
+			bullet.apply_central_impulse(Vector2(0, -500))
+			body.queue_free()
 		
-		if body.is_in_group("golden_pegs"):
+		if body.is_in_group("golden_pegs"): #Score increments for both gold and normal pegs
 			score_display.score += 5
+		elif body.is_in_group("hurt_pegs"):
+			score_display.score -= 5
 		else:
 			score_display.score += 1
 		if dash_ready < 0.9:

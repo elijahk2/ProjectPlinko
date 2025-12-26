@@ -28,6 +28,8 @@ golden_pegs=""
 all_pegs=""
 rocket_pegs=""
 iron_pegs=""
+bullet_pegs=""
+hurt_pegs=""
 
 [gui]
 
