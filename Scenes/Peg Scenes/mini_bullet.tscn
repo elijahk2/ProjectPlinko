@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dow5q7b348cp3" path="res://Scripts/mini_bullet.gd" id="1_ri6c8"]
 [ext_resource type="Texture2D" uid="uid://c5vl8gviyvi24" path="res://Assets/Art/Ball_Peg/BulletPeg.png" id="1_txp45"]
-[ext_resource type="AudioStream" uid="uid://g2eobh7xpvig" path="res://Assets/Sound/SFX/bounce-effect-elliot-3.wav" id="3_7lafe"]
+[ext_resource type="AudioStream" uid="uid://g2eobh7xpvig" path="res://Assets/Sound/SFX/BounceSound.wav" id="3_7lafe"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ri6c8"]
 bounce = 1.0

@@ -1,6 +1,8 @@
 extends RigidBody2D
 
-@onready var hit_sound = $AudioStreamPlayer # Path to your sound node
+@onready var particles: GPUParticles2D = $Particles
+@onready var hit_sound: AudioStreamPlayer = $BounceSFX
+@onready var dash_sfx: AudioStreamPlayer = $DashSFX
 @onready var score_display: Label = $"../Background Control/ScoreDisplay"
 @onready var animated_bg: AnimatedSprite2D = $"../Background Control/Background/AnimatedSprite2D"
 @onready var charge_display: Label = $"../Background Control/ChargeDisplay"
@@ -16,6 +18,7 @@ const tap_power = 2
 const octave_limit = 3.0
 const init_pitch_scale = 0.7
 var scale_degree = 0
+var time_elapsed = 0
 
 func _ready():
 	#Set random x position, reset pitch, reset collision management
@@ -25,7 +28,7 @@ func _ready():
 	self.set_collision_mask_value(2, false)
 	body_entered.connect(_on_body_entered)
 	charge_display.text = str(100 * dash_ready) + "%" 
-
+ 
 func _on_body_entered(body):
 	if body.is_in_group("all_pegs") and body.collision_layer == 1: #Check for re-collisions
 		if body.get("is_spent") == true: #Manage ONE and ONE ONLY iteration of code for each peg
@@ -66,8 +69,20 @@ func _on_body_entered(body):
 			dash_ready += 0.1
 		
 func _physics_process(delta: float) -> void:
+	print(linear_velocity.length())
 	charge_display.text = str(100 * dash_ready) + "%" 
 	#Manage key presses (>= 0.99 is used to prevent non-exact values for dash_ready)
+	if time_elapsed < 60 and particles.emitting == true: #Time (1s) since started showing particles
+		time_elapsed += 1 #ISSUE: DIFFERING FRAMERATES WILL SEE DIFFERENT PARTICLE TRAIL LENGTHS. USE DELTA TIMING
+	else:
+		if linear_velocity.length() < 400:
+			particles.emitting = false
+	if Input.is_action_pressed("push") and dash_ready >= 0.99: #Manage dash sfx playing and dash particle start/stop
+		dash_sfx.pitch_scale = randf_range(1.0, 1.2) #Random pitch to make each sound unique
+		dash_sfx.play()
+		particles.emitting = true
+		time_elapsed = 0 #Start particle emission and reset timer
+		
 	if Input.is_action_pressed("push") and dash_ready >= 0.99 and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
 		apply_impulse(Vector2(0,(-1 * dash_power)), Vector2(0,0))
 		dash_ready = 0
@@ -83,7 +98,6 @@ func _physics_process(delta: float) -> void:
 			dash_ready = 0
 		else:
 			apply_impulse(Vector2(tap_power,0),Vector2(0,0))
-		
 		
 # major scale
 func pitch_multiplier_power(degree: int) -> float:
