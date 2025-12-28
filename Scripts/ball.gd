@@ -46,7 +46,10 @@ func _on_body_entered(body):
 		# hit sound logic
 		hit_sound.play()
 		hit_sound.pitch_scale = init_pitch_scale * 2**(pitch_multiplier_power(scale_degree))
-		scale_degree += 1
+		if body.is_in_group("hurt_pegs"):
+			scale_degree -= 1
+		else:
+			scale_degree += 1
 		
 		if body.is_in_group("rocket_pegs"): #Management for impulse on impact with Rocket Pegs
 			apply_impulse(Vector2(0, -2500), Vector2(0,0))
@@ -69,7 +72,6 @@ func _on_body_entered(body):
 			dash_ready += 0.1
 		
 func _physics_process(delta: float) -> void:
-	print(linear_velocity.length())
 	charge_display.text = str(100 * dash_ready) + "%" 
 	#Manage key presses (>= 0.99 is used to prevent non-exact values for dash_ready)
 	if time_elapsed < 60 and particles.emitting == true: #Time (1s) since started showing particles
@@ -77,14 +79,17 @@ func _physics_process(delta: float) -> void:
 	else:
 		if linear_velocity.length() < 400:
 			particles.emitting = false
-	if Input.is_action_pressed("push") and dash_ready >= 0.99: #Manage dash sfx playing and dash particle start/stop
+	if Input.is_action_pressed("push") and dash_ready >= 0.99 and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")): #Manage dash sfx playing and dash particle start/stop
 		dash_sfx.pitch_scale = randf_range(1.0, 1.2) #Random pitch to make each sound unique
 		dash_sfx.play()
 		particles.emitting = true
 		time_elapsed = 0 #Start particle emission and reset timer
 		
-	if Input.is_action_pressed("push") and dash_ready >= 0.99 and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
+	if Input.is_action_pressed("push") and dash_ready >= 0.99  and Input.is_action_pressed("up") and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
 		apply_impulse(Vector2(0,(-1 * dash_power)), Vector2(0,0))
+		dash_ready = 0
+	if Input.is_action_pressed("push") and dash_ready >= 0.99  and Input.is_action_pressed("down") and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
+		apply_impulse(Vector2(0,(dash_power)), Vector2(0,0))
 		dash_ready = 0
 	if Input.is_action_pressed("left") and dash_ready >= 0.99:
 		if Input.is_action_pressed("push"):
