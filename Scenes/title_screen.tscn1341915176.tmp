@@ -17,11 +17,11 @@ func _on_QuitButton_pressed():
 	get_tree().quit()
 	pass
 
-func _process(delta):
+func _ready() -> void:
 	if Input.is_action_pressed(\"push\"):
 		get_tree().change_scene_to_file(\"res://Scenes/game.tscn\")
 	elif Input.is_action_pressed(\"back\"):
-		get_tree().quit()
+		get_tree.quit()
 "
 
 [node name="Title Screen" type="Control"]
