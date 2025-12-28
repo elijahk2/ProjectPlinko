@@ -91,27 +91,30 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("push") and dash_ready >= 0.99  and Input.is_action_pressed("down") and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
 		apply_impulse(Vector2(0,(dash_power)), Vector2(0,0))
 		dash_ready = 0
+		scale_degree = 0
 	if Input.is_action_pressed("left") and dash_ready >= 0.99:
 		if Input.is_action_pressed("push"):
 			apply_impulse(Vector2((-1 * dash_power), 0),Vector2(0,0))
 			dash_ready = 0
+			scale_degree = 0
 		else:
 			apply_impulse(Vector2((-1 * tap_power),0),Vector2(0,0))
 	if Input.is_action_pressed("right"):
 		if Input.is_action_pressed("push") and dash_ready >= 0.99:
 			apply_impulse(Vector2(dash_power, 0),Vector2(0,0))
 			dash_ready = 0
+			scale_degree = 0
 		else:
 			apply_impulse(Vector2(tap_power,0),Vector2(0,0))
 		
 # major scale
 func pitch_multiplier_power(degree: int) -> float:
 	# major scale
-	# const scale = [1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 0.5]
+	const scale = [1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 0.5]
 	# minor scale
 	# const scale = [1.0, 0.5, 1.0, 1.0, 0.5, 1.0, 1.0]
 	# pentatonic scale
-	const scale = [1.0, 1.0, 1.5, 1.0, 1.5]
+	# const scale = [1.0, 1.0, 1.5, 1.0, 1.5]
 	var octaves = degree / scale.size()
 	degree %= scale.size()
 	var power_part = 0.0
@@ -122,7 +125,7 @@ func pitch_multiplier_power(degree: int) -> float:
 		sum += scale[i]
 	var power = power_part + octaves
 	#stops ascending at octave_limit
-	if power > octave_limit:
+	if power >= octave_limit:
 		return octave_limit
 	else:
 		return power
