@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=6 format=3 uid="uid://cru6autotisje"]
+[gd_resource type="AudioBusLayout" load_steps=8 format=3 uid="uid://cru6autotisje"]
 
 [sub_resource type="AudioEffectChorus" id="AudioEffectChorus_j3pel"]
 resource_name = "Chorus"
@@ -22,12 +22,18 @@ wet = 0.7
 [sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_j3pel"]
 resource_name = "Limiter"
 
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_g28q7"]
+resource_name = "Reverb"
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_n8wo2"]
+resource_name = "Reverb"
+
 [resource]
 bus/0/volume_db = -5.042245
 bus/0/effect/0/effect = SubResource("AudioEffectChorus_j3pel")
 bus/0/effect/0/enabled = false
 bus/0/effect/1/effect = SubResource("AudioEffectLimiter_g28q7")
-bus/0/effect/1/enabled = true
+bus/0/effect/1/enabled = false
 bus/1/name = &"Bounce SFX"
 bus/1/solo = false
 bus/1/mute = false
@@ -42,3 +48,19 @@ bus/1/effect/2/effect = SubResource("AudioEffectReverb_j3pel")
 bus/1/effect/2/enabled = true
 bus/1/effect/3/effect = SubResource("AudioEffectLimiter_j3pel")
 bus/1/effect/3/enabled = false
+bus/2/name = &"Title SFX"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = -10.0691595
+bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectReverb_g28q7")
+bus/2/effect/0/enabled = true
+bus/3/name = &"Dash SFX"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = -10.0691595
+bus/3/send = &"Master"
+bus/3/effect/0/effect = SubResource("AudioEffectReverb_n8wo2")
+bus/3/effect/0/enabled = true

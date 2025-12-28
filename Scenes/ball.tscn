@@ -1,11 +1,30 @@
-[gd_scene load_steps=6 format=3 uid="uid://cbflfmyvv77qh"]
+[gd_scene load_steps=10 format=3 uid="uid://cbflfmyvv77qh"]
 
 [ext_resource type="Script" uid="uid://gobi7yyesavl" path="res://Scripts/ball.gd" id="1_ij5cq"]
 [ext_resource type="Texture2D" uid="uid://cj2casl7hnvba" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="2_376qj"]
-[ext_resource type="AudioStream" uid="uid://g2eobh7xpvig" path="res://Assets/Sound/SFX/bounce-effect-elliot-3.wav" id="3_376qj"]
+[ext_resource type="AudioStream" uid="uid://g2eobh7xpvig" path="res://Assets/Sound/SFX/BounceSound.wav" id="3_376qj"]
+[ext_resource type="AudioStream" uid="uid://bdnyjvpvrwm28" path="res://Assets/Sound/SFX/stringy.wav" id="4_yk4cr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d60mj"]
 bounce = 1.0
+
+[sub_resource type="Curve" id="Curve_yk4cr"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_aw2wy"]
+curve = SubResource("Curve_yk4cr")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vblhy"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 0.01
+angle_min = 1.0728835e-05
+angle_max = 720.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.099999994
+scale_max = 0.099999994
+scale_curve = SubResource("CurveTexture_aw2wy")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d60mj"]
 radius = 50.0
@@ -16,6 +35,13 @@ contact_monitor = true
 max_contacts_reported = 5
 script = ExtResource("1_ij5cq")
 
+[node name="Particles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 50
+texture = ExtResource("2_376qj")
+lifetime = 0.4
+process_material = SubResource("ParticleProcessMaterial_vblhy")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-4.500005, -4.4107437e-06)
 scale = Vector2(0.17161915, 0.17343578)
@@ -24,7 +50,11 @@ texture = ExtResource("2_376qj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_d60mj")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="BounceSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_376qj")
 mix_target = 1
 bus = &"Bounce SFX"
+
+[node name="DashSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_yk4cr")
+bus = &"Dash SFX"

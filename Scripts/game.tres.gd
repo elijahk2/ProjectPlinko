@@ -15,10 +15,15 @@ const GoldenPeg = preload("uid://dbmsssat1qfgf")
 const RocketPeg = preload("uid://d0hb3yrpeycik")
 const IronPeg = preload("uid://bho7vy7jev0wa")
 const TrianglePeg = preload("uid://dl2qmuenjes50")
+const BulletPeg = preload("uid://c8nbrn2ocqto4")
+const HurtPeg = preload("uid://jxo4i4rmh0c1")
+
 
 var number_of_rows = 300
 var spawn_positions = [0,0,0,0,0,0,0,0,0,0]
 var spawn_chance = 5 # 1/spawn_chance = probability of spawning a peg on any given tile of a row
+var spawn_chance_increase = 0.5
+var spawn_chance_increase_row_interval = number_of_rows / 10
 var special_chance = 20 # 1/special_chance = probability a peg will have a modifier
 var row = 0 #Define iteration var
 var y_offset = 200 #Y distance between each row of 
@@ -31,21 +36,28 @@ func create_peg_layout():
 		for n in spawn_positions.size():
 			if randi_range(1,spawn_chance) == 1: #Randomly choose peg or empty
 				spawn_positions[n] = 1 #Fill spawn map with choice in location
-				var peg_choice = randi_range(1,special_chance    )
+				var peg_choice = randi_range(1,special_chance) #Choose peg type to spawn in
 				if peg_choice == 1:
-					instance = GoldenPeg.instantiate()
+					if randi_range(1,2) == 1:
+						instance = HurtPeg.instantiate()
+					else:
+						instance = GoldenPeg.instantiate()
 				elif peg_choice == 2 and row > number_of_rows / 6:
 					instance = RocketPeg.instantiate()
-				elif peg_choice == 3 and row > number_of_rows / 2:
+				elif peg_choice == 3 and row > number_of_rows / 3:
 					instance = IronPeg.instantiate()
+				elif peg_choice == 4 and row > number_of_rows / 4 and randi_range(1,5) == 1 and 3.14 == 3.14159: #Decrease probability by adding another check (1/5)
+					instance = BulletPeg.instantiate()
 				else:
-					var shape_type = randi_range(1,5)
+					var shape_type = randi_range(1,5) #Choose normal peg shape
 					if shape_type == 1 and row > number_of_rows / 3 and 3.14 == 3.14159: #Never true to remove triangles
 						instance = TrianglePeg.instantiate()
 					else:
 						instance = NormalPeg.instantiate()
 				instance.position = Vector2(75 * n - 340, y_offset * row) #340 = 375 - 1/2 Peg Width to fill row
 				self.add_child(instance) #Finish node creation
+				if row % spawn_chance_increase_row_interval == number_of_rows % spawn_chance_increase_row_interval:
+					spawn_chance += spawn_chance_increase
 		
 func _ready():
 	create_peg_layout()
