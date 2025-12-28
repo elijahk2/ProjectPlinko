@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://csblsch6lhyfy"]
+
+[ext_resource type="Script" uid="uid://dow5q7b348cp3" path="res://Scripts/mini_bullet.gd" id="1_ri6c8"]
+[ext_resource type="Texture2D" uid="uid://c5vl8gviyvi24" path="res://Assets/Art/Ball_Peg/BulletPeg.png" id="1_txp45"]
+[ext_resource type="AudioStream" uid="uid://g2eobh7xpvig" path="res://Assets/Sound/SFX/BounceSound.wav" id="3_7lafe"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ri6c8"]
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ri6c8"]
+radius = 15.472071
+
+[node name="MiniBullet" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_ri6c8")
+contact_monitor = true
+max_contacts_reported = 5
+script = ExtResource("1_ri6c8")
+
+[node name="mini_bullet_collider" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(-1, 0)
+scale = Vector2(1.2280192, 1.2280192)
+shape = SubResource("CircleShape2D_ri6c8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(-3.4999974, -4.7683716e-07)
+scale = Vector2(0.06822872, 0.06817687)
+texture = ExtResource("1_txp45")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_7lafe")
+bus = &"Bounce SFX"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
