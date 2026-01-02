@@ -9,10 +9,13 @@
 resource_name = "titlescreen"
 script/source = "extends Control
 
+@onready var startSFX: AudioStreamPlayer = $AudioStreamPlayer
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+
 func _on_StartButton_pressed():
+	Globals.play_title_start_sfx()
 	get_tree().change_scene_to_file(\"res://Scenes/game.tscn\")
 	pass
-
 func _on_QuitButton_pressed():
 	get_tree().quit()
 	pass
