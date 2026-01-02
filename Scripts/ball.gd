@@ -60,7 +60,7 @@ func _on_body_entered(body):
 			var bullet = MiniBullet.instantiate()
 			get_parent().add_child(bullet)
 			bullet.global_position = self.global_position
-			bullet.apply_central_impulse(Vector2(0, -500))
+			#bullet.apply_central_impulse(Vector2(0, -500))
 			body.queue_free()
 		
 		if body.is_in_group("golden_pegs"): #Score increments for both gold and normal pegs
