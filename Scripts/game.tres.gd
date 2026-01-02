@@ -46,7 +46,7 @@ func create_peg_layout():
 					instance = RocketPeg.instantiate()
 				elif peg_choice == 3 and row > number_of_rows / 3:
 					instance = IronPeg.instantiate()
-				elif peg_choice == 4 and row > number_of_rows / 4 and randi_range(1,5) == 1 and 3.14 == 3.14159: #Decrease probability by adding another check (1/5)
+				elif peg_choice == 4: #and row > number_of_rows / 4 and randi_range(1,5) == 1 and 3.14 == 3.14159: #Decrease probability by adding another check (1/5)
 					instance = BulletPeg.instantiate()
 				else:
 					var shape_type = randi_range(1,5) #Choose normal peg shape

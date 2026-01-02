@@ -74,7 +74,12 @@ script/source = "extends Label
 var score = 0
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _ready():
+	Globals.score_changed.connect(_on_score_updated)
+
+func _on_score_updated(increase):
+	score += increase
+	
 func _process(delta: float) -> void:
 	self.text = \"Score: \" + str(score)
 "

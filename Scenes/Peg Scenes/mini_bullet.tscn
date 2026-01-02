@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://g2eobh7xpvig" path="res://Assets/Sound/SFX/BounceSound.wav" id="3_7lafe"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ri6c8"]
-bounce = 1.0
+bounce = 20.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ri6c8"]
 radius = 15.472071
