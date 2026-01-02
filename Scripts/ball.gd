@@ -44,12 +44,13 @@ func _on_body_entered(body):
 			animated_bg.frame = 1
 		
 		# hit sound logic
-		hit_sound.play()
-		hit_sound.pitch_scale = init_pitch_scale * 2**(pitch_multiplier_power(scale_degree))
 		if body.is_in_group("hurt_pegs"):
 			scale_degree -= 1
 		else:
 			scale_degree += 1
+		hit_sound.play()
+		hit_sound.pitch_scale = init_pitch_scale * 2**(pitch_multiplier_power(scale_degree))
+		
 		
 		if body.is_in_group("rocket_pegs"): #Management for impulse on impact with Rocket Pegs
 			apply_impulse(Vector2(0, -2500), Vector2(0,0))
@@ -81,7 +82,7 @@ func _physics_process(delta: float) -> void:
 			particles.emitting = false
 	if Input.is_action_pressed("push") and dash_ready >= 0.99 and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")): #Manage dash sfx playing and dash particle start/stop
 		dash_sfx.pitch_scale = randf_range(1.0, 1.2) #Random pitch to make each sound unique
-		dash_sfx.play()
+		#dash_sfx.play() Commented out until new sound developed
 		particles.emitting = true
 		time_elapsed = 0 #Start particle emission and reset timer
 		

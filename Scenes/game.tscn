@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dgqecseoat4ms"]
+[gd_scene load_steps=22 format=3 uid="uid://dgqecseoat4ms"]
 
 [ext_resource type="PackedScene" uid="uid://cbflfmyvv77qh" path="res://Scenes/ball.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://d1evh0y4dcen6" path="res://Scripts/game.tres.gd" id="1_rfjv2"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://b6am1f5l1onb1" path="res://Assets/Art/Background/pink_bg.png" id="7_1phco"]
 [ext_resource type="Texture2D" uid="uid://b2apr10sqnkgt" path="res://Assets/Art/Background/purple_bg.png" id="8_nb51f"]
 [ext_resource type="FontFile" uid="uid://kqa215m7xt8s" path="res://Assets/Art/Fonts/TexpiSans.ttf" id="11_rfjv2"]
+[ext_resource type="AudioStream" uid="uid://bdnyjvpvrwm28" path="res://Assets/Sound/SFX/stringy.wav" id="12_rku1e"]
 
 [sub_resource type="GDScript" id="GDScript_v158k"]
 resource_name = "background"
@@ -172,5 +173,8 @@ script = SubResource("GDScript_rku1e")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Endzone"]
 position = Vector2(1, 4193)
 shape = SubResource("RectangleShape2D_rku1e")
+
+[node name="TitleScreenStartSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_rku1e")
 
 [connection signal="body_entered" from="Endzone" to="." method="_on_endzone_body_entered"]
