@@ -18,7 +18,10 @@ const TrianglePeg = preload("uid://dl2qmuenjes50")
 const BulletPeg = preload("uid://c8nbrn2ocqto4")
 const HurtPeg = preload("uid://jxo4i4rmh0c1")
 
+@onready var background_music: AudioStreamPlayer = $BackgroundMusic
 
+var number_of_rows_array = [150, 300, 450] #Arrays will set their corresponding variable based on the settings chosen in mod menu
+var spawn_chance_array = [8, 5, 3]
 var number_of_rows = 300
 var spawn_positions = [0,0,0,0,0,0,0,0,0,0]
 var spawn_chance = 5 # 1/spawn_chance = probability of spawning a peg on any given tile of a row
@@ -28,6 +31,7 @@ var special_chance = 20 # 1/special_chance = probability a peg will have a modif
 var row = 0 #Define iteration var
 var y_offset = 200 #Y distance between each row of 
 var instance = 0 #Clear var for storing node to spawn
+var is_bullet_out = false
 
 func create_peg_layout():
 	while row < number_of_rows: #Repeat until all rows generated
@@ -46,7 +50,7 @@ func create_peg_layout():
 					instance = RocketPeg.instantiate()
 				elif peg_choice == 3 and row > number_of_rows / 3:
 					instance = IronPeg.instantiate()
-				elif peg_choice == 4: #and row > number_of_rows / 4 and randi_range(1,5) == 1 and 3.14 == 3.14159: #Decrease probability by adding another check (1/5)
+				elif peg_choice == 4: #Decrease probability by adding another check (1/10)
 					instance = BulletPeg.instantiate()
 				else:
 					var shape_type = randi_range(1,5) #Choose normal peg shape
@@ -58,6 +62,12 @@ func create_peg_layout():
 				self.add_child(instance) #Finish node creation
 				if row % spawn_chance_increase_row_interval == number_of_rows % spawn_chance_increase_row_interval:
 					spawn_chance += spawn_chance_increase
+func _process(delta: float) -> void:
+	print(spawn_chance)
 		
 func _ready():
+	number_of_rows = number_of_rows_array[Globals.settings[1]]
+	spawn_chance = spawn_chance_array[Globals.settings[2]]
 	create_peg_layout()
+	#background_music.play()
+	

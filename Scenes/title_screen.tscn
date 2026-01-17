@@ -1,30 +1,44 @@
-[gd_scene load_steps=6 format=3 uid="uid://bc8bwi8ckrrqd"]
+[gd_scene load_steps=7 format=3 uid="uid://bc8bwi8ckrrqd"]
 
 [ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_klylv"]
 [ext_resource type="FontFile" uid="uid://kqa215m7xt8s" path="res://Assets/Art/Fonts/TexpiSans.ttf" id="2_p3fck"]
 [ext_resource type="Texture2D" uid="uid://d3syxqqruqwaq" path="res://Assets/Art/cross.png" id="3_twnyg"]
 [ext_resource type="Texture2D" uid="uid://kjua42i24llt" path="res://Assets/Art/circle.png" id="4_55kwv"]
+[ext_resource type="Texture2D" uid="uid://cj2casl7hnvba" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="5_55kwv"]
 
 [sub_resource type="GDScript" id="GDScript_rxejw"]
 resource_name = "titlescreen"
 script/source = "extends Control
 
+var cursor_y = 1
+
+@onready var cursor: Sprite2D = $Cursor
 @onready var startSFX: AudioStreamPlayer = $AudioStreamPlayer
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 func _on_StartButton_pressed():
 	Globals.play_title_start_sfx()
-	get_tree().change_scene_to_file(\"res://Scenes/game.tscn\")
+	get_tree().change_scene_to_file(\"res://Scenes/modifier_choice.tscn\")
 	pass
 func _on_QuitButton_pressed():
 	get_tree().quit()
 	pass
 
 func _process(delta):
+	if cursor_y == 1:
+		cursor.position = Vector2(326,431) #Hardcoded positions to display cursor at.
+	else:
+		cursor.position = Vector2(289,536) # \" \"
+		
 	if Input.is_action_pressed(\"push\"):
-		get_tree().change_scene_to_file(\"res://Scenes/game.tscn\")
-	elif Input.is_action_pressed(\"back\"):
-		get_tree().quit()
+		if cursor_y == 1:
+			get_tree().change_scene_to_file(\"res://Scenes/modifier_choice.tscn\")
+		else:
+			get_tree().quit()
+	elif Input.is_action_just_pressed(\"down\") and cursor_y == 1:
+		cursor_y += 1
+	elif Input.is_action_just_pressed(\"up\") and cursor_y == 2:
+		cursor_y -= 1
 "
 
 [node name="Title Screen" type="Control"]
@@ -75,14 +89,21 @@ theme_override_font_sizes/font_size = 48
 text = "ProjectPlinko"
 
 [node name="Cross" type="Sprite2D" parent="."]
-position = Vector2(315.00003, 430.00003)
+visible = false
+position = Vector2(161.00003, 239.00003)
 scale = Vector2(0.65, 0.65)
 texture = ExtResource("3_twnyg")
 
 [node name="Circle" type="Sprite2D" parent="Cross"]
+visible = false
 position = Vector2(-44.61544, 160)
 scale = Vector2(0.6384616, 0.6384616)
 texture = ExtResource("4_55kwv")
+
+[node name="Cursor" type="Sprite2D" parent="."]
+position = Vector2(289, 535.99994)
+scale = Vector2(0.07272223, 0.072722234)
+texture = ExtResource("5_55kwv")
 
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="QuitButton" to="." method="_on_QuitButton_pressed"]

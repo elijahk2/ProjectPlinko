@@ -1,0 +1,105 @@
+[gd_scene load_steps=5 format=3 uid="uid://cahb0kvqas1xd"]
+
+[ext_resource type="Script" uid="uid://cw8t5xi5tl8w4" path="res://Scripts/modifier_choice.gd" id="1_bwtaw"]
+[ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_n35lv"]
+[ext_resource type="FontFile" uid="uid://kqa215m7xt8s" path="res://Assets/Art/Fonts/TexpiSans.ttf" id="2_sy6ld"]
+[ext_resource type="Texture2D" uid="uid://cj2casl7hnvba" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="4_n35lv"]
+
+[node name="Modifier Select" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bwtaw")
+
+[node name="BlackBg" type="Sprite2D" parent="."]
+position = Vector2(185, 365.5)
+scale = Vector2(2.925, 5.11875)
+texture = ExtResource("1_n35lv")
+
+[node name="Header1" type="Label" parent="."]
+layout_mode = 0
+offset_left = 11.0
+offset_top = -1.0
+offset_right = 510.0
+offset_bottom = 107.0
+theme_override_fonts/font = ExtResource("2_sy6ld")
+theme_override_font_sizes/font_size = 48
+text = "Select Modifiers"
+
+[node name="Peg Density Header" type="Label" parent="."]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 103.0
+offset_right = 510.0
+offset_bottom = 211.0
+theme_override_fonts/font = ExtResource("2_sy6ld")
+theme_override_font_sizes/font_size = 36
+text = "Peg Density"
+
+[node name="Peg Density Display" type="Label" parent="Peg Density Header"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 69.0
+offset_right = 142.0
+offset_bottom = 120.0
+theme_override_fonts/font = ExtResource("2_sy6ld")
+theme_override_font_sizes/font_size = 32
+text = "Medium"
+
+[node name="Drop Length Header" type="Label" parent="."]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 230.0
+offset_right = 510.0
+offset_bottom = 338.0
+theme_override_fonts/font = ExtResource("2_sy6ld")
+theme_override_font_sizes/font_size = 36
+text = "Drop Length"
+
+[node name="Drop Length Display" type="Label" parent="Drop Length Header"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 69.0
+offset_right = 142.0
+offset_bottom = 120.0
+theme_override_fonts/font = ExtResource("2_sy6ld")
+theme_override_font_sizes/font_size = 32
+text = "Short"
+
+[node name="Augment Header" type="Label" parent="."]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 361.0
+offset_right = 510.0
+offset_bottom = 469.0
+theme_override_fonts/font = ExtResource("2_sy6ld")
+theme_override_font_sizes/font_size = 36
+text = "Augment"
+
+[node name="Augment Display" type="Label" parent="Augment Header"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 69.0
+offset_right = 142.0
+offset_bottom = 120.0
+theme_override_fonts/font = ExtResource("2_sy6ld")
+theme_override_font_sizes/font_size = 32
+text = "Normal"
+
+[node name="Augment Header2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 557.0
+offset_right = 235.0
+offset_bottom = 609.0
+theme_override_fonts/font = ExtResource("2_sy6ld")
+theme_override_font_sizes/font_size = 36
+text = "DROP!"
+
+[node name="Cursor" type="Sprite2D" parent="."]
+position = Vector2(279, 322)
+scale = Vector2(0.07272223, 0.072722234)
+texture = ExtResource("4_n35lv")

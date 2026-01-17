@@ -1,6 +1,7 @@
 extends Node
 
 var sfx_player: AudioStreamPlayer
+var settings = []
 signal score_changed(new_score) # Define a signal to modify ScoreDisplay's score value
 
 func _ready():
@@ -14,3 +15,6 @@ func play_title_start_sfx():
 	
 func bullet_peg_point_increment():
 	score_changed.emit(1) #Send 1 so the label knows to increase score by one
+
+func prepare_settings(density, length, augment):
+	settings = [density, length, augment]
