@@ -18,3 +18,4 @@ func bullet_peg_point_increment():
 
 func prepare_settings(density, length, augment):
 	settings = [density, length, augment]
+	print(settings)

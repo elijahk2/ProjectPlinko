@@ -40,7 +40,7 @@ func create_peg_layout():
 		for n in spawn_positions.size():
 			if randi_range(1,spawn_chance) == 1: #Randomly choose peg or empty
 				spawn_positions[n] = 1 #Fill spawn map with choice in location
-				var peg_choice = randi_range(1,special_chance) #Choose peg type to spawn in
+				var peg_choice = randi_range(1, special_chance) #Choose peg type to spawn in
 				if peg_choice == 1:
 					if randi_range(1,2) == 1:
 						instance = HurtPeg.instantiate()
@@ -62,12 +62,12 @@ func create_peg_layout():
 				self.add_child(instance) #Finish node creation
 				if row % spawn_chance_increase_row_interval == number_of_rows % spawn_chance_increase_row_interval:
 					spawn_chance += spawn_chance_increase
-func _process(delta: float) -> void:
-	print(spawn_chance)
 		
 func _ready():
+	spawn_chance = spawn_chance_array[Globals.settings[0]]
 	number_of_rows = number_of_rows_array[Globals.settings[1]]
-	spawn_chance = spawn_chance_array[Globals.settings[2]]
+	print(spawn_chance)
+	print(number_of_rows)
 	create_peg_layout()
 	#background_music.play()
 	

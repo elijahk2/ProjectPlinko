@@ -100,6 +100,6 @@ theme_override_font_sizes/font_size = 36
 text = "DROP!"
 
 [node name="Cursor" type="Sprite2D" parent="."]
-position = Vector2(279, 322)
+position = Vector2(292, 192)
 scale = Vector2(0.07272223, 0.072722234)
 texture = ExtResource("4_n35lv")
