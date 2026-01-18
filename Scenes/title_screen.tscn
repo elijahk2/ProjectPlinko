@@ -24,7 +24,7 @@ func _on_QuitButton_pressed():
 	get_tree().quit()
 	pass
 
-func _process(delta):
+func _process(_delta):
 	if cursor_y == 1:
 		cursor.position = Vector2(326,431) #Hardcoded positions to display cursor at.
 	else:

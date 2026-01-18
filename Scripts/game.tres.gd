@@ -3,9 +3,11 @@
 # 2) Rename the nodes accordingly, and make a new group to add the StaticBody2D to. Make sure you do this!
 # 3) Modify create_peg_layout() function to account for the new peg's mechanics, and add a new elif to add it to procedural generation!
 
+#Augments: ["Normal", "Bounce House", "Killbox", "Polygon Peril", "Ride or Die"]
+
 extends Node2D
 
-func _on_endzone_body_entered(body: RigidBody2D) -> void:
+func _on_endzone_body_entered(_body: RigidBody2D) -> void:
 	#Reset to title screen scene when the ball enters CollisionBody at end of drop.
 	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
 
@@ -32,6 +34,7 @@ var row = 0 #Define iteration var
 var y_offset = 200 #Y distance between each row of 
 var instance = 0 #Clear var for storing node to spawn
 var is_bullet_out = false
+var current_augment = -1
 
 func create_peg_layout():
 	while row < number_of_rows: #Repeat until all rows generated
@@ -41,23 +44,34 @@ func create_peg_layout():
 			if randi_range(1,spawn_chance) == 1: #Randomly choose peg or empty
 				spawn_positions[n] = 1 #Fill spawn map with choice in location
 				var peg_choice = randi_range(1, special_chance) #Choose peg type to spawn in
-				if peg_choice == 1:
-					if randi_range(1,2) == 1:
-						instance = HurtPeg.instantiate()
+				if current_augment == 0 or current_augment == 2 or current_augment == 3: #If Normal Augment
+					if peg_choice == 1:
+						if randi_range(1,2) == 1:
+							instance = HurtPeg.instantiate()
+						else:
+							instance = GoldenPeg.instantiate()
+					elif peg_choice == 2 and row > number_of_rows / 6:
+						instance = RocketPeg.instantiate()
+					elif peg_choice == 3 and row > number_of_rows / 3:
+						instance = IronPeg.instantiate()
+					elif peg_choice == 4:
+						instance = BulletPeg.instantiate()
 					else:
-						instance = GoldenPeg.instantiate()
-				elif peg_choice == 2 and row > number_of_rows / 6:
-					instance = RocketPeg.instantiate()
-				elif peg_choice == 3 and row > number_of_rows / 3:
-					instance = IronPeg.instantiate()
-				elif peg_choice == 4: #Decrease probability by adding another check (1/10)
-					instance = BulletPeg.instantiate()
-				else:
-					var shape_type = randi_range(1,5) #Choose normal peg shape
-					if shape_type == 1 and row > number_of_rows / 3 and 3.14 == 3.14159: #Never true to remove triangles
-						instance = TrianglePeg.instantiate()
+						var shape_type = randi_range(1,5) #Choose normal peg shape
+						if shape_type == 1 and current_augment == 3: #Never true to remove triangles
+							instance = TrianglePeg.instantiate()
+						else:
+							instance = NormalPeg.instantiate()
+				elif current_augment == 1: #Is Bounce House Augment
+					if randi_range(1, 5) == 1:
+						instance = RocketPeg.instantiate()
 					else:
 						instance = NormalPeg.instantiate()
+				elif current_augment == 4: #Is Ride or Die Augment
+					if randi_range(1,2) == 1:
+						instance = GoldenPeg.instantiate()
+					else:
+						instance = HurtPeg.instantiate()
 				instance.position = Vector2(75 * n - 340, y_offset * row) #340 = 375 - 1/2 Peg Width to fill row
 				self.add_child(instance) #Finish node creation
 				if row % spawn_chance_increase_row_interval == number_of_rows % spawn_chance_increase_row_interval:
@@ -66,8 +80,8 @@ func create_peg_layout():
 func _ready():
 	spawn_chance = spawn_chance_array[Globals.settings[0]]
 	number_of_rows = number_of_rows_array[Globals.settings[1]]
-	print(spawn_chance)
-	print(number_of_rows)
+	current_augment = Globals.settings[2]
+	print(current_augment)
 	create_peg_layout()
 	#background_music.play()
 	

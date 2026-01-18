@@ -13,7 +13,7 @@ var density_id = 1 #Reference array's items by this ID
 var length = ["Short", "Medium", "Long"] #Store possible display options for Length
 var length_id = 0
 
-var augment = ["Normal"] #Store possible display options for Augment
+var augment = ["Normal", "Bounce House", "Killbox (Not Implemented)", "Polygon Peril (Not Implemented)", "Ride or Die"] #Store possible display options for Augment
 var augment_id = 0
 
 # Called when the node enters the scene tree for the first time.
@@ -22,7 +22,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	peg_density_display.text = density[density_id % density.size()] #Update Density label's text
 	drop_length_display.text = length[length_id % length.size()] #Update Length label's text
 	augment_display.text = augment[augment_id % augment.size()] #Update Augment label's text

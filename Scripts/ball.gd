@@ -75,7 +75,7 @@ func _on_body_entered(body):
 		if dash_ready < 0.9:
 			dash_ready += 0.1
 		
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	charge_display.text = str(100 * dash_ready) + "%" 
 	#Manage key presses (>= 0.99 is used to prevent non-exact values for dash_ready)
 	if time_elapsed < 60 and particles.emitting == true: #Time (1s) since started showing particles
