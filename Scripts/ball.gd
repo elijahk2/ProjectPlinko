@@ -10,6 +10,7 @@ const MiniBullet = preload("uid://csblsch6lhyfy")
 
 var is_spent = false
 var dash_ready = 1.0
+var is_bullet_out = false
 
 const dash_power = 1200
 const tap_power = 2
@@ -55,7 +56,9 @@ func _on_body_entered(body):
 		if body.is_in_group("rocket_pegs"): #Management for impulse on impact with Rocket Pegs
 			apply_impulse(Vector2(0, -2500), Vector2(0,0))
 			
-		if body.is_in_group("bullet_pegs"): #Management for bullet instantiation
+		if body.is_in_group("bullet_pegs") and is_bullet_out == false: #Management for bullet instantiation
+			is_bullet_out = true
+			print(is_bullet_out)
 			set_deferred("collision_layer", 0)
 			var bullet = MiniBullet.instantiate()
 			get_parent().add_child(bullet)
