@@ -13,13 +13,14 @@ script/source = "extends Control
 var cursor_y = 1
 
 @onready var cursor: Sprite2D = $Cursor
-@onready var startSFX: AudioStreamPlayer = $AudioStreamPlayer
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var cursor_move_sfx: AudioStreamPlayer = $CursorMoveSFX
 
 func _on_StartButton_pressed():
 	Globals.play_title_start_sfx()
 	get_tree().change_scene_to_file(\"res://Scenes/modifier_choice.tscn\")
 	pass
+
 func _on_QuitButton_pressed():
 	get_tree().quit()
 	pass
@@ -32,13 +33,16 @@ func _process(_delta):
 		
 	if Input.is_action_pressed(\"push\"):
 		if cursor_y == 1:
+			Globals.play_cursor_move_sfx()
 			get_tree().change_scene_to_file(\"res://Scenes/modifier_choice.tscn\")
 		else:
 			get_tree().quit()
 	elif Input.is_action_just_pressed(\"down\") and cursor_y == 1:
 		cursor_y += 1
+		Globals.play_cursor_move_sfx()
 	elif Input.is_action_just_pressed(\"up\") and cursor_y == 2:
 		cursor_y -= 1
+		Globals.play_cursor_move_sfx()
 "
 
 [node name="Title Screen" type="Control"]
