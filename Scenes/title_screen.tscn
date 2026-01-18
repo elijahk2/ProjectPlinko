@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_klylv"]
 [ext_resource type="FontFile" uid="uid://kqa215m7xt8s" path="res://Assets/Art/Fonts/TexpiSans.ttf" id="2_p3fck"]
-[ext_resource type="Texture2D" uid="uid://d3syxqqruqwaq" path="res://Assets/Art/cross.png" id="3_twnyg"]
-[ext_resource type="Texture2D" uid="uid://kjua42i24llt" path="res://Assets/Art/circle.png" id="4_55kwv"]
-[ext_resource type="Texture2D" uid="uid://cj2casl7hnvba" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="5_55kwv"]
+[ext_resource type="Texture2D" uid="uid://d3syxqqruqwaq" path="res://Assets/Art/Controller Icons/cross.png" id="3_twnyg"]
+[ext_resource type="Texture2D" uid="uid://kjua42i24llt" path="res://Assets/Art/Controller Icons/circle.png" id="4_55kwv"]
+[ext_resource type="Texture2D" uid="uid://bxtbt48ffv8oh" path="res://Assets/Art/Ball_Peg/white-ball-test.png" id="5_55kwv"]
 
 [sub_resource type="GDScript" id="GDScript_rxejw"]
 resource_name = "titlescreen"
