@@ -23,8 +23,8 @@ Globals="*res://Scripts/globals.gd"
 
 window/size/viewport_width=375
 window/size/viewport_height=750
-window/size/resizable=false
-window/stretch/mode="viewport"
+window/size/mode=3
+window/stretch/mode="canvas_items"
 
 [global_group]
 

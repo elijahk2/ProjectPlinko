@@ -16,6 +16,10 @@ var cursor_y = 1
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 @onready var cursor_move_sfx: AudioStreamPlayer = $CursorMoveSFX
 
+func _ready():
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	DisplayServer.window_set_size(Vector2i(375, 750))
+
 func _on_StartButton_pressed():
 	Globals.play_title_start_sfx()
 	get_tree().change_scene_to_file(\"res://Scenes/modifier_choice.tscn\")
