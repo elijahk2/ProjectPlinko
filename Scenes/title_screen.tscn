@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_klylv"]
 [ext_resource type="FontFile" uid="uid://kqa215m7xt8s" path="res://Assets/Art/Fonts/TexpiSans.ttf" id="2_p3fck"]
-[ext_resource type="Texture2D" uid="uid://d3syxqqruqwaq" path="res://Assets/Art/cross.png" id="3_twnyg"]
-[ext_resource type="Texture2D" uid="uid://kjua42i24llt" path="res://Assets/Art/circle.png" id="4_55kwv"]
-[ext_resource type="Texture2D" uid="uid://cj2casl7hnvba" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="5_55kwv"]
+[ext_resource type="Texture2D" uid="uid://d3syxqqruqwaq" path="res://Assets/Art/Controller Icons/cross.png" id="3_twnyg"]
+[ext_resource type="Texture2D" uid="uid://kjua42i24llt" path="res://Assets/Art/Controller Icons/circle.png" id="4_55kwv"]
+[ext_resource type="Texture2D" uid="uid://bxtbt48ffv8oh" path="res://Assets/Art/Ball_Peg/white-ball-test.png" id="5_55kwv"]
 
 [sub_resource type="GDScript" id="GDScript_rxejw"]
 resource_name = "titlescreen"
@@ -13,13 +13,18 @@ script/source = "extends Control
 var cursor_y = 1
 
 @onready var cursor: Sprite2D = $Cursor
-@onready var startSFX: AudioStreamPlayer = $AudioStreamPlayer
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var cursor_move_sfx: AudioStreamPlayer = $CursorMoveSFX
+
+func _ready():
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	DisplayServer.window_set_size(Vector2i(375, 750))
 
 func _on_StartButton_pressed():
 	Globals.play_title_start_sfx()
 	get_tree().change_scene_to_file(\"res://Scenes/modifier_choice.tscn\")
 	pass
+
 func _on_QuitButton_pressed():
 	get_tree().quit()
 	pass
@@ -32,13 +37,16 @@ func _process(_delta):
 		
 	if Input.is_action_pressed(\"push\"):
 		if cursor_y == 1:
+			Globals.play_cursor_move_sfx()
 			get_tree().change_scene_to_file(\"res://Scenes/modifier_choice.tscn\")
 		else:
 			get_tree().quit()
 	elif Input.is_action_just_pressed(\"down\") and cursor_y == 1:
 		cursor_y += 1
+		Globals.play_cursor_move_sfx()
 	elif Input.is_action_just_pressed(\"up\") and cursor_y == 2:
 		cursor_y -= 1
+		Globals.play_cursor_move_sfx()
 "
 
 [node name="Title Screen" type="Control"]

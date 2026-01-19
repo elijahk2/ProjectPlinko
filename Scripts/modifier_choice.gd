@@ -32,8 +32,10 @@ func _process(_delta: float) -> void:
 		
 	if Input.is_action_just_pressed("down") and cursor_y < 4:
 		cursor_y += 1
+		Globals.play_cursor_move_sfx()
 	if Input.is_action_just_pressed("up") and cursor_y > 1:
 		cursor_y -= 1
+		Globals.play_cursor_move_sfx()
 	if Input.is_action_just_pressed("right"): #These two if statements can be shortened with negative multiplication, etc.
 		if cursor_y == 1:
 			density_id += 1
@@ -41,6 +43,8 @@ func _process(_delta: float) -> void:
 			length_id += 1
 		elif cursor_y == 3:
 			augment_id += 1
+		if cursor_y != 4:
+			Globals.play_cursor_move_sfx()
 	if Input.is_action_just_pressed("left"):
 		if cursor_y == 1:
 			density_id -= 1
@@ -48,8 +52,11 @@ func _process(_delta: float) -> void:
 			length_id -= 1
 		elif cursor_y == 3:
 			augment_id -= 1
-	
+		if cursor_y != 4:
+			Globals.play_cursor_move_sfx()
+			
 	if Input.is_action_just_pressed("push") and cursor_y == 4:
 		Globals.prepare_settings(density_id % density.size(), length_id % length.size(), augment_id % augment.size())
+		Globals.play_title_start_sfx()
 		get_tree().change_scene_to_file("res://Scenes/game.tscn")
 		

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kjua42i24llt"
-path="res://.godot/imported/circle.png-cb68f422cff328eab3c3f8efc77cc131.ctex"
+uid="uid://bxtbt48ffv8oh"
+path="res://.godot/imported/white-ball-test.png-35516b9184f1c50989fd1bba4a0e619e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/circle.png"
-dest_files=["res://.godot/imported/circle.png-cb68f422cff328eab3c3f8efc77cc131.ctex"]
+source_file="res://Assets/Art/Ball_Peg/white-ball-test.png"
+dest_files=["res://.godot/imported/white-ball-test.png-35516b9184f1c50989fd1bba4a0e619e.ctex"]
 
 [params]
 

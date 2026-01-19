@@ -1,12 +1,16 @@
-[gd_scene load_steps=10 format=3 uid="uid://cbflfmyvv77qh"]
+[gd_scene load_steps=11 format=3 uid="uid://cbflfmyvv77qh"]
 
 [ext_resource type="Script" uid="uid://gobi7yyesavl" path="res://Scripts/ball.gd" id="1_ij5cq"]
-[ext_resource type="Texture2D" uid="uid://cj2casl7hnvba" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="2_376qj"]
+[ext_resource type="Texture2D" uid="uid://ckjauwg6fgfn6" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="2_376qj"]
+[ext_resource type="Texture2D" uid="uid://bxtbt48ffv8oh" path="res://Assets/Art/Ball_Peg/white-ball-test.png" id="2_aw2wy"]
 [ext_resource type="AudioStream" uid="uid://g2eobh7xpvig" path="res://Assets/Sound/SFX/BounceSound.wav" id="3_376qj"]
 [ext_resource type="AudioStream" uid="uid://bdnyjvpvrwm28" path="res://Assets/Sound/SFX/stringy.wav" id="4_yk4cr"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d60mj"]
 bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d60mj"]
+radius = 50.0
 
 [sub_resource type="Curve" id="Curve_yk4cr"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -26,14 +30,19 @@ scale_min = 0.099999994
 scale_max = 0.099999994
 scale_curve = SubResource("CurveTexture_aw2wy")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_d60mj"]
-radius = 50.0
-
 [node name="RigidBody2D" type="RigidBody2D"]
 physics_material_override = SubResource("PhysicsMaterial_d60mj")
 contact_monitor = true
 max_contacts_reported = 5
 script = ExtResource("1_ij5cq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_d60mj")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+position = Vector2(-4.500005, -4.4107437e-06)
+scale = Vector2(0.17161915, 0.17343578)
+texture = ExtResource("2_aw2wy")
 
 [node name="Particles" type="GPUParticles2D" parent="."]
 emitting = false
@@ -41,14 +50,6 @@ amount = 50
 texture = ExtResource("2_376qj")
 lifetime = 0.4
 process_material = SubResource("ParticleProcessMaterial_vblhy")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-4.500005, -4.4107437e-06)
-scale = Vector2(0.17161915, 0.17343578)
-texture = ExtResource("2_376qj")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_d60mj")
 
 [node name="BounceSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_376qj")
