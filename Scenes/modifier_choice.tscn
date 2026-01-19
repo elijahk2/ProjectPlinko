@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cw8t5xi5tl8w4" path="res://Scripts/modifier_choice.gd" id="1_bwtaw"]
 [ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_n35lv"]
 [ext_resource type="FontFile" uid="uid://kqa215m7xt8s" path="res://Assets/Art/Fonts/TexpiSans.ttf" id="2_sy6ld"]
-[ext_resource type="Texture2D" uid="uid://cj2casl7hnvba" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="4_n35lv"]
+[ext_resource type="Texture2D" uid="uid://bxtbt48ffv8oh" path="res://Assets/Art/Ball_Peg/white-ball.png" id="4_n35lv"]
 
 [node name="Modifier Select" type="Control"]
 layout_mode = 3
