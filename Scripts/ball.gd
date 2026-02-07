@@ -23,7 +23,7 @@ var time_elapsed = 0
 
 func _ready():
 	#Set random x position, reset pitch, reset collision management
-	position = Vector2(randi_range(-200, 200), -2000) #Place the ball randomly on the x-axis and above all the pegs
+	position = Vector2(randi_range(-200, 200), -2500) #Place the ball randomly on the x-axis and above all the pegs
 	hit_sound.pitch_scale = 1
 	self.set_collision_mask_value(1, true)
 	self.set_collision_mask_value(2, false)

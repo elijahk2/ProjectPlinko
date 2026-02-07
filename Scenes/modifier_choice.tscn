@@ -26,7 +26,8 @@ texture = ExtResource("4_n35lv")
 
 [node name="Header1" type="Label" parent="."]
 layout_mode = 0
-offset_right = 356.0
+offset_left = 10.0
+offset_right = 366.0
 offset_bottom = 65.0
 theme_override_fonts/font = ExtResource("2_sy6ld")
 theme_override_font_sizes/font_size = 48

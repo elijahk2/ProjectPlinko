@@ -64,7 +64,7 @@ func _process(delta: float) -> void:
 			peg_density_display.position.x += label_vel * delta
 			drop_length_display.position.x += label_vel * delta
 			augment_display.position.x += label_vel * delta
-		if header_1.position.y < -1:
+		if header_1.position.y < 10:
 			header_1.position.y += label_vel * delta
 		if drop_label.position.y > 557:
 			drop_label.position.y -= label_vel * delta
@@ -82,7 +82,7 @@ func _process(delta: float) -> void:
 		augment_display.position.y -= label_vel * delta
 		augment_header.position.y -= label_vel * delta
 		cursor.position.y -= label_vel * delta
-		if drop_label.position.y < -50: #Ensure DROP! is off the screen
+		if drop_label.position.y < -100: #Ensure DROP! is off the screen
 			get_tree().change_scene_to_file("res://Scenes/game.tscn")
 		
 
