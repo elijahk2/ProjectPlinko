@@ -4,8 +4,9 @@ extends Node
 
 var sfx_player: AudioStreamPlayer
 var settings = []
-var song_notes = [1, 1.2, 1.4, 1.6, 1.8, 2, 1.8, 1.6, 1.4, 1.2] #Defines the song played when the cursor moves on the title screen
+var song_notes = [1, 1.2, 1.4, 1.6, 1.8, 1.6, 1.4, 1.2] #Defines the song played when the cursor moves on the title screen
 var song_notes_id = 0
+var num_balls = 0
 signal score_changed(new_score) # Define a signal to modify ScoreDisplay's score value
 
 func _ready():
@@ -31,3 +32,6 @@ func bullet_peg_point_increment():
 func prepare_settings(density, length, augment):
 	settings = [density, length, augment]
 	print(settings)
+	
+func change_ball_num(change):
+	num_balls += change

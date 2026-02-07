@@ -1,0 +1,20 @@
+extends VBoxContainer
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	generate_leaderboard_table()
+
+var score_data = []
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+func generate_leaderboard_table():
+	var leaderboard_length = score_data.size()
+	for i in leaderboard_length:
+		var new_label = Label.new()
+		new_label.text = str(i+1) + ". " + str(score_data[i])
+		new_label.name = "Label" + str(i)
+		new_label.add_theme_font_size_override("font_size", 32)
+		add_child(new_label)

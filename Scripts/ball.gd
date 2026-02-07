@@ -23,7 +23,7 @@ var time_elapsed = 0
 
 func _ready():
 	#Set random x position, reset pitch, reset collision management
-	position.x = randi_range(-200, 200)
+	position = Vector2(randi_range(-200, 200), -2000) #Place the ball randomly on the x-axis and above all the pegs
 	hit_sound.pitch_scale = 1
 	self.set_collision_mask_value(1, true)
 	self.set_collision_mask_value(2, false)
@@ -51,7 +51,6 @@ func _on_body_entered(body):
 			scale_degree += 1
 		hit_sound.play()
 		hit_sound.pitch_scale = init_pitch_scale * 2**(pitch_multiplier_power(scale_degree))
-		
 		
 		if body.is_in_group("rocket_pegs"): #Management for impulse on impact with Rocket Pegs
 			apply_impulse(Vector2(0, -2500), Vector2(0,0))
