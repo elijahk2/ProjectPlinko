@@ -35,6 +35,7 @@ rocket_pegs=""
 iron_pegs=""
 bullet_pegs=""
 hurt_pegs=""
+endzone_body=""
 
 [gui]
 

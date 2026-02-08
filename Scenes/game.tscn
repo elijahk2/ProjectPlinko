@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dgqecseoat4ms"]
+[gd_scene load_steps=21 format=3 uid="uid://dgqecseoat4ms"]
 
 [ext_resource type="PackedScene" uid="uid://cbflfmyvv77qh" path="res://Scenes/ball.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://d1evh0y4dcen6" path="res://Scripts/game.tres.gd" id="1_rfjv2"]
@@ -94,14 +94,6 @@ distance = 75.0
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wrm1d"]
 normal = Vector2(-1, 0)
 
-[sub_resource type="GDScript" id="GDScript_rku1e"]
-resource_name = "endzone"
-script/source = "extends Area2D
-"
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rku1e"]
-size = Vector2(1798, 613)
-
 [node name="Game" type="Node2D"]
 script = ExtResource("1_rfjv2")
 
@@ -172,16 +164,6 @@ shape = SubResource("WorldBoundaryShape2D_qxrlw")
 position = Vector2(498, 2)
 shape = SubResource("WorldBoundaryShape2D_wrm1d")
 
-[node name="Endzone" type="Area2D" parent="."]
-position = Vector2(2, 0)
-collision_layer = 128
-collision_mask = 128
-script = SubResource("GDScript_rku1e")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Endzone"]
-position = Vector2(1, 4193)
-shape = SubResource("RectangleShape2D_rku1e")
-
 [node name="TitleScreenStartSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_rku1e")
 
@@ -189,5 +171,3 @@ stream = ExtResource("12_rku1e")
 stream = ExtResource("13_rfjv2")
 bus = &"BG Music"
 parameters/looping = true
-
-[connection signal="body_entered" from="Endzone" to="." method="_on_endzone_body_entered"]

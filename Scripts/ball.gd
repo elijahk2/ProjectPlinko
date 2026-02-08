@@ -75,6 +75,8 @@ func _on_body_entered(body):
 			dash_ready += 0.1
 		
 func _physics_process(_delta: float) -> void:
+	if self.position.y > Globals.end_y:
+		get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
 	charge_display.text = str(100 * dash_ready) + "%" 
 	#Manage key presses (>= 0.99 is used to prevent non-exact values for dash_ready)
 	if time_elapsed < 60 and particles.emitting == true: #Time (1s) since started showing particles

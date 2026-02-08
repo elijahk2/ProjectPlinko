@@ -12,6 +12,7 @@ func _ready() -> void:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("title_bound"):
 		self.apply_central_impulse(Vector2(0, -400))
+		#Globals.play_bounce_sfx()
 
 func _process(delta: float) -> void:
 	if self.position.y > 780:

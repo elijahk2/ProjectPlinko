@@ -54,9 +54,9 @@ text = "Medium"
 
 [node name="Drop Length Header" type="Label" parent="."]
 layout_mode = 0
-offset_top = 236.0
+offset_top = 235.0
 offset_right = 356.0
-offset_bottom = 286.0
+offset_bottom = 285.0
 theme_override_fonts/font = ExtResource("2_sy6ld")
 theme_override_font_sizes/font_size = 36
 text = "Drop Length"
@@ -64,18 +64,18 @@ text = "Drop Length"
 [node name="Drop Length Display" type="Label" parent="Drop Length Header"]
 layout_mode = 0
 offset_left = 50.0
-offset_top = 67.0
+offset_top = 69.0
 offset_right = 142.0
-offset_bottom = 118.0
+offset_bottom = 120.0
 theme_override_fonts/font = ExtResource("2_sy6ld")
 theme_override_font_sizes/font_size = 32
 text = "Short"
 
 [node name="Augment Header" type="Label" parent="."]
 layout_mode = 0
-offset_top = 370.0
+offset_top = 371.0
 offset_right = 356.0
-offset_bottom = 420.0
+offset_bottom = 421.0
 theme_override_fonts/font = ExtResource("2_sy6ld")
 theme_override_font_sizes/font_size = 36
 text = "Augment"
@@ -99,3 +99,11 @@ offset_bottom = 636.0
 theme_override_fonts/font = ExtResource("2_sy6ld")
 theme_override_font_sizes/font_size = 36
 text = "DROP!"
+
+[node name="HeaderUnderline" type="Line2D" parent="."]
+position = Vector2(0, 34.285706)
+scale = Vector2(1, 0.71428573)
+points = PackedVector2Array(362, 59.799995, 17, 61.199997)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2

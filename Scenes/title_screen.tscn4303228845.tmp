@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bc8bwi8ckrrqd"]
+[gd_scene load_steps=9 format=3 uid="uid://bc8bwi8ckrrqd"]
 
 [ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_klylv"]
 [ext_resource type="FontFile" uid="uid://kqa215m7xt8s" path="res://Assets/Art/Fonts/TexpiSans.ttf" id="2_p3fck"]
+[ext_resource type="PackedScene" uid="uid://cy8fxj4flnkmp" path="res://Scenes/button_icon_help.tscn" id="4_twnyg"]
 [ext_resource type="Texture2D" uid="uid://bxtbt48ffv8oh" path="res://Assets/Art/Ball_Peg/white-ball-test.png" id="5_55kwv"]
 
 [sub_resource type="GDScript" id="GDScript_rxejw"]
@@ -39,6 +40,12 @@ func _ready():
 	DisplayServer.window_set_size(Vector2i(375, 750))
 	for i in 26:
 		spawn_title_ball()
+
+func _input(event): #Detect whether the player is using controller or KBM
+	if event is InputEventKey or event is InputEventMouseButton:
+		
+	elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		
 		
 func spawn_title_ball():
 	var ball = title_screen_balls.instantiate()
@@ -186,3 +193,6 @@ shape = SubResource("WorldBoundaryShape2D_twnyg")
 [node name="Right Bound" type="CollisionShape2D" parent="World Walls"]
 position = Vector2(498, 2)
 shape = SubResource("WorldBoundaryShape2D_55kwv")
+
+[node name="Button Icon Help" parent="." instance=ExtResource("4_twnyg")]
+position = Vector2(92, 736)

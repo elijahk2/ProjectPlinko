@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=9 format=3 uid="uid://cru6autotisje"]
+[gd_resource type="AudioBusLayout" load_steps=10 format=3 uid="uid://cru6autotisje"]
 
 [sub_resource type="AudioEffectChorus" id="AudioEffectChorus_j3pel"]
 resource_name = "Chorus"
@@ -31,6 +31,9 @@ resource_name = "Reverb"
 [sub_resource type="AudioEffectAmplify" id="AudioEffectAmplify_g28q7"]
 resource_name = "Amplify"
 volume_db = 5.0
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_5t1r3"]
+resource_name = "Reverb"
 
 [resource]
 bus/0/volume_db = -5.042245
@@ -82,3 +85,11 @@ bus/5/mute = false
 bus/5/bypass_fx = false
 bus/5/volume_db = 0.0
 bus/5/send = &"Master"
+bus/6/name = &"Title Bounce SFX"
+bus/6/solo = false
+bus/6/mute = false
+bus/6/bypass_fx = false
+bus/6/volume_db = -3.1173582
+bus/6/send = &"Master"
+bus/6/effect/0/effect = SubResource("AudioEffectReverb_5t1r3")
+bus/6/effect/0/enabled = true

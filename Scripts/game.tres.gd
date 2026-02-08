@@ -7,10 +7,6 @@
 
 extends Node2D
 
-func _on_endzone_body_entered(_body: RigidBody2D) -> void:
-	#Reset to title screen scene when the ball enters CollisionBody at end of drop.
-	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
-
 #Procedural Peg Generation
 const NormalPeg = preload("res://Scenes/Peg Scenes/normal_peg.tscn") #Load peg scenes to spawn in
 const GoldenPeg = preload("uid://dbmsssat1qfgf")
@@ -21,9 +17,11 @@ const BulletPeg = preload("uid://c8nbrn2ocqto4")
 const HurtPeg = preload("uid://jxo4i4rmh0c1")
 
 @onready var background_music: AudioStreamPlayer = $BackgroundMusic
+@onready var endzone: CollisionShape2D = $Endzone/CollisionShape2D
+@onready var camera_2d: Camera2D = $Player/Camera2D
 
 var number_of_rows_array = [150, 300, 450] #Arrays will set their corresponding variable based on the settings chosen in mod menu
-var spawn_chance_array = [8, 5, 3]
+var spawn_chance_array = [800, 5, 3]
 var number_of_rows = 300
 var spawn_positions = [0,0,0,0,0,0,0,0,0,0]
 var spawn_chance = 5 # 1/spawn_chance = probability of spawning a peg on any given tile of a row
@@ -83,5 +81,8 @@ func _ready():
 	current_augment = Globals.settings[2]
 	print(current_augment)
 	create_peg_layout()
+	var end_y = y_offset * (number_of_rows + 1) #The y pos that the ball must reach to finish
+	Globals.get_end_y(end_y)
+	camera_2d.limit_bottom = end_y - y_offset * 3 #Add 3 rows padding so the ball falls offscreen
 	#background_music.play()
 	

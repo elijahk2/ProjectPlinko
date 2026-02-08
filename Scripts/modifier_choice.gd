@@ -47,6 +47,10 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	
+	if Input.is_action_just_pressed("back"): #Manage returning to title screen
+		Globals.play_cursor_move_sfx()
+		get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
+	
 	peg_density_display.text = density[density_id % density.size()] #Update Density label's text
 	drop_length_display.text = length[length_id % length.size()] #Update Length label's text
 	augment_display.text = augment[augment_id % augment.size()] #Update Augment label's text

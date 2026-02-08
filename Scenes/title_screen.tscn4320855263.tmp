@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bc8bwi8ckrrqd"]
+[gd_scene load_steps=9 format=3 uid="uid://bc8bwi8ckrrqd"]
 
 [ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_klylv"]
 [ext_resource type="FontFile" uid="uid://kqa215m7xt8s" path="res://Assets/Art/Fonts/TexpiSans.ttf" id="2_p3fck"]
+[ext_resource type="PackedScene" uid="uid://cy8fxj4flnkmp" path="res://Scenes/button_icon_help.tscn" id="4_twnyg"]
 [ext_resource type="Texture2D" uid="uid://bxtbt48ffv8oh" path="res://Assets/Art/Ball_Peg/white-ball-test.png" id="5_55kwv"]
 
 [sub_resource type="GDScript" id="GDScript_rxejw"]
@@ -186,3 +187,6 @@ shape = SubResource("WorldBoundaryShape2D_twnyg")
 [node name="Right Bound" type="CollisionShape2D" parent="World Walls"]
 position = Vector2(498, 2)
 shape = SubResource("WorldBoundaryShape2D_55kwv")
+
+[node name="Button Icon Help" parent="." instance=ExtResource("4_twnyg")]
+position = Vector2(92, 736)
