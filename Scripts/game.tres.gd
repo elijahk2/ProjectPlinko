@@ -21,7 +21,7 @@ const HurtPeg = preload("uid://jxo4i4rmh0c1")
 @onready var camera_2d: Camera2D = $Player/Camera2D
 
 var number_of_rows_array = [150, 300, 450] #Arrays will set their corresponding variable based on the settings chosen in mod menu
-var spawn_chance_array = [800, 5, 3]
+var spawn_chance_array = [8, 5, 3]
 var number_of_rows = 300
 var spawn_positions = [0,0,0,0,0,0,0,0,0,0]
 var spawn_chance = 5 # 1/spawn_chance = probability of spawning a peg on any given tile of a row
@@ -52,7 +52,7 @@ func create_peg_layout():
 						instance = RocketPeg.instantiate()
 					elif peg_choice == 3 and row > number_of_rows / 3:
 						instance = IronPeg.instantiate()
-					elif peg_choice == 4:
+					elif peg_choice == 4 and row > number_of_rows / 4:
 						instance = BulletPeg.instantiate()
 					else:
 						var shape_type = randi_range(1,5) #Choose normal peg shape

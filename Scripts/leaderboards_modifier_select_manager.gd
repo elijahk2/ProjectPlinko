@@ -52,3 +52,5 @@ func _process(_delta: float) -> void:
 		elif cursor_y == 3:
 			augment_id -= 1
 		Globals.play_cursor_move_sfx()
+	var modifiers = [density_id, length_id, augment_id]
+	Globals.get_modifiers_for_leaderboard(modifiers)
