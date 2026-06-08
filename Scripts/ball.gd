@@ -14,6 +14,8 @@ var is_bullet_out = false
 
 const dash_power = 1200
 const tap_power = 2
+const energy_required = 0
+var overall_power = 0
 
 # scale settings
 const octave_limit = 3.0
@@ -23,12 +25,15 @@ var time_elapsed = 0
 
 func _ready():
 	#Set random x position, reset pitch, reset collision management
-	position.x = randi_range(-200, 200)
+	position = Vector2(randi_range(-200, 200), -2500) #Place the ball randomly on the x-axis and above all the pegs
 	hit_sound.pitch_scale = 1
 	self.set_collision_mask_value(1, true)
 	self.set_collision_mask_value(2, false)
 	body_entered.connect(_on_body_entered)
 	charge_display.text = str(100 * dash_ready) + "%" 
+
+func end_game(result):
+	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
  
 func _on_body_entered(body):
 	if body.is_in_group("all_pegs") and body.collision_layer == 1: #Check for re-collisions
@@ -52,10 +57,12 @@ func _on_body_entered(body):
 		hit_sound.play()
 		hit_sound.pitch_scale = init_pitch_scale * 2**(pitch_multiplier_power(scale_degree))
 		
-		
 		if body.is_in_group("rocket_pegs"): #Management for impulse on impact with Rocket Pegs
 			apply_impulse(Vector2(0, -2500), Vector2(0,0))
 			
+		if body.is_in_group("kill_pegs"): #Management for game end on impact w/ killpegs
+			end_game("You failed...") #Edit to change the message displayed on the end game screen
+		
 		if body.is_in_group("bullet_pegs") and is_bullet_out == false: #Management for bullet instantiation
 			is_bullet_out = true
 			print(is_bullet_out)
@@ -76,6 +83,9 @@ func _on_body_entered(body):
 			dash_ready += 0.1
 		
 func _physics_process(_delta: float) -> void:
+	overall_power = dash_power * dash_ready
+	if self.position.y > Globals.end_y:
+		end_game("You made it!")  #Edit to change the message displayed on the end game screen
 	charge_display.text = str(100 * dash_ready) + "%" 
 	#Manage key presses (>= 0.99 is used to prevent non-exact values for dash_ready)
 	if time_elapsed < 60 and particles.emitting == true: #Time (1s) since started showing particles
@@ -83,29 +93,29 @@ func _physics_process(_delta: float) -> void:
 	else:
 		if linear_velocity.length() < 400:
 			particles.emitting = false
-	if Input.is_action_pressed("push") and dash_ready >= 0.99 and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")): #Manage dash sfx playing and dash particle start/stop
+	if Input.is_action_pressed("push") and dash_ready >= energy_required and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")): #Manage dash sfx playing and dash particle start/stop
 		dash_sfx.pitch_scale = randf_range(1.0, 1.2) #Random pitch to make each sound unique
 		#dash_sfx.play() Commented out until new sound developed
 		particles.emitting = true
 		time_elapsed = 0 #Start particle emission and reset timer
 		
-	if Input.is_action_pressed("push") and dash_ready >= 0.99  and Input.is_action_pressed("up") and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
-		apply_impulse(Vector2(0,(-1 * dash_power)), Vector2(0,0))
+	if Input.is_action_pressed("push") and dash_ready >= energy_required  and Input.is_action_pressed("up") and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
+		apply_impulse(Vector2(0,(-1 * overall_power)), Vector2(0,0))
 		dash_ready = 0
-	if Input.is_action_pressed("push") and dash_ready >= 0.99  and Input.is_action_pressed("down") and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
-		apply_impulse(Vector2(0,(dash_power)), Vector2(0,0))
+	if Input.is_action_pressed("push") and dash_ready >= energy_required  and Input.is_action_pressed("down") and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
+		apply_impulse(Vector2(0,(overall_power)), Vector2(0,0))
 		dash_ready = 0
 		scale_degree = 0
-	if Input.is_action_pressed("left") and dash_ready >= 0.99:
+	if Input.is_action_pressed("left") and dash_ready >= energy_required:
 		if Input.is_action_pressed("push"):
-			apply_impulse(Vector2((-1 * dash_power), 0),Vector2(0,0))
+			apply_impulse(Vector2((-1 * overall_power), 0),Vector2(0,0))
 			dash_ready = 0
 			scale_degree = 0
 		else:
 			apply_impulse(Vector2((-1 * tap_power),0),Vector2(0,0))
 	if Input.is_action_pressed("right"):
-		if Input.is_action_pressed("push") and dash_ready >= 0.99:
-			apply_impulse(Vector2(dash_power, 0),Vector2(0,0))
+		if Input.is_action_pressed("push") and dash_ready >= energy_required:
+			apply_impulse(Vector2(overall_power, 0),Vector2(0,0))
 			dash_ready = 0
 			scale_degree = 0
 		else:
@@ -114,7 +124,7 @@ func _physics_process(_delta: float) -> void:
 # major scale
 func pitch_multiplier_power(degree: int) -> float:
 	# major scale
-	const scale = [1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 0.5]
+	var scale = [1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 0.5]
 	# minor scale
 	# const scale = [1.0, 0.5, 1.0, 1.0, 0.5, 1.0, 1.0]
 	# pentatonic scale

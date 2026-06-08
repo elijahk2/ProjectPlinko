@@ -19,22 +19,25 @@ position = Vector2(185, 365.5)
 scale = Vector2(2.925, 5.11875)
 texture = ExtResource("1_n35lv")
 
+[node name="Cursor" type="Sprite2D" parent="."]
+position = Vector2(292, 192)
+scale = Vector2(0.07272223, 0.072722234)
+texture = ExtResource("4_n35lv")
+
 [node name="Header1" type="Label" parent="."]
 layout_mode = 0
-offset_left = 11.0
-offset_top = -1.0
-offset_right = 510.0
-offset_bottom = 107.0
+offset_left = 10.0
+offset_right = 366.0
+offset_bottom = 65.0
 theme_override_fonts/font = ExtResource("2_sy6ld")
 theme_override_font_sizes/font_size = 48
 text = "Select Modifiers"
 
 [node name="Peg Density Header" type="Label" parent="."]
 layout_mode = 0
-offset_left = 11.0
-offset_top = 103.0
-offset_right = 510.0
-offset_bottom = 211.0
+offset_top = 89.0
+offset_right = 356.0
+offset_bottom = 139.0
 theme_override_fonts/font = ExtResource("2_sy6ld")
 theme_override_font_sizes/font_size = 36
 text = "Peg Density"
@@ -42,19 +45,18 @@ text = "Peg Density"
 [node name="Peg Density Display" type="Label" parent="Peg Density Header"]
 layout_mode = 0
 offset_left = 50.0
-offset_top = 69.0
-offset_right = 142.0
-offset_bottom = 120.0
+offset_top = 74.0
+offset_right = 162.0
+offset_bottom = 125.0
 theme_override_fonts/font = ExtResource("2_sy6ld")
 theme_override_font_sizes/font_size = 32
 text = "Medium"
 
 [node name="Drop Length Header" type="Label" parent="."]
 layout_mode = 0
-offset_left = 11.0
-offset_top = 230.0
-offset_right = 510.0
-offset_bottom = 338.0
+offset_top = 235.0
+offset_right = 356.0
+offset_bottom = 285.0
 theme_override_fonts/font = ExtResource("2_sy6ld")
 theme_override_font_sizes/font_size = 36
 text = "Drop Length"
@@ -71,10 +73,9 @@ text = "Short"
 
 [node name="Augment Header" type="Label" parent="."]
 layout_mode = 0
-offset_left = 11.0
-offset_top = 361.0
-offset_right = 510.0
-offset_bottom = 469.0
+offset_top = 371.0
+offset_right = 356.0
+offset_bottom = 421.0
 theme_override_fonts/font = ExtResource("2_sy6ld")
 theme_override_font_sizes/font_size = 36
 text = "Augment"
@@ -82,24 +83,28 @@ text = "Augment"
 [node name="Augment Display" type="Label" parent="Augment Header"]
 layout_mode = 0
 offset_left = 50.0
-offset_top = 69.0
-offset_right = 142.0
-offset_bottom = 120.0
+offset_top = 57.0
+offset_right = 157.0
+offset_bottom = 108.0
 theme_override_fonts/font = ExtResource("2_sy6ld")
 theme_override_font_sizes/font_size = 32
 text = "Normal"
 
-[node name="Augment Header2" type="Label" parent="."]
+[node name="DROP!" type="Label" parent="."]
 layout_mode = 0
 offset_left = 120.0
-offset_top = 557.0
-offset_right = 235.0
-offset_bottom = 609.0
+offset_top = 586.0
+offset_right = 476.0
+offset_bottom = 636.0
 theme_override_fonts/font = ExtResource("2_sy6ld")
 theme_override_font_sizes/font_size = 36
 text = "DROP!"
 
-[node name="Cursor" type="Sprite2D" parent="."]
-position = Vector2(292, 192)
-scale = Vector2(0.07272223, 0.072722234)
-texture = ExtResource("4_n35lv")
+[node name="HeaderUnderline" type="Line2D" parent="."]
+position = Vector2(0, 34.285706)
+scale = Vector2(1, 0.71428573)
+points = PackedVector2Array(362, 59.799995, 17, 61.199997)
+width = 5.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2

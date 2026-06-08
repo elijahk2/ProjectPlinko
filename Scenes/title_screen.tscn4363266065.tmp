@@ -1,0 +1,188 @@
+[gd_scene load_steps=8 format=3 uid="uid://bc8bwi8ckrrqd"]
+
+[ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_klylv"]
+[ext_resource type="FontFile" uid="uid://kqa215m7xt8s" path="res://Assets/Art/Fonts/TexpiSans.ttf" id="2_p3fck"]
+[ext_resource type="Texture2D" uid="uid://bxtbt48ffv8oh" path="res://Assets/Art/Ball_Peg/white-ball-test.png" id="5_55kwv"]
+
+[sub_resource type="GDScript" id="GDScript_rxejw"]
+resource_name = "titlescreen"
+script/source = "extends Control
+
+#NOTE: Would be nice to remove hardcoded positioning values for label movement
+
+var cursor_y = 1
+var is_title_ended = false
+var text_vel = 0
+
+var title_header_done = false #Handles movement of headers offscreen
+var title_header_vel = 0
+var play_label_done = false
+var play_label_vel = 0
+var cursor_vel = 0
+
+@onready var cursor: Sprite2D = $Cursor
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var cursor_move_sfx: AudioStreamPlayer = $CursorMoveSFX
+@onready var title_screen_balls = preload(\"res://Scenes/title_screen_balls.tscn\")
+@onready var lower_bound: CollisionShape2D = $\"World Floor/Lower Bound\"
+
+@onready var title_header: Label = $TitleHeader
+@onready var play_label: Label = $PlayLabel
+@onready var leaderboard_label: Label = $LeaderboardLabel
+@onready var quit_label: Label = $QuitLabel
+
+
+		
+func _ready():
+	Globals.num_balls = 0 #Reset count of balls on screen
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	DisplayServer.window_set_size(Vector2i(375, 750))
+	for i in 26:
+		spawn_title_ball()
+		
+func spawn_title_ball():
+	var ball = title_screen_balls.instantiate()
+	self.move_child(ball, 0) # This moves the ball to the first index, drawing it BEHIND other UI
+	ball.position = Vector2(randi_range(0, 375), randi_range(-10, -400)) #Randomly position the balls at the top of the screen to drop at random intervals.
+	self.add_child(ball)
+	Globals.change_ball_num(1)
+		
+func _process(delta):
+	if is_title_ended == false:
+		if cursor_y == 1:
+			cursor.position = Vector2(289,431) #Hardcoded positions to display cursor at.
+		elif cursor_y == 2:
+			cursor.position = Vector2(289,485) # \" \"
+		else:
+			cursor.position = Vector2(289, 539)
+			
+		if Input.is_action_just_pressed(\"push\"):
+			if cursor_y == 1 and is_title_ended == false:
+				Globals.play_cursor_move_sfx()
+				end_title()
+			elif cursor_y == 2:
+				Globals.play_cursor_move_sfx()
+				get_tree().change_scene_to_file(\"res://Scenes/leaderboards.tscn\")
+			else:
+				get_tree().quit()
+		elif Input.is_action_just_pressed(\"down\") and cursor_y < 3:
+			cursor_y += 1
+			Globals.play_cursor_move_sfx()
+		elif Input.is_action_just_pressed(\"up\") and cursor_y > 1:
+			cursor_y -= 1
+			Globals.play_cursor_move_sfx()
+		if Input.is_action_just_pressed(\"down\") and cursor_y < 3 or Input.is_action_just_pressed(\"up\") and cursor_y > 1:
+			spawn_title_ball()
+		if Input.is_action_just_pressed(\"back\"): #End game
+			get_tree().quit()
+	if is_title_ended == true and title_header.position.x > -400:
+		title_header_vel += 10
+		title_header.position.x -= title_header_vel * delta
+		if title_header.position.x < -150:
+			title_header_done = true
+	if title_header_done == true:
+		play_label_vel += 10
+		play_label.position.x -= play_label_vel * delta
+		leaderboard_label.position.x -= play_label_vel / 2 * delta
+		cursor.position.y += 5 * play_label_vel / 2 * delta
+		quit_label.position.x -= play_label_vel / 3 * delta
+		if Globals.num_balls == 0 and quit_label.position.x < -250 and cursor.position.y > 850:
+			play_label_done = true
+			get_tree().change_scene_to_file(\"res://Scenes/modifier_choice.tscn\")
+
+func end_title():
+	is_title_ended = true
+	lower_bound.set_deferred(\"disabled\", true)
+	#get_tree().change_scene_to_file(\"res://Scenes/modifier_choice.tscn\")
+"
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4gxqj"]
+normal = Vector2(-0.0038461252, -0.99999255)
+distance = -751.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_twnyg"]
+normal = Vector2(1, 0)
+distance = 155.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_55kwv"]
+normal = Vector2(-1, 0)
+distance = 297.0
+
+[node name="Title Screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_rxejw")
+
+[node name="BlackBg" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(185, 365.5)
+scale = Vector2(2.925, 5.11875)
+texture = ExtResource("1_klylv")
+
+[node name="TitleHeader" type="Label" parent="."]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 118.0
+offset_right = 534.0
+offset_bottom = 226.0
+theme_override_fonts/font = ExtResource("2_p3fck")
+theme_override_font_sizes/font_size = 48
+text = "ProjectPlinko"
+
+[node name="Cursor" type="Sprite2D" parent="."]
+position = Vector2(289, 432.99994)
+scale = Vector2(0.07272223, 0.072722234)
+texture = ExtResource("5_55kwv")
+
+[node name="PlayLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.082
+anchor_bottom = 0.264
+offset_left = 35.0
+offset_top = 398.0
+offset_right = 123.25
+offset_bottom = 387.40833
+theme_override_font_sizes/font_size = 48
+text = "PLAY"
+
+[node name="LeaderboardLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 452.0
+offset_right = 229.0
+offset_bottom = 517.0
+theme_override_font_sizes/font_size = 48
+text = "SCORES"
+
+[node name="QuitLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 507.0
+offset_right = 151.0
+offset_bottom = 572.0
+theme_override_font_sizes/font_size = 48
+text = "QUIT"
+
+[node name="World Floor" type="StaticBody2D" parent="." groups=["title_bound"]]
+light_mask = 2
+visibility_layer = 2
+position = Vector2(176, -1)
+
+[node name="Lower Bound" type="CollisionShape2D" parent="World Floor"]
+shape = SubResource("WorldBoundaryShape2D_4gxqj")
+
+[node name="World Walls" type="StaticBody2D" parent="."]
+position = Vector2(176, -1)
+
+[node name="Left Bound" type="CollisionShape2D" parent="World Walls"]
+position = Vector2(-329, 1)
+shape = SubResource("WorldBoundaryShape2D_twnyg")
+
+[node name="Right Bound" type="CollisionShape2D" parent="World Walls"]
+position = Vector2(498, 2)
+shape = SubResource("WorldBoundaryShape2D_55kwv")

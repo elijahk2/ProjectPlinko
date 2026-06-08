@@ -1,0 +1,121 @@
+[gd_scene load_steps=7 format=3 uid="uid://kxki8dw74t6a"]
+
+[ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_4kg6k"]
+[ext_resource type="Script" uid="uid://lgx51xdoa14f" path="res://Scripts/leaderboards.gd" id="1_n6tc2"]
+[ext_resource type="Script" uid="uid://e2wth625p4o3" path="res://Scripts/leaderboard_list_manger.gd" id="3_l7afy"]
+[ext_resource type="Script" uid="uid://dcbghhqcrtsku" path="res://Scripts/leaderboards_modifier_select_manager.gd" id="4_5yl7b"]
+[ext_resource type="FontFile" uid="uid://kqa215m7xt8s" path="res://Assets/Art/Fonts/TexpiSans.ttf" id="5_k624t"]
+[ext_resource type="Texture2D" uid="uid://bxtbt48ffv8oh" path="res://Assets/Art/Ball_Peg/white-ball-test.png" id="6_uswq1"]
+
+[node name="Leaderboards" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n6tc2")
+
+[node name="BlackBg" type="Sprite2D" parent="."]
+position = Vector2(185, 365.5)
+scale = Vector2(2.925, 5.11875)
+texture = ExtResource("1_4kg6k")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 331.0
+offset_right = 48.0
+offset_bottom = 364.0
+script = ExtResource("3_l7afy")
+
+[node name="LeaderboardHeader" type="Label" parent="."]
+layout_mode = 0
+offset_left = 53.0
+offset_right = 323.0
+offset_bottom = 65.0
+theme_override_font_sizes/font_size = 48
+text = "Leaderboard"
+
+[node name="ModifierSelectManager" type="Node" parent="."]
+script = ExtResource("4_5yl7b")
+
+[node name="Peg Density Header" type="Label" parent="ModifierSelectManager"]
+offset_left = 11.0
+offset_top = 58.0
+offset_right = 209.0
+offset_bottom = 149.0
+theme_override_fonts/font = ExtResource("5_k624t")
+theme_override_font_sizes/font_size = 32
+text = "Peg Density"
+
+[node name="Peg Density Display" type="Label" parent="ModifierSelectManager/Peg Density Header"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 45.0
+offset_right = 162.0
+offset_bottom = 96.0
+theme_override_fonts/font = ExtResource("5_k624t")
+theme_override_font_sizes/font_size = 24
+text = "Medium"
+
+[node name="Drop Length Header" type="Label" parent="ModifierSelectManager"]
+offset_left = 11.0
+offset_top = 134.0
+offset_right = 221.0
+offset_bottom = 226.0
+theme_override_fonts/font = ExtResource("5_k624t")
+theme_override_font_sizes/font_size = 32
+text = "Drop Length"
+
+[node name="Drop Length Display" type="Label" parent="ModifierSelectManager/Drop Length Header"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 49.0
+offset_right = 142.0
+offset_bottom = 100.0
+theme_override_fonts/font = ExtResource("5_k624t")
+theme_override_font_sizes/font_size = 24
+text = "Short"
+
+[node name="Augment Header" type="Label" parent="ModifierSelectManager"]
+offset_left = 11.0
+offset_top = 217.0
+offset_right = 180.0
+offset_bottom = 315.0
+theme_override_fonts/font = ExtResource("5_k624t")
+theme_override_font_sizes/font_size = 32
+text = "Augment"
+
+[node name="Augment Display" type="Label" parent="ModifierSelectManager/Augment Header"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 51.0
+offset_right = 157.0
+offset_bottom = 102.0
+theme_override_fonts/font = ExtResource("5_k624t")
+theme_override_font_sizes/font_size = 24
+text = "Normal"
+
+[node name="Cursor" type="Sprite2D" parent="ModifierSelectManager"]
+position = Vector2(215, 122)
+scale = Vector2(0.05721731, 0.05721732)
+texture = ExtResource("6_uswq1")
+
+[node name="HeaderUnderline" type="Line2D" parent="."]
+position = Vector2(0, 14.285713)
+scale = Vector2(1, 0.71428573)
+points = PackedVector2Array(315, 61.199997, 96.68875, 59.996704, 61, 59.799995)
+width = 5.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Settings_ScoresUnderline" type="Line2D" parent="."]
+position = Vector2(0, 277.2857)
+scale = Vector2(1, 0.71428573)
+points = PackedVector2Array(315, 61.199997, 96.68875, 59.996704, 61, 59.799995)
+width = 5.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2

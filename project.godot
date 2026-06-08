@@ -35,6 +35,8 @@ rocket_pegs=""
 iron_pegs=""
 bullet_pegs=""
 hurt_pegs=""
+endzone_body=""
+kill_pegs=""
 
 [gui]
 
@@ -88,3 +90,10 @@ back={
 textures/canvas_textures/default_texture_filter=0
 anti_aliasing/quality/msaa_2d=3
 anti_aliasing/quality/screen_space_aa=2
+
+[steam]
+
+initialization/app_id=0
+initialization/initialize_on_startup=false
+initialization/embed_callbacks=false
+multiplayer_peer/max_channels=4

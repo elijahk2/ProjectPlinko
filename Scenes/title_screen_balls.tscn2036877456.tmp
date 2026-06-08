@@ -1,0 +1,51 @@
+[gd_scene load_steps=10 format=3 uid="uid://b8vkec06mqpmg"]
+
+[ext_resource type="Texture2D" uid="uid://car2enqq87kti" path="res://Assets/Art/Ball_Peg/HurtPeg.png" id="1_5xh06"]
+[ext_resource type="Script" uid="uid://433luxgvcsfb" path="res://Scripts/title_screen_balls.gd" id="1_jhmnm"]
+[ext_resource type="Texture2D" uid="uid://c5vl8gviyvi24" path="res://Assets/Art/Ball_Peg/BulletPeg.png" id="2_4qia5"]
+[ext_resource type="Texture2D" uid="uid://cm10gmaqrajmw" path="res://Assets/Art/Ball_Peg/GoldenPeg.png" id="3_02unv"]
+[ext_resource type="Texture2D" uid="uid://picxtttkm6tx" path="res://Assets/Art/Ball_Peg/IronPeg.png" id="5_npktw"]
+[ext_resource type="Texture2D" uid="uid://d081t0ufl8qtd" path="res://Assets/Art/Ball_Peg/RocketPeg.png" id="6_jqjla"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5xh06"]
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n3upb"]
+radius = 13.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7pu2i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4qia5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_02unv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_5xh06")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_npktw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_jqjla")
+}],
+"loop": true,
+"name": &"Ball Frames",
+"speed": 5.0
+}]
+
+[node name="Title Screen Balls" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_5xh06")
+script = ExtResource("1_jhmnm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_n3upb")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-0.9999999, 1.1920929e-07)
+scale = Vector2(0.043907806, 0.043907795)
+sprite_frames = SubResource("SpriteFrames_7pu2i")
+animation = &"Ball Frames"
+frame_progress = 0.68689716

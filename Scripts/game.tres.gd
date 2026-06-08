@@ -7,10 +7,6 @@
 
 extends Node2D
 
-func _on_endzone_body_entered(_body: RigidBody2D) -> void:
-	#Reset to title screen scene when the ball enters CollisionBody at end of drop.
-	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
-
 #Procedural Peg Generation
 const NormalPeg = preload("res://Scenes/Peg Scenes/normal_peg.tscn") #Load peg scenes to spawn in
 const GoldenPeg = preload("uid://dbmsssat1qfgf")
@@ -19,8 +15,11 @@ const IronPeg = preload("uid://bho7vy7jev0wa")
 const TrianglePeg = preload("uid://dl2qmuenjes50")
 const BulletPeg = preload("uid://c8nbrn2ocqto4")
 const HurtPeg = preload("uid://jxo4i4rmh0c1")
+const KillPeg = preload("uid://bp4cvbqoaw20s")
 
 @onready var background_music: AudioStreamPlayer = $BackgroundMusic
+@onready var endzone: CollisionShape2D = $Endzone/CollisionShape2D
+@onready var camera_2d: Camera2D = $Player/Camera2D
 
 var number_of_rows_array = [150, 300, 450] #Arrays will set their corresponding variable based on the settings chosen in mod menu
 var spawn_chance_array = [8, 5, 3]
@@ -44,7 +43,7 @@ func create_peg_layout():
 			if randi_range(1,spawn_chance) == 1: #Randomly choose peg or empty
 				spawn_positions[n] = 1 #Fill spawn map with choice in location
 				var peg_choice = randi_range(1, special_chance) #Choose peg type to spawn in
-				if current_augment == 0 or current_augment == 2 or current_augment == 3: #If Normal Augment
+				if current_augment == 0 or current_augment == 3: #If Normal Augment/Polygon Peril
 					if peg_choice == 1:
 						if randi_range(1,2) == 1:
 							instance = HurtPeg.instantiate()
@@ -54,11 +53,11 @@ func create_peg_layout():
 						instance = RocketPeg.instantiate()
 					elif peg_choice == 3 and row > number_of_rows / 3:
 						instance = IronPeg.instantiate()
-					elif peg_choice == 4:
+					elif peg_choice == 4 and row > number_of_rows / 4:
 						instance = BulletPeg.instantiate()
 					else:
 						var shape_type = randi_range(1,5) #Choose normal peg shape
-						if shape_type == 1 and current_augment == 3: #Never true to remove triangles
+						if shape_type == 1 and current_augment == 3:
 							instance = TrianglePeg.instantiate()
 						else:
 							instance = NormalPeg.instantiate()
@@ -67,6 +66,14 @@ func create_peg_layout():
 						instance = RocketPeg.instantiate()
 					else:
 						instance = NormalPeg.instantiate()
+				elif current_augment == 2: #Is Killbox Augment
+					if randi_range(1, 8) == 1 and row >= 5:
+						instance = KillPeg.instantiate()
+					else:
+						if randi_range(1, 5) == 1:
+							instance = GoldenPeg.instantiate()
+						else:
+							instance = NormalPeg.instantiate()
 				elif current_augment == 4: #Is Ride or Die Augment
 					if randi_range(1,2) == 1:
 						instance = GoldenPeg.instantiate()
@@ -83,5 +90,8 @@ func _ready():
 	current_augment = Globals.settings[2]
 	print(current_augment)
 	create_peg_layout()
+	var end_y = y_offset * (number_of_rows + 1) #The y pos that the ball must reach to finish
+	Globals.get_end_y(end_y)
+	camera_2d.limit_bottom = end_y - y_offset * 3 #Add 3 rows padding so the ball falls offscreen
 	#background_music.play()
 	
