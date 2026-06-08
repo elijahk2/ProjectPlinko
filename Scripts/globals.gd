@@ -26,7 +26,7 @@ func _init():
 func _ready():
 	sfx_player = AudioStreamPlayer.new()
 	add_child(sfx_player)
-	Steam.findLeaderboard("Highscore") #Change this once we make actual leaderboards
+	Steam.findLeaderboard("123") #Change this once we make actual leaderboards
 	
 func leaderboard_result(handle, found): #Check if the leaderboard is found
 	if found:
