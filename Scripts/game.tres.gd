@@ -15,6 +15,7 @@ const IronPeg = preload("uid://bho7vy7jev0wa")
 const TrianglePeg = preload("uid://dl2qmuenjes50")
 const BulletPeg = preload("uid://c8nbrn2ocqto4")
 const HurtPeg = preload("uid://jxo4i4rmh0c1")
+const KillPeg = preload("uid://bp4cvbqoaw20s")
 
 @onready var background_music: AudioStreamPlayer = $BackgroundMusic
 @onready var endzone: CollisionShape2D = $Endzone/CollisionShape2D
@@ -42,7 +43,7 @@ func create_peg_layout():
 			if randi_range(1,spawn_chance) == 1: #Randomly choose peg or empty
 				spawn_positions[n] = 1 #Fill spawn map with choice in location
 				var peg_choice = randi_range(1, special_chance) #Choose peg type to spawn in
-				if current_augment == 0 or current_augment == 2 or current_augment == 3: #If Normal Augment
+				if current_augment == 0 or current_augment == 3: #If Normal Augment/Polygon Peril
 					if peg_choice == 1:
 						if randi_range(1,2) == 1:
 							instance = HurtPeg.instantiate()
@@ -56,7 +57,7 @@ func create_peg_layout():
 						instance = BulletPeg.instantiate()
 					else:
 						var shape_type = randi_range(1,5) #Choose normal peg shape
-						if shape_type == 1 and current_augment == 3: #Never true to remove triangles
+						if shape_type == 1 and current_augment == 3:
 							instance = TrianglePeg.instantiate()
 						else:
 							instance = NormalPeg.instantiate()
@@ -65,6 +66,14 @@ func create_peg_layout():
 						instance = RocketPeg.instantiate()
 					else:
 						instance = NormalPeg.instantiate()
+				elif current_augment == 2: #Is Killbox Augment
+					if randi_range(1, 8) == 1 and row >= 5:
+						instance = KillPeg.instantiate()
+					else:
+						if randi_range(1, 5) == 1:
+							instance = GoldenPeg.instantiate()
+						else:
+							instance = NormalPeg.instantiate()
 				elif current_augment == 4: #Is Ride or Die Augment
 					if randi_range(1,2) == 1:
 						instance = GoldenPeg.instantiate()

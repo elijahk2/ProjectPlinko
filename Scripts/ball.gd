@@ -31,6 +31,9 @@ func _ready():
 	self.set_collision_mask_value(2, false)
 	body_entered.connect(_on_body_entered)
 	charge_display.text = str(100 * dash_ready) + "%" 
+
+func end_game(result):
+	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
  
 func _on_body_entered(body):
 	if body.is_in_group("all_pegs") and body.collision_layer == 1: #Check for re-collisions
@@ -57,6 +60,9 @@ func _on_body_entered(body):
 		if body.is_in_group("rocket_pegs"): #Management for impulse on impact with Rocket Pegs
 			apply_impulse(Vector2(0, -2500), Vector2(0,0))
 			
+		if body.is_in_group("kill_pegs"): #Management for game end on impact w/ killpegs
+			end_game("You failed...") #Edit to change the message displayed on the end game screen
+		
 		if body.is_in_group("bullet_pegs") and is_bullet_out == false: #Management for bullet instantiation
 			is_bullet_out = true
 			print(is_bullet_out)
@@ -79,7 +85,7 @@ func _on_body_entered(body):
 func _physics_process(_delta: float) -> void:
 	overall_power = dash_power * dash_ready
 	if self.position.y > Globals.end_y:
-		get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
+		end_game("You made it!")  #Edit to change the message displayed on the end game screen
 	charge_display.text = str(100 * dash_ready) + "%" 
 	#Manage key presses (>= 0.99 is used to prevent non-exact values for dash_ready)
 	if time_elapsed < 60 and particles.emitting == true: #Time (1s) since started showing particles

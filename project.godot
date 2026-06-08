@@ -36,6 +36,7 @@ iron_pegs=""
 bullet_pegs=""
 hurt_pegs=""
 endzone_body=""
+kill_pegs=""
 
 [gui]
 
