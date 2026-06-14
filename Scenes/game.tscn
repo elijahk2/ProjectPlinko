@@ -25,7 +25,6 @@ script/source = "extends Sprite2D
 func _ready() -> void:
 	animated_bg.frame = 0
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
@@ -98,7 +97,7 @@ normal = Vector2(-1, 0)
 script = ExtResource("1_rfjv2")
 
 [node name="Background Control" type="CanvasLayer" parent="."]
-layer = -100
+layer = -1
 
 [node name="Background" type="Sprite2D" parent="Background Control"]
 z_index = -100
@@ -114,8 +113,22 @@ animation = &"BG Color Shift"
 frame = 7
 frame_progress = 1.0
 
+[node name="TransitionContainer" type="Node" parent="Background Control"]
+
+[node name="ChargeDisplay" type="Label" parent="Background Control"]
+z_index = 2
+offset_left = 112.0
+offset_top = 23.0
+offset_right = 273.0
+offset_bottom = 109.0
+theme_override_fonts/font = ExtResource("11_rfjv2")
+theme_override_font_sizes/font_size = 32
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="ScoreDisplay" type="Label" parent="Background Control"]
-z_index = 100
+z_index = 2
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -131,18 +144,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = SubResource("GDScript_wowpa")
 
-[node name="ChargeDisplay" type="Label" parent="Background Control"]
-offset_left = 112.0
-offset_top = 23.0
-offset_right = 273.0
-offset_bottom = 109.0
-theme_override_fonts/font = ExtResource("11_rfjv2")
-theme_override_font_sizes/font_size = 32
-text = "100%"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Player" parent="." instance=ExtResource("1_ebmjs")]
+z_index = 1
 position = Vector2(0, -103)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]

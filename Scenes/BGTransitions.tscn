@@ -1,0 +1,50 @@
+[gd_scene load_steps=10 format=3 uid="uid://bipep6iop5joa"]
+
+[ext_resource type="Script" uid="uid://chmxtk605gvi8" path="res://Scripts/bg_transitions.gd" id="1_t5csp"]
+[ext_resource type="Texture2D" uid="uid://byyr4wj52m4hy" path="res://Assets/Art/Background/BG Transition Sprites/BGTransition_DarkBlue.png" id="2_5qwn4"]
+[ext_resource type="Texture2D" uid="uid://ctexa4jm60u10" path="res://Assets/Art/Background/BG Transition Sprites/BGTransition_Green.png" id="3_ds4f4"]
+[ext_resource type="Texture2D" uid="uid://cpcj5ejim4jf5" path="res://Assets/Art/Background/BG Transition Sprites/BGTransition_LightBlue.png" id="4_slgxy"]
+[ext_resource type="Texture2D" uid="uid://bs2bjqr2bv22g" path="res://Assets/Art/Background/BG Transition Sprites/BGTransition_Orange.png" id="5_qdap0"]
+[ext_resource type="Texture2D" uid="uid://7xsuaecgv1id" path="res://Assets/Art/Background/BG Transition Sprites/BGTransition_Pink.png" id="6_m3y70"]
+[ext_resource type="Texture2D" uid="uid://bolv3jwjvc4m7" path="res://Assets/Art/Background/BG Transition Sprites/BGTransition_Purple.png" id="7_5umfr"]
+[ext_resource type="Texture2D" uid="uid://c881mdk76vdo6" path="res://Assets/Art/Background/BG Transition Sprites/BGTransition_Red.png" id="8_yq4v1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5w7mu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_yq4v1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_qdap0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ds4f4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_slgxy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_5qwn4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_5umfr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_m3y70")
+}],
+"loop": true,
+"name": &"transitions",
+"speed": 5.0
+}]
+
+[node name="BGTransitions" type="Node2D"]
+z_index = 1
+script = ExtResource("1_t5csp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
+position = Vector2(-27, 7)
+sprite_frames = SubResource("SpriteFrames_5w7mu")
+animation = &"transitions"
+frame_progress = 0.31476596

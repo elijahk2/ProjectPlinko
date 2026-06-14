@@ -7,14 +7,16 @@ extends RigidBody2D
 @onready var animated_bg: AnimatedSprite2D = $"../Background Control/Background/AnimatedSprite2D"
 @onready var charge_display: Label = $"../Background Control/ChargeDisplay"
 const MiniBullet = preload("uid://csblsch6lhyfy")
+const bg_transitions = preload("res://Scenes/BGTransitions.tscn")
 
 var is_spent = false
-var dash_ready = 1.0
-var is_bullet_out = false
+var dash_ready = 0 #Measure of dash energy (1.0 is 100%)
+var is_bullet_out = false #Will change to true when a green ball is launched to prevent many from spawning
+var end_padding = 50 #Ensures that the multiplier scripts run correctly before the scene changes
 
-const dash_power = 1200
-const tap_power = 2
-const energy_required = 0
+const dash_power = 1200 #Strength of the dash
+const tap_power = 2 #Strength of nudging
+const energy_required = 0 #Minimum energy needed to dash
 var overall_power = 0
 
 # scale settings
@@ -34,9 +36,17 @@ func _ready():
 
 func end_game(result):
 	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
- 
+
 func _on_body_entered(body):
-	if body.is_in_group("all_pegs") and body.collision_layer == 1: #Check for re-collisions
+	if body.is_in_group("all_pegs") and body.collision_layer == 1:
+		var instance = bg_transitions.instantiate() #instantiates a bg transition scene
+		instance.position = body.position
+		instance.color = animated_bg.frame
+		instance.animated_bg = animated_bg
+		#instance.global_position = body.get_global_transform_with_canvas().origin
+		instance.global_position = body.get_viewport().get_canvas_transform() * body.global_position
+		var target_node = get_tree().current_scene.get_node("Background Control/TransitionContainer")
+		target_node.add_child(instance)
 		if body.get("is_spent") == true: #Manage ONE and ONE ONLY iteration of code for each peg
 			return
 		body.set("is_spent", true)
@@ -84,7 +94,7 @@ func _on_body_entered(body):
 		
 func _physics_process(_delta: float) -> void:
 	overall_power = dash_power * dash_ready
-	if self.position.y > Globals.end_y:
+	if self.position.y > Globals.end_y + end_padding:
 		end_game("You made it!")  #Edit to change the message displayed on the end game screen
 	charge_display.text = str(100 * dash_ready) + "%" 
 	#Manage key presses (>= 0.99 is used to prevent non-exact values for dash_ready)

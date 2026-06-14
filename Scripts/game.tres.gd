@@ -35,6 +35,8 @@ var instance = 0 #Clear var for storing node to spawn
 var is_bullet_out = false
 var current_augment = -1
 
+var timescale = 1
+
 func create_peg_layout():
 	while row < number_of_rows: #Repeat until all rows generated
 		row += 1 #increase iteration var
@@ -83,14 +85,15 @@ func create_peg_layout():
 				self.add_child(instance) #Finish node creation
 				if row % spawn_chance_increase_row_interval == number_of_rows % spawn_chance_increase_row_interval:
 					spawn_chance += spawn_chance_increase
-		
+	
 func _ready():
+	Engine.time_scale = timescale
 	spawn_chance = spawn_chance_array[Globals.settings[0]]
 	number_of_rows = number_of_rows_array[Globals.settings[1]]
 	current_augment = Globals.settings[2]
 	print(current_augment)
-	create_peg_layout()
 	var end_y = y_offset * (number_of_rows + 1) #The y pos that the ball must reach to finish
+	create_peg_layout()
 	Globals.get_end_y(end_y)
 	camera_2d.limit_bottom = end_y - y_offset * 3 #Add 3 rows padding so the ball falls offscreen
 	#background_music.play()
