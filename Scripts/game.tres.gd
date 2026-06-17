@@ -56,7 +56,8 @@ func create_peg_layout():
 					elif peg_choice == 3 and row > number_of_rows / 3:
 						instance = IronPeg.instantiate()
 					elif peg_choice == 4 and row > number_of_rows / 4:
-						instance = BulletPeg.instantiate()
+						#instance = BulletPeg.instantiate()
+						pass #BulletPegs removed until further notice, as they disrupt the natural flow of the game and make it less fun.
 					else:
 						var shape_type = randi_range(1,5) #Choose normal peg shape
 						if shape_type == 1 and current_augment == 3:

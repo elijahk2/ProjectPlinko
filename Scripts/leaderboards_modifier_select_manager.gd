@@ -4,6 +4,8 @@ extends Node
 @onready var drop_length_display: Label = $"Drop Length Header/Drop Length Display"
 @onready var augment_display: Label = $"Augment Header/Augment Display"
 @onready var cursor: Sprite2D = $Cursor
+@onready var leaderboard_list: VBoxContainer = $"../VBoxContainer"
+
 
 var cursor_y = 1 #Use 1 for Density row, 2 for Length, 3 for Augment
 
@@ -18,32 +20,33 @@ var augment_id = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Globals.update_searched_for_leaderboard()
+	Globals.leaderboard_updated.connect(leaderboard_list.generate_leaderboard_table)
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	peg_density_display.text = density[density_id % density.size()] #Update Density label's text
-	drop_length_display.text = length[length_id % length.size()] #Update Length label's text
-	augment_display.text = augment[augment_id % augment.size()] #Update Augment label's text
-	
-	cursor.position = Vector2(292, 127 + 76 * (cursor_y - 1)) 
-	#Set the cursor's position to 292 (the right x value) and y incrementing based on the current cursor_y value.
-		
+	peg_density_display.text = density[density_id % density.size()]
+	drop_length_display.text = length[length_id % length.size()]
+	augment_display.text = augment[augment_id % augment.size()]
+
+	cursor.position = Vector2(292, 127 + 76 * (cursor_y - 1))
+
 	if Input.is_action_just_pressed("down") and cursor_y < 3:
 		cursor_y += 1
-		Globals.play_cursor_move_sfx()
+		_on_cursor_changed()
 	if Input.is_action_just_pressed("up") and cursor_y > 1:
 		cursor_y -= 1
-		Globals.play_cursor_move_sfx()
-	if Input.is_action_just_pressed("right"): #These two if statements can be shortened with negative multiplication, etc.
+		_on_cursor_changed()
+	if Input.is_action_just_pressed("right"):
 		if cursor_y == 1:
 			density_id += 1
 		elif cursor_y == 2:
 			length_id += 1
 		elif cursor_y == 3:
 			augment_id += 1
-		Globals.play_cursor_move_sfx()
+		_on_cursor_changed()
 	if Input.is_action_just_pressed("left"):
 		if cursor_y == 1:
 			density_id -= 1
@@ -51,6 +54,14 @@ func _process(_delta: float) -> void:
 			length_id -= 1
 		elif cursor_y == 3:
 			augment_id -= 1
-		Globals.play_cursor_move_sfx()
-	var modifiers = [density_id, length_id, augment_id]
+		_on_cursor_changed()
+
+func _on_cursor_changed() -> void:
+	Globals.play_cursor_move_sfx()
+	var modifiers = [
+		((density_id % density.size()) + density.size()) % density.size(),
+		((length_id % length.size()) + length.size()) % length.size(),
+		((augment_id % augment.size()) + augment.size()) % augment.size()
+	]
 	Globals.get_modifiers_for_leaderboard(modifiers)
+	Globals.update_searched_for_leaderboard()

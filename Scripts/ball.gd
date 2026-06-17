@@ -16,7 +16,7 @@ var end_padding = 50 #Ensures that the multiplier scripts run correctly before t
 
 const dash_power = 1200 #Strength of the dash
 const tap_power = 2 #Strength of nudging
-const energy_required = 0 #Minimum energy needed to dash
+const energy_required = 0.1 #Minimum energy needed to dash
 var overall_power = 0
 
 # scale settings
@@ -35,6 +35,7 @@ func _ready():
 	charge_display.text = str(100 * dash_ready) + "%" 
 
 func end_game(result):
+	Globals.add_item_to_leaderboard(score_display.score)
 	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
 
 func _on_body_entered(body):
@@ -43,8 +44,7 @@ func _on_body_entered(body):
 		instance.position = body.position
 		instance.color = animated_bg.frame
 		instance.animated_bg = animated_bg
-		#instance.global_position = body.get_global_transform_with_canvas().origin
-		instance.global_position = body.get_viewport().get_canvas_transform() * body.global_position
+		instance.position = get_viewport().get_canvas_transform() * body.global_position
 		var target_node = get_tree().current_scene.get_node("Background Control/TransitionContainer")
 		target_node.add_child(instance)
 		if body.get("is_spent") == true: #Manage ONE and ONE ONLY iteration of code for each peg

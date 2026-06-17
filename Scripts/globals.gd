@@ -3,6 +3,7 @@ extends Node
 #This node manages scene-to-scene interactions because it is set as a "global script"
 #It acts as a sort of hub between scenes and nodes.
 
+var leaderboard_modifiers = [0,0,0]
 var leaderboard = []
 var sfx_player: AudioStreamPlayer
 var settings = []
@@ -12,7 +13,7 @@ var num_balls = 0
 var end_y = 0
 signal score_changed(new_score) # Define a signal to modify ScoreDisplay's score value
 
-var AppID = "480" #Change to our unique appid after $100 purchase
+var AppID = "4865760"
 var boardHandle: int
 var id
 
@@ -26,7 +27,14 @@ func _init():
 func _ready():
 	sfx_player = AudioStreamPlayer.new()
 	add_child(sfx_player)
-	Steam.findLeaderboard("1") #Change this once we make actual leaderboards
+
+func _process(delta: float) -> void:
+	Steam.run_callbacks()
+	
+func update_searched_for_leaderboard():
+	var leaderboard_to_find = leaderboard_modifiers #Use the string from the func below, determined by the player's settings, what leaderboard to display
+	Steam.findLeaderboard(str(leaderboard_to_find)) #Change this once we make actual leaderboards
+	print(leaderboard_to_find)
 	
 func leaderboard_result(handle, found): #Check if the leaderboard is found
 	if found:
@@ -36,6 +44,10 @@ func leaderboard_result(handle, found): #Check if the leaderboard is found
 		Steam.leaderboard_scores_downloaded.connect(on_scores_downloaded)
 	else:
 		print("not found...")
+		leaderboard = []
+		leaderboard_updated.emit()
+
+signal leaderboard_updated
 
 func on_scores_downloaded(message, this_board, result): #Download the scores from the leaderboard
 	leaderboard = []
@@ -45,15 +57,13 @@ func on_scores_downloaded(message, this_board, result): #Download the scores fro
 			"score": entry["score"],
 			"steam_id": entry["steam_id"]
 		})
+	leaderboard_updated.emit()
 
 func on_score_uploaded(success, was_changed, this_score): #Handle response for uploaded scores
 	if success:
 		print("Score uploaded!")
 	else:
 		print("Upload failed.")
-
-func _process(delta: float) -> void:
-	Steam.run_callbacks()
 
 func play_title_start_sfx():
 	sfx_player.bus = "Title Play SFX"
@@ -89,7 +99,11 @@ func get_end_y(value):
 	end_y = value
 
 func get_modifiers_for_leaderboard(modifiers): #Recieve the ids for the settings the player wants to see lb for
-	var leaderboard_modifiers = modifiers
+	leaderboard_modifiers = modifiers
+	var a = leaderboard_modifiers[0]
+	var b = leaderboard_modifiers[1]
+	var c = leaderboard_modifiers[2]
+	leaderboard_modifiers = str(a) + ", " + str(b) + ", " + str(c)
 
 func get_leaderboard(): #Recieve the leaderboard corresponding with the modifiers from the steam database
 	return leaderboard
@@ -99,6 +113,7 @@ func add_item_to_leaderboard(score):
 		print("No board handle yet!")
 		return
 	Steam.uploadLeaderboardScore(score, true, [], boardHandle)
+	Steam.leaderboard_find_result.connect(leaderboard_result)
 	
 func remove_item_from_leaderboard():
 	pass
