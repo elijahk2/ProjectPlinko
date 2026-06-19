@@ -11,6 +11,11 @@ var song_notes = [1, 1.2, 1.4, 1.6, 1.8, 1.6, 1.4, 1.2] #Defines the song played
 var song_notes_id = 0
 var num_balls = 0
 var end_y = 0
+var user_highscore = 0
+var user_steam_id: int
+var score_changing = 0
+var score_to_add = 0
+var highscore = 0
 signal score_changed(new_score) # Define a signal to modify ScoreDisplay's score value
 
 var AppID = "4865760"
@@ -23,25 +28,45 @@ func _init():
 	OS.set_environment("SteamGameID", AppID)
 	Steam.leaderboard_find_result.connect(leaderboard_result) #Connect the function with Steam's leaderboard finding code
 	Steam.leaderboard_score_uploaded.connect(on_score_uploaded)
+	Steam.leaderboard_scores_downloaded.connect(on_scores_downloaded)
 	
 func _ready():
 	sfx_player = AudioStreamPlayer.new()
 	add_child(sfx_player)
+	user_steam_id = Steam.getSteamID()
 
 func _process(delta: float) -> void:
 	Steam.run_callbacks()
-	
+
+func get_modifiers_for_leaderboard(modifiers):
+	leaderboard_modifiers = modifiers # keep as array
+
 func update_searched_for_leaderboard():
-	var leaderboard_to_find = leaderboard_modifiers #Use the string from the func below, determined by the player's settings, what leaderboard to display
-	Steam.findLeaderboard(str(leaderboard_to_find)) #Change this once we make actual leaderboards
-	print(leaderboard_to_find)
+	var a = leaderboard_modifiers[0]
+	var b = leaderboard_modifiers[1]
+	var c = leaderboard_modifiers[2]
+	var leaderboard_name = str(a) + ", " + str(b) + ", " + str(c)
+	Steam.findLeaderboard(leaderboard_name)
+	print(leaderboard_name)
+
+func get_leaderboard(): #Recieve the leaderboard corresponding with the modifiers from the steam database
+	return leaderboard
 	
+func add_item_to_leaderboard(score):
+	if boardHandle == 0:
+		print("No board handle yet!")
+		return
+	score_changing = 1
+	score_to_add = score
+	Steam.downloadLeaderboardEntries(0, 0, Steam.LEADERBOARD_DATA_REQUEST_GLOBAL_AROUND_USER, boardHandle)
+	
+
 func leaderboard_result(handle, found): #Check if the leaderboard is found
 	if found:
 		boardHandle = handle
+		print(boardHandle)
 		print("FOUND!")
 		Steam.downloadLeaderboardEntries(1, 10, Steam.LEADERBOARD_DATA_REQUEST_GLOBAL, boardHandle)
-		Steam.leaderboard_scores_downloaded.connect(on_scores_downloaded)
 	else:
 		print("not found...")
 		leaderboard = []
@@ -50,6 +75,19 @@ func leaderboard_result(handle, found): #Check if the leaderboard is found
 signal leaderboard_updated
 
 func on_scores_downloaded(message, this_board, result): #Download the scores from the leaderboard
+	print(score_changing)
+	print(result)
+	if score_changing == 1:
+		if result.size() > 0:
+			highscore = result[0]["score"]
+		else:
+			Steam.uploadLeaderboardScore(score_to_add, true, [], boardHandle)
+			return
+		print(highscore)
+		print(score_to_add)
+		if score_to_add > highscore:
+			print("new high score!")
+			Steam.uploadLeaderboardScore(score_to_add, true, [], boardHandle)
 	leaderboard = []
 	for entry in result:
 		leaderboard.append({
@@ -58,6 +96,7 @@ func on_scores_downloaded(message, this_board, result): #Download the scores fro
 			"steam_id": entry["steam_id"]
 		})
 	leaderboard_updated.emit()
+	score_changing = 0
 
 func on_score_uploaded(success, was_changed, this_score): #Handle response for uploaded scores
 	if success:
@@ -97,23 +136,3 @@ func change_ball_num(change):
 	
 func get_end_y(value):
 	end_y = value
-
-func get_modifiers_for_leaderboard(modifiers): #Recieve the ids for the settings the player wants to see lb for
-	leaderboard_modifiers = modifiers
-	var a = leaderboard_modifiers[0]
-	var b = leaderboard_modifiers[1]
-	var c = leaderboard_modifiers[2]
-	leaderboard_modifiers = str(a) + ", " + str(b) + ", " + str(c)
-
-func get_leaderboard(): #Recieve the leaderboard corresponding with the modifiers from the steam database
-	return leaderboard
-	
-func add_item_to_leaderboard(score):
-	if boardHandle == 0:
-		print("No board handle yet!")
-		return
-	Steam.uploadLeaderboardScore(score, true, [], boardHandle)
-	Steam.leaderboard_find_result.connect(leaderboard_result)
-	
-func remove_item_from_leaderboard():
-	pass

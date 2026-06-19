@@ -20,6 +20,9 @@ var augment_id = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	density_id = Globals.leaderboard_modifiers[0]
+	length_id = Globals.leaderboard_modifiers[1]
+	augment_id = Globals.leaderboard_modifiers[2]
 	Globals.update_searched_for_leaderboard()
 	Globals.leaderboard_updated.connect(leaderboard_list.generate_leaderboard_table)
 	pass # Replace with function body.

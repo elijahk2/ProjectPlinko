@@ -12,9 +12,6 @@ extends Control
 @onready var header_1: Label = $Header1
 @onready var drop_label: Label = $"DROP!"
 
-
-
-
 var cursor_y = 1 #Use 1 for Density row, 2 for Length, 3 for Augment
 var intro_done = false
 var labels_done = false
@@ -120,6 +117,8 @@ func _process(delta: float) -> void:
 				Globals.play_cursor_move_sfx()
 				
 		if Input.is_action_just_pressed("push") and cursor_y == 4:
+			var modifiers = [density_id, length_id, augment_id]
+			Globals.get_modifiers_for_leaderboard(modifiers)
 			Globals.prepare_settings(density_id % density.size(), length_id % length.size(), augment_id % augment.size())
 			Globals.play_title_start_sfx()
 			#get_tree().change_scene_to_file("res://Scenes/game.tscn")

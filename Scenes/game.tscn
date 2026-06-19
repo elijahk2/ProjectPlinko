@@ -73,7 +73,6 @@ script/source = "extends Label
 
 var score = 0
 
-
 func _ready():
 	Globals.score_changed.connect(_on_score_updated)
 
