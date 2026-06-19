@@ -1,0 +1,64 @@
+[gd_scene load_steps=5 format=3 uid="uid://dsoifg4ncwfh1"]
+
+[ext_resource type="Texture2D" uid="uid://cexaosu5p2yqu" path="res://Assets/Art/Misc/MultPath.png" id="1_lsduy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lsduy"]
+size = Vector2(100, 911)
+
+[sub_resource type="GDScript" id="GDScript_lsduy"]
+script/source = "extends Area2D
+
+var multiplier_hit = false
+
+@onready var score_display: Label = $\"../Background Control/ScoreDisplay\"
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+func _on_body_entered(body: Node2D) -> void:
+	print(\"entry detected\")
+	if multiplier_hit == false and body.name == \"Player\":
+		score_display.score *= 5
+		multiplier_hit = true
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e2r7q"]
+size = Vector2(708, 410)
+
+[node name="MultPath" type="StaticBody2D"]
+visible = false
+scale = Vector2(0.5, 0.5)
+
+[node name="Left Bound" type="CollisionShape2D" parent="."]
+position = Vector2(-426, -1.5)
+shape = SubResource("RectangleShape2D_lsduy")
+
+[node name="Right Bound" type="CollisionShape2D" parent="."]
+position = Vector2(399, 0.5)
+shape = SubResource("RectangleShape2D_lsduy")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -282.0
+offset_top = -995.0
+offset_right = 255.0
+offset_bottom = -381.0
+theme_override_font_sizes/font_size = 458
+text = "5x"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_lsduy")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-2, 432)
+script = SubResource("GDScript_lsduy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-12, -1)
+shape = SubResource("RectangleShape2D_e2r7q")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

@@ -11,6 +11,8 @@ func _process(delta: float) -> void:
 	pass
 
 func generate_leaderboard_table():
+	for child in get_children():
+		child.queue_free()
 	var score_data = Globals.get_leaderboard()
 	var leaderboard_length = score_data.size()
 	for i in leaderboard_length:

@@ -21,7 +21,7 @@ const KillPeg = preload("uid://bp4cvbqoaw20s")
 @onready var endzone: CollisionShape2D = $Endzone/CollisionShape2D
 @onready var camera_2d: Camera2D = $Player/Camera2D
 
-var number_of_rows_array = [150, 300, 450] #Arrays will set their corresponding variable based on the settings chosen in mod menu
+var number_of_rows_array = [100, 200, 300] #Arrays will set their corresponding variable based on the settings chosen in mod menu
 var spawn_chance_array = [8, 5, 3]
 var number_of_rows = 300
 var spawn_positions = [0,0,0,0,0,0,0,0,0,0]
@@ -34,6 +34,8 @@ var y_offset = 200 #Y distance between each row of
 var instance = 0 #Clear var for storing node to spawn
 var is_bullet_out = false
 var current_augment = -1
+
+var timescale = 1
 
 func create_peg_layout():
 	while row < number_of_rows: #Repeat until all rows generated
@@ -54,7 +56,8 @@ func create_peg_layout():
 					elif peg_choice == 3 and row > number_of_rows / 3:
 						instance = IronPeg.instantiate()
 					elif peg_choice == 4 and row > number_of_rows / 4:
-						instance = BulletPeg.instantiate()
+						#instance = BulletPeg.instantiate()
+						pass #BulletPegs removed until further notice, as they disrupt the natural flow of the game and make it less fun.
 					else:
 						var shape_type = randi_range(1,5) #Choose normal peg shape
 						if shape_type == 1 and current_augment == 3:
@@ -83,15 +86,17 @@ func create_peg_layout():
 				self.add_child(instance) #Finish node creation
 				if row % spawn_chance_increase_row_interval == number_of_rows % spawn_chance_increase_row_interval:
 					spawn_chance += spawn_chance_increase
-		
+	
 func _ready():
+	Engine.time_scale = timescale
 	spawn_chance = spawn_chance_array[Globals.settings[0]]
 	number_of_rows = number_of_rows_array[Globals.settings[1]]
 	current_augment = Globals.settings[2]
 	print(current_augment)
-	create_peg_layout()
 	var end_y = y_offset * (number_of_rows + 1) #The y pos that the ball must reach to finish
+	create_peg_layout()
 	Globals.get_end_y(end_y)
+	Globals.update_searched_for_leaderboard()
 	camera_2d.limit_bottom = end_y - y_offset * 3 #Add 3 rows padding so the ball falls offscreen
 	#background_music.play()
 	

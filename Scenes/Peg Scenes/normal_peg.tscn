@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://ccwkowvhnl108"]
 
 [ext_resource type="Script" uid="uid://cdys0fiqyqfxt" path="res://Scripts/peg.gd" id="1_p4b2k"]
-[ext_resource type="Texture2D" uid="uid://cj2casl7hnvba" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="2_p4b2k"]
+[ext_resource type="Texture2D" uid="uid://ckjauwg6fgfn6" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="2_p4b2k"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qwx1w"]
 
