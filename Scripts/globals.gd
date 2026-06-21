@@ -58,6 +58,7 @@ func add_item_to_leaderboard(score):
 		return
 	score_changing = 1
 	score_to_add = score
+	update_searched_for_leaderboard()
 	Steam.downloadLeaderboardEntries(0, 0, Steam.LEADERBOARD_DATA_REQUEST_GLOBAL_AROUND_USER, boardHandle)
 	
 
