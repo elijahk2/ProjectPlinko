@@ -55,7 +55,8 @@ func _process(delta):
 			cursor.position = Vector2(289,485) # \" \"
 		else:
 			cursor.position = Vector2(289, 539)
-			
+		if Input.is_action_just_pressed(\"down\") and cursor_y < 3 or Input.is_action_just_pressed(\"up\") and cursor_y > 1:
+			spawn_title_ball()
 		if Input.is_action_just_pressed(\"push\"):
 			if cursor_y == 1 and is_title_ended == false:
 				Globals.play_cursor_move_sfx()
@@ -71,8 +72,6 @@ func _process(delta):
 		elif Input.is_action_just_pressed(\"up\") and cursor_y > 1:
 			cursor_y -= 1
 			Globals.play_cursor_move_sfx()
-		if Input.is_action_just_pressed(\"down\") and cursor_y < 3 or Input.is_action_just_pressed(\"up\") and cursor_y > 1:
-			spawn_title_ball()
 		if Input.is_action_just_pressed(\"back\"): #End game
 			get_tree().quit()
 	if is_title_ended == true and title_header.position.x > -400:

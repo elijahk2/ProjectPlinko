@@ -21,7 +21,7 @@ const KillPeg = preload("uid://bp4cvbqoaw20s")
 @onready var endzone: CollisionShape2D = $Endzone/CollisionShape2D
 @onready var camera_2d: Camera2D = $Player/Camera2D
 
-var number_of_rows_array = [100, 200, 300] #Arrays will set their corresponding variable based on the settings chosen in mod menu
+var number_of_rows_array = [100, 200, 3] #Arrays will set their corresponding variable based on the settings chosen in mod menu
 var spawn_chance_array = [8, 5, 3]
 var number_of_rows = 300
 var spawn_positions = [0,0,0,0,0,0,0,0,0,0]

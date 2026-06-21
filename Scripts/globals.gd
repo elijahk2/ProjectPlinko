@@ -60,7 +60,6 @@ func add_item_to_leaderboard(score):
 	score_to_add = score
 	update_searched_for_leaderboard()
 	Steam.downloadLeaderboardEntries(0, 0, Steam.LEADERBOARD_DATA_REQUEST_GLOBAL_AROUND_USER, boardHandle)
-	
 
 func leaderboard_result(handle, found): #Check if the leaderboard is found
 	if found:
@@ -75,12 +74,17 @@ func leaderboard_result(handle, found): #Check if the leaderboard is found
 
 signal leaderboard_updated
 
-func on_scores_downloaded(message, this_board, result): #Download the scores from the leaderboard
+func on_scores_downloaded(message, this_board, result):
 	print(score_changing)
 	print(result)
 	if score_changing == 1:
-		if result.size() > 0:
-			highscore = result[0]["score"]
+		var current_player_score = null
+		for entry in result:
+			if entry["steam_id"] == user_steam_id:
+				current_player_score = entry["score"]
+				break
+		if current_player_score != null:
+			highscore = current_player_score
 		else:
 			Steam.uploadLeaderboardScore(score_to_add, true, [], boardHandle)
 			return
