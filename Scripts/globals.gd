@@ -16,6 +16,9 @@ var user_steam_id: int
 var score_changing = 0
 var score_to_add = 0
 var highscore = 0
+
+var max_name_length = 15
+
 signal score_changed(new_score) # Define a signal to modify ScoreDisplay's score value
 
 var AppID = "4865760"
@@ -53,13 +56,9 @@ func get_leaderboard(): #Recieve the leaderboard corresponding with the modifier
 	return leaderboard
 	
 func add_item_to_leaderboard(score):
-	if boardHandle == 0:
-		print("No board handle yet!")
-		return
 	score_changing = 1
 	score_to_add = score
 	update_searched_for_leaderboard()
-	Steam.downloadLeaderboardEntries(0, 0, Steam.LEADERBOARD_DATA_REQUEST_GLOBAL_AROUND_USER, boardHandle)
 
 func leaderboard_result(handle, found): #Check if the leaderboard is found
 	if found:
@@ -95,8 +94,14 @@ func on_scores_downloaded(message, this_board, result):
 			Steam.uploadLeaderboardScore(score_to_add, true, [], boardHandle)
 	leaderboard = []
 	for entry in result:
+		var name = Steam.getFriendPersonaName(entry["steam_id"])
+		var name_limited = "stuff"
+		if name.length() > 15:
+			name_limited = name.left(max_name_length) + "..."
+		else:
+			name_limited = name
 		leaderboard.append({
-			"name": Steam.getFriendPersonaName(entry["steam_id"]),
+			"name": name_limited,
 			"score": entry["score"],
 			"steam_id": entry["steam_id"]
 		})
