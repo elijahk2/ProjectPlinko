@@ -26,11 +26,14 @@ var density_id = 1 #Reference array's items by this ID
 var length = ["Short", "Medium", "Long"] #Store possible display options for Length
 var length_id = 0
 
-var augment = ["Normal", "BounceHouse", "Killbox", "PolygonPeril (Not Implemented)", "Ride or Die"] #Store possible display options for Augment
+var augment = ["Normal", "BounceHouse", "Killbox", "ControlFreak", "Ride or Die"] #Store possible display options for Augment
 var augment_id = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	density_id = Globals.last_played_density
+	length_id = Globals.last_played_drop_length
+	augment_id = Globals.last_played_augment
 	cursor.position.x = 400 #slightly higher than the right edge of the screen
 	header_1.position.y = label_init_offset
 	drop_label.position.y = 775
@@ -120,6 +123,7 @@ func _process(delta: float) -> void:
 			var modifiers = [density_id, length_id, augment_id]
 			Globals.get_modifiers_for_leaderboard(modifiers)
 			Globals.prepare_settings(density_id % density.size(), length_id % length.size(), augment_id % augment.size())
+			Globals.set_last_settings(density_id % density.size(), length_id % length.size(), augment_id % augment.size())
 			Globals.play_title_start_sfx()
 			#get_tree().change_scene_to_file("res://Scenes/game.tscn")
 			label_vel = 0

@@ -17,6 +17,5 @@ func _on_body_entered(body: Node) -> void:
 func _process(delta: float) -> void:
 	if self.position.y > 780:
 		Globals.change_ball_num(-1)
-		print(Globals.num_balls)
 		queue_free()
 	

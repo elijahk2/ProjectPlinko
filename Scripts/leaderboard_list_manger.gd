@@ -4,8 +4,6 @@ extends VBoxContainer
 func _ready() -> void:
 	generate_leaderboard_table()
 
-
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

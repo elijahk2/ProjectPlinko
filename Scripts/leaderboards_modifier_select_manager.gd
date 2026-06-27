@@ -15,7 +15,7 @@ var density_id = 1 #Reference array's items by this ID
 var length = ["Short", "Medium", "Long"] #Store possible display options for Length
 var length_id = 0
 
-var augment = ["Normal", "BounceHouse", "Killbox", "PolygonPeril (Not Implemented)", "Ride or Die"] #Store possible display options for Augment
+var augment = ["Normal", "BounceHouse", "Killbox", "ControlFreak", "Ride or Die"] #Store possible display options for Augment
 var augment_id = 0
 
 # Called when the node enters the scene tree for the first time.
@@ -37,11 +37,11 @@ func _process(_delta: float) -> void:
 	cursor.position = Vector2(292, 127 + 76 * (cursor_y - 1))
 
 	if Input.is_action_just_pressed("down") and cursor_y < 3:
+		Globals.play_cursor_move_sfx()
 		cursor_y += 1
-		_on_cursor_changed()
 	if Input.is_action_just_pressed("up") and cursor_y > 1:
+		Globals.play_cursor_move_sfx()
 		cursor_y -= 1
-		_on_cursor_changed()
 	if Input.is_action_just_pressed("right"):
 		if cursor_y == 1:
 			density_id += 1
@@ -60,6 +60,8 @@ func _process(_delta: float) -> void:
 		_on_cursor_changed()
 
 func _on_cursor_changed() -> void:
+	for child in leaderboard_list.get_children():
+		child.queue_free()
 	Globals.play_cursor_move_sfx()
 	var modifiers = [
 		((density_id % density.size()) + density.size()) % density.size(),

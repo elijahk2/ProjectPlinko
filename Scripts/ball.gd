@@ -15,9 +15,14 @@ var is_bullet_out = false #Will change to true when a green ball is launched to 
 var end_padding = 50 #Ensures that the multiplier scripts run correctly before the scene changes
 
 const dash_power = 1200 #Strength of the dash
-const tap_power = 2 #Strength of nudging
 const energy_required = 0.1 #Minimum energy needed to dash
 var overall_power = 0
+var tap_power = 2 #Strength of nudging
+
+#Initialize Jackpot mod vars
+var i = 0
+var chance = 5
+var jackpot_multiplier = 1 #initialize at 1 so it doesn't affect any other modes
 
 # scale settings
 const octave_limit = 3.0
@@ -33,6 +38,8 @@ func _ready():
 	self.set_collision_mask_value(2, false)
 	body_entered.connect(_on_body_entered)
 	charge_display.text = str(100 * dash_ready) + "%" 
+	if Globals.last_played_augment == 3:
+		tap_power = 10
 
 func end_game(result):
 	Globals.add_item_to_leaderboard(score_display.score)
@@ -53,6 +60,13 @@ func _on_body_entered(body):
 		if not body.is_in_group("iron_pegs"): #Safeguard against deleting iron pegs
 			body.set_collision_layer_value(1, false) #Prevent re-colliding during fadeout animation
 			body.set_collision_layer_value(2, true)
+		else:
+			body.health -= 1
+			print("IRON PEG HEALTH: " + str(body.health))
+			if body.health < 1:
+				body.set_collision_layer_value(1, false) #Prevent re-colliding during fadeout animation
+				body.set_collision_layer_value(2, true)
+				
 		#For some reason, collision layers of 2 were being registered as hits by mask 1 ball, so multiple safety checks are in place to prevent that.
 		var frame_count = animated_bg.sprite_frames.get_frame_count("BG Color Shift")
 		animated_bg.frame = (animated_bg.frame + 1) % frame_count
@@ -83,12 +97,13 @@ func _on_body_entered(body):
 			#bullet.apply_central_impulse(Vector2(0, -500))
 			body.queue_free()
 		
+		#JACKPOT NOT IN THE GAME CURRENTLY
 		if body.is_in_group("golden_pegs"): #Score increments for both gold and normal pegs
-			score_display.score += 5
+			score_display.score = score_display.score + (5 * jackpot_multiplier) #Add 5 times whatever the jackpot multiplier is at
 		elif body.is_in_group("hurt_pegs"):
 			score_display.score -= 5
 		else:
-			score_display.score += 1
+			score_display.score = score_display.score + jackpot_multiplier #Add points equal to the multiplier
 		if dash_ready < 0.9:
 			dash_ready += 0.1
 		
