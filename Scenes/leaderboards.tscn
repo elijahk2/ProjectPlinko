@@ -37,6 +37,15 @@ offset_bottom = 65.0
 theme_override_font_sizes/font_size = 48
 text = "Leaderboard"
 
+[node name="LoadingLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 362.0
+offset_right = 290.0
+offset_bottom = 427.0
+theme_override_font_sizes/font_size = 48
+text = "Loading..."
+
 [node name="ModifierSelectManager" type="Node" parent="."]
 script = ExtResource("4_5yl7b")
 

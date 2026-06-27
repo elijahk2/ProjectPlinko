@@ -12,7 +12,6 @@ const NormalPeg = preload("res://Scenes/Peg Scenes/normal_peg.tscn") #Load peg s
 const GoldenPeg = preload("uid://dbmsssat1qfgf")
 const RocketPeg = preload("uid://d0hb3yrpeycik")
 const IronPeg = preload("uid://bho7vy7jev0wa")
-const TrianglePeg = preload("uid://dl2qmuenjes50")
 const BulletPeg = preload("uid://c8nbrn2ocqto4")
 const HurtPeg = preload("uid://jxo4i4rmh0c1")
 const KillPeg = preload("uid://bp4cvbqoaw20s")
@@ -21,7 +20,7 @@ const KillPeg = preload("uid://bp4cvbqoaw20s")
 @onready var endzone: CollisionShape2D = $Endzone/CollisionShape2D
 @onready var camera_2d: Camera2D = $Player/Camera2D
 
-var number_of_rows_array = [100, 2, 300] #Arrays will set their corresponding variable based on the settings chosen in mod menu
+var number_of_rows_array = [100, 200, 300] #Arrays will set their corresponding variable based on the settings chosen in mod menu
 var spawn_chance_array = [8, 5, 3]
 var number_of_rows = 300
 var spawn_positions = [0,0,0,0,0,0,0,0,0,0]
@@ -34,6 +33,7 @@ var y_offset = 200 #Y distance between each row of
 var instance = 0 #Clear var for storing node to spawn
 var is_bullet_out = false
 var current_augment = -1
+var board_array = []
 
 var timescale = 1
 
@@ -45,7 +45,7 @@ func create_peg_layout():
 			if randi_range(1,spawn_chance) == 1: #Randomly choose peg or empty
 				spawn_positions[n] = 1 #Fill spawn map with choice in location
 				var peg_choice = randi_range(1, special_chance) #Choose peg type to spawn in
-				if current_augment == 0 or current_augment == 3: #If Normal Augment/Polygon Peril
+				if current_augment == 0 or current_augment == 3: #If Normal Augment
 					if peg_choice == 1:
 						if randi_range(1,2) == 1:
 							instance = HurtPeg.instantiate()
@@ -59,11 +59,7 @@ func create_peg_layout():
 						#instance = BulletPeg.instantiate()
 						pass #BulletPegs removed until further notice, as they disrupt the natural flow of the game and make it less fun.
 					else:
-						var shape_type = randi_range(1,5) #Choose normal peg shape
-						if shape_type == 1 and current_augment == 3:
-							instance = TrianglePeg.instantiate()
-						else:
-							instance = NormalPeg.instantiate()
+						instance = NormalPeg.instantiate()
 				elif current_augment == 1: #Is Bounce House Augment
 					if randi_range(1, 5) == 1:
 						instance = RocketPeg.instantiate()
@@ -83,16 +79,24 @@ func create_peg_layout():
 					else:
 						instance = HurtPeg.instantiate()
 				instance.position = Vector2(75 * n - 340, y_offset * row) #340 = 375 - 1/2 Peg Width to fill row
+				if instance == GoldenPeg: #Add points to an array to calculate the max possible score
+					board_array.append(5)
+				elif instance == IronPeg:
+					board_array.append(10)
+				elif instance != HurtPeg: #Ignore Hurt Pegs to have the highest score w/o hazards hit
+					board_array.append(1)
+					
 				self.add_child(instance) #Finish node creation
 				if row % spawn_chance_increase_row_interval == number_of_rows % spawn_chance_increase_row_interval:
 					spawn_chance += spawn_chance_increase
+	Globals.calculate_max_possible_score(board_array) #Send the board to Globals for it to then add it together for sanity checks.
 	
 func _ready():
 	Engine.time_scale = timescale
 	spawn_chance = spawn_chance_array[Globals.settings[0]]
 	number_of_rows = number_of_rows_array[Globals.settings[1]]
 	current_augment = Globals.settings[2]
-	print(current_augment)
+	print("Current Augment: " + str(current_augment))
 	var end_y = y_offset * (number_of_rows + 1) #The y pos that the ball must reach to finish
 	create_peg_layout()
 	Globals.get_end_y(end_y)

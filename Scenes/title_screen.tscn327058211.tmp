@@ -34,9 +34,8 @@ var cursor_vel = 0
 
 		
 func _ready():
-	Engine.time_scale = 1 #Set to normal speed unless ur psycho
 	Globals.num_balls = 0 #Reset count of balls on screen
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	DisplayServer.window_set_size(Vector2i(375, 750))
 	for i in 26:
 		spawn_title_ball()
