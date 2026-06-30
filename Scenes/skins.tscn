@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3 uid="uid://bopq452g6j6b5"]
+
+[ext_resource type="Script" uid="uid://ba8idqf3tpajo" path="res://Scripts/skins.gd" id="1_2a2m2"]
+[ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_p4tl2"]
+[ext_resource type="Texture2D" uid="uid://ockdp48rdr10" path="res://Assets/Art/Ball_Peg/Skins/CoinSkin.png" id="3_u8to8"]
+[ext_resource type="Texture2D" uid="uid://bxtbt48ffv8oh" path="res://Assets/Art/Ball_Peg/white-ball-test.png" id="3_x8uvg"]
+[ext_resource type="Texture2D" uid="uid://gag1af72lmqw" path="res://Assets/Art/Ball_Peg/Skins/SmileSkin.png" id="4_pq553"]
+[ext_resource type="Texture2D" uid="uid://bh6nn3wbeu4qx" path="res://Assets/Art/Ball_Peg/Skins/SoccerSkin.png" id="5_x8uvg"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2a2m2"]
+load_path = "res://.godot/imported/white-ball-test.png-35516b9184f1c50989fd1bba4a0e619e.ctex"
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p4tl2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_x8uvg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_u8to8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_pq553")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_x8uvg")
+}],
+"loop": true,
+"name": &"SkinsAnimation",
+"speed": 5.0
+}]
+
+[node name="Skins" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2a2m2")
+
+[node name="BlackBg" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(185, 365.5)
+scale = Vector2(2.925, 5.11875)
+texture = ExtResource("1_p4tl2")
+
+[node name="Cursor" type="Sprite2D" parent="."]
+position = Vector2(25.520267, 26.437468)
+scale = Vector2(0.09, 0.091)
+texture = SubResource("CompressedTexture2D_2a2m2")
+
+[node name="SkinsDisplay" type="AnimatedSprite2D" parent="."]
+position = Vector2(25.715149, 26.5)
+scale = Vector2(0.073, 0.073)
+sprite_frames = SubResource("SpriteFrames_p4tl2")
+animation = &"SkinsAnimation"
+frame = 2
+frame_progress = 0.19002025
+
+[node name="SkinReqLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 0.2
+offset_left = 30.0
+offset_top = 538.0
+offset_right = 345.0
+offset_bottom = 591.0
+theme_override_font_sizes/font_size = 32

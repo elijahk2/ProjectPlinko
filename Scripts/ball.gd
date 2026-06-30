@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+#NOTE: THE SKINS ARE SLIGHTLY OFFCENTER FROM THE ORIGINAL. SHOULDNT BE AN ISSUE, BUT MAYBE
+
 @onready var particles: GPUParticles2D = $Particles
 @onready var hit_sound: AudioStreamPlayer = $BounceSFX
 @onready var dash_sfx: AudioStreamPlayer = $DashSFX

@@ -2,7 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_klylv"]
 [ext_resource type="FontFile" uid="uid://kqa215m7xt8s" path="res://Assets/Art/Fonts/TexpiSans.ttf" id="2_p3fck"]
-[ext_resource type="Texture2D" uid="uid://bxtbt48ffv8oh" path="res://Assets/Art/Ball_Peg/white-ball-test.png" id="5_55kwv"]
 
 [sub_resource type="GDScript" id="GDScript_rxejw"]
 resource_name = "titlescreen"
@@ -54,8 +53,10 @@ func _process(delta):
 			cursor.position = Vector2(289,431) #Hardcoded positions to display cursor at.
 		elif cursor_y == 2:
 			cursor.position = Vector2(289,485) # \" \"
-		else:
+		elif cursor_y == 3:
 			cursor.position = Vector2(289, 539)
+		else:
+			cursor.position = Vector2(289, 593)
 		if Input.is_action_just_pressed(\"down\") and cursor_y < 3 or Input.is_action_just_pressed(\"up\") and cursor_y > 1:
 			spawn_title_ball()
 		if Input.is_action_just_pressed(\"push\"):
@@ -65,9 +66,12 @@ func _process(delta):
 			elif cursor_y == 2:
 				Globals.play_cursor_move_sfx()
 				get_tree().change_scene_to_file(\"res://Scenes/leaderboards.tscn\")
+			elif cursor_y == 3:
+				Globals.play_cursor_move_sfx()
+				get_tree().change_scene_to_file(\"res://Scenes/skins.tscn\")
 			else:
 				get_tree().quit()
-		elif Input.is_action_just_pressed(\"down\") and cursor_y < 3:
+		elif Input.is_action_just_pressed(\"down\") and cursor_y < 4:
 			cursor_y += 1
 			Globals.play_cursor_move_sfx()
 		elif Input.is_action_just_pressed(\"up\") and cursor_y > 1:
@@ -95,6 +99,9 @@ func end_title():
 	lower_bound.set_deferred(\"disabled\", true)
 	#get_tree().change_scene_to_file(\"res://Scenes/modifier_choice.tscn\")
 "
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_p3fck"]
+load_path = "res://.godot/imported/white-ball-test.png-35516b9184f1c50989fd1bba4a0e619e.ctex"
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4gxqj"]
 normal = Vector2(-0.0038461252, -0.99999255)
@@ -136,7 +143,7 @@ text = "ProjectPlinko"
 [node name="Cursor" type="Sprite2D" parent="."]
 position = Vector2(289, 432.99994)
 scale = Vector2(0.07272223, 0.072722234)
-texture = ExtResource("5_55kwv")
+texture = SubResource("CompressedTexture2D_p3fck")
 
 [node name="PlayLabel" type="Label" parent="."]
 layout_mode = 1
@@ -159,12 +166,21 @@ offset_bottom = 517.0
 theme_override_font_sizes/font_size = 48
 text = "SCORES"
 
+[node name="SkinsLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 503.0
+offset_right = 229.0
+offset_bottom = 568.0
+theme_override_font_sizes/font_size = 48
+text = "SKINS"
+
 [node name="QuitLabel" type="Label" parent="."]
 layout_mode = 0
 offset_left = 34.0
-offset_top = 507.0
+offset_top = 555.0
 offset_right = 151.0
-offset_bottom = 572.0
+offset_bottom = 620.0
 theme_override_font_sizes/font_size = 48
 text = "QUIT"
 
