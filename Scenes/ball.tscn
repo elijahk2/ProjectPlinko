@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cbflfmyvv77qh"]
+[gd_scene load_steps=16 format=3 uid="uid://cbflfmyvv77qh"]
 
 [ext_resource type="Script" uid="uid://gobi7yyesavl" path="res://Scripts/ball.gd" id="1_ij5cq"]
 [ext_resource type="Texture2D" uid="uid://ckjauwg6fgfn6" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="2_376qj"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://ockdp48rdr10" path="res://Assets/Art/Ball_Peg/Skins/CoinSkin.png" id="4_hk63f"]
 [ext_resource type="AudioStream" uid="uid://bdnyjvpvrwm28" path="res://Assets/Sound/SFX/stringy.wav" id="4_yk4cr"]
 [ext_resource type="Texture2D" uid="uid://gag1af72lmqw" path="res://Assets/Art/Ball_Peg/Skins/SmileSkin.png" id="5_vm4s8"]
-[ext_resource type="Texture2D" uid="uid://bh6nn3wbeu4qx" path="res://Assets/Art/Ball_Peg/Skins/SoccerSkin.png" id="6_2b6yv"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d60mj"]
 bounce = 1.0
@@ -33,6 +32,12 @@ scale_min = 0.099999994
 scale_max = 0.099999994
 scale_curve = SubResource("CurveTexture_aw2wy")
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_31idh"]
+load_path = "res://.godot/imported/SoccerSkin.png-d7ed0dfcd3a9d7113bb5918d919c6d3c.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hk63f"]
+load_path = "res://.godot/imported/rorofish's_Skin.png-63f69541f7844cfd59ee731ad1b8301c.ctex"
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_cx4d7"]
 animations = [{
 "frames": [{
@@ -46,11 +51,14 @@ animations = [{
 "texture": ExtResource("5_vm4s8")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_2b6yv")
+"texture": SubResource("CompressedTexture2D_31idh")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_hk63f")
 }],
 "loop": true,
 "name": &"Skins",
-"speed": 5.0
+"speed": 2.0
 }]
 
 [node name="RigidBody2D" type="RigidBody2D"]
@@ -74,8 +82,8 @@ position = Vector2(-4, 5.9604645e-08)
 scale = Vector2(0.173, 0.173)
 sprite_frames = SubResource("SpriteFrames_cx4d7")
 animation = &"Skins"
-frame = 3
-frame_progress = 0.43033785
+frame = 4
+frame_progress = 0.009661986
 
 [node name="BounceSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_376qj")

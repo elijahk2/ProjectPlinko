@@ -29,6 +29,7 @@ var cursor_vel = 0
 @onready var play_label: Label = $PlayLabel
 @onready var leaderboard_label: Label = $LeaderboardLabel
 @onready var quit_label: Label = $QuitLabel
+@onready var skins_label: Label = $SkinsLabel
 
 
 		
@@ -90,7 +91,8 @@ func _process(delta):
 		leaderboard_label.position.x -= play_label_vel / 2 * delta
 		cursor.position.y += 5 * play_label_vel / 2 * delta
 		quit_label.position.x -= play_label_vel / 3 * delta
-		if Globals.num_balls == 0 and quit_label.position.x < -250 and cursor.position.y > 850:
+		skins_label.position.x -= play_label_vel / 4 * delta
+		if Globals.num_balls == 0 and skins_label.position.x < -250 and cursor.position.y > 850:
 			play_label_done = true
 			get_tree().change_scene_to_file(\"res://Scenes/modifier_choice.tscn\")
 

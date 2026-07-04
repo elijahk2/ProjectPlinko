@@ -24,7 +24,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	skin_req_label.text = skin_req_text[cursor_x + (cursor_y * 6)]
+	var id = cursor_x + (cursor_y * 6)
+	skin_req_label.text = skin_req_text[id]
 	cursor.position = Vector2(cursor_start_x + (cursor_offset_x * cursor_x), cursor_start_y + (cursor_offset_y * cursor_y))
 	if Input.is_action_just_pressed("back"):
 		get_tree().change_scene_to_file( "res://Scenes/title_screen.tscn")
@@ -36,6 +37,9 @@ func _process(delta: float) -> void:
 		cursor_x -= 1
 	if Input.is_action_just_pressed("right") and cursor_x < 5:
 		cursor_x += 1
+	if Input.is_action_just_pressed("push"):
+		Globals.set_skin(id)
+		print(id)
 
 func prepare_skin_display():
 	skins_display.hide()
