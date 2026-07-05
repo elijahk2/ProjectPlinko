@@ -27,6 +27,11 @@ var i = 0
 var chance = 5
 var jackpot_multiplier = 1 #initialize at 1 so it doesn't affect any other modes
 
+#Vars that will be sent to Globals for match recap
+var num_pegs_hit = 0
+var num_points_gained = 0
+var num_points_removed = 0
+
 # scale settings
 const octave_limit = 3.0
 const init_pitch_scale = 0.7
@@ -46,11 +51,13 @@ func _ready():
 		tap_power = 10
 
 func end_game(result):
+	Globals.get_match_recap(num_pegs_hit, num_points_gained, num_points_removed)
 	Globals.add_item_to_leaderboard(score_display.score)
-	get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
+	get_tree().change_scene_to_file("res://Scenes/match_recap.tscn")
 
 func _on_body_entered(body):
 	if body.is_in_group("all_pegs") and body.collision_layer == 1:
+		num_pegs_hit += 1
 		var instance = bg_transitions.instantiate() #instantiates a bg transition scene
 		instance.position = body.position
 		instance.color = animated_bg.frame
@@ -104,10 +111,13 @@ func _on_body_entered(body):
 		#JACKPOT NOT IN THE GAME CURRENTLY
 		if body.is_in_group("golden_pegs"): #Score increments for both gold and normal pegs
 			score_display.score = score_display.score + (5 * jackpot_multiplier) #Add 5 times whatever the jackpot multiplier is at
+			num_points_gained += 5
 		elif body.is_in_group("hurt_pegs"):
 			score_display.score -= 5
+			num_points_removed += 5
 		else:
 			score_display.score = score_display.score + jackpot_multiplier #Add points equal to the multiplier
+			num_points_gained += 1
 		if dash_ready < 0.9:
 			dash_ready += 0.1
 		

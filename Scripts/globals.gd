@@ -25,6 +25,12 @@ var last_played_drop_length = 0
 var last_played_density = 0
 var last_played_augment = 0
 
+#Vars for match recap
+var pegs_hit
+var points_gained
+var points_removed
+var max_score
+
 var max_name_length = 15
 
 signal score_changed(new_score) # Define a signal to modify ScoreDisplay's score value
@@ -182,3 +188,8 @@ func set_label_visibility(is_visible: bool):
 func set_skin(id): #Func called when the player selects a skin from the Skins menu. Var is pulled from ball.tscn at game start
 	player_skin = id
 	
+func get_match_recap(num_pegs_hit, num_points_gained, num_points_removed):
+	pegs_hit = num_pegs_hit
+	points_gained = num_points_gained
+	points_removed = num_points_removed
+	max_score = max_possible_score
