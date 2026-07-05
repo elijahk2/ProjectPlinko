@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bopq452g6j6b5"]
+[gd_scene load_steps=12 format=3 uid="uid://bopq452g6j6b5"]
 
 [ext_resource type="Script" uid="uid://ba8idqf3tpajo" path="res://Scripts/skins.gd" id="1_2a2m2"]
 [ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_p4tl2"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://gag1af72lmqw" path="res://Assets/Art/Ball_Peg/Skins/SmileSkin.png" id="4_pq553"]
 [ext_resource type="Texture2D" uid="uid://lej2gjq1rlk1" path="res://Assets/Art/Ball_Peg/Skins/SoccerSkin.png" id="5_x8uvg"]
 [ext_resource type="Texture2D" uid="uid://7jjbu5nsku7w" path="res://Assets/Art/Ball_Peg/Skins/rorofish's_Skin.png" id="7_x8uvg"]
+[ext_resource type="Texture2D" uid="uid://x5drjljd31aw" path="res://Assets/Art/Misc/SelectedSkin.png" id="8_7hrwx"]
+[ext_resource type="Texture2D" uid="uid://ic0ha4elj4yk" path="res://Assets/Art/Ball_Peg/Skins/rorofish's_Skin2White.png" id="8_gsxex"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2a2m2"]
 load_path = "res://.godot/imported/white-ball-test.png-35516b9184f1c50989fd1bba4a0e619e.ctex"
@@ -28,6 +30,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("7_x8uvg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_gsxex")
 }],
 "loop": true,
 "name": &"SkinsAnimation",
@@ -71,3 +76,9 @@ offset_top = 538.0
 offset_right = 345.0
 offset_bottom = 591.0
 theme_override_font_sizes/font_size = 32
+
+[node name="SelectedSkinSymbol" type="Sprite2D" parent="."]
+z_index = 100
+position = Vector2(26.000004, 26.000004)
+scale = Vector2(0.073, 0.073)
+texture = ExtResource("8_7hrwx")

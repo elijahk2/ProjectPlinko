@@ -1,5 +1,6 @@
 extends Control
 
+@onready var selected_skin: Sprite2D = $SelectedSkinSymbol
 @onready var cursor: Sprite2D = $Cursor
 @onready var skin_req_label: Label = $SkinReqLabel
 @onready var skins_display: AnimatedSprite2D = $SkinsDisplay
@@ -10,6 +11,8 @@ var cursor_offset_x = 60
 var cursor_offset_y = 75
 var cursor_x = 0
 var cursor_y = 0
+var selected_skin_x = 0
+var selected_skin_y = 0
 
 var skin_req_text: Array = [
 	"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
@@ -26,20 +29,27 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var id = cursor_x + (cursor_y * 6)
 	skin_req_label.text = skin_req_text[id]
-	cursor.position = Vector2(cursor_start_x + (cursor_offset_x * cursor_x), cursor_start_y + (cursor_offset_y * cursor_y))
+	cursor.position = Vector2(cursor_start_x + (cursor_offset_x * cursor_x), cursor_start_y + (cursor_offset_y * cursor_y)) #Move the cursor based on the cursor_x/cursor_y values
+	selected_skin.position = Vector2(cursor_start_x + (cursor_offset_x * selected_skin_x), cursor_start_y + (cursor_offset_y * selected_skin_y)) #Place the translucent grey check on the location of the selected skin
 	if Input.is_action_just_pressed("back"):
 		get_tree().change_scene_to_file( "res://Scenes/title_screen.tscn")
 	if Input.is_action_just_pressed("up") and cursor_y > 0:
 		cursor_y -= 1
+		Globals.play_cursor_move_sfx()
 	if Input.is_action_just_pressed("down") and cursor_y < 5:
 		cursor_y += 1
+		Globals.play_cursor_move_sfx()
 	if Input.is_action_just_pressed("left") and cursor_x > 0:
 		cursor_x -= 1
+		Globals.play_cursor_move_sfx()
 	if Input.is_action_just_pressed("right") and cursor_x < 5:
 		cursor_x += 1
+		Globals.play_cursor_move_sfx()
 	if Input.is_action_just_pressed("push"):
 		Globals.set_skin(id)
-		print(id)
+		selected_skin_x = cursor_x
+		selected_skin_y = cursor_y
+		Globals.play_cursor_move_sfx()
 
 func prepare_skin_display():
 	skins_display.hide()

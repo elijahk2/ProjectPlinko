@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cbflfmyvv77qh"]
+[gd_scene load_steps=17 format=3 uid="uid://cbflfmyvv77qh"]
 
 [ext_resource type="Script" uid="uid://gobi7yyesavl" path="res://Scripts/ball.gd" id="1_ij5cq"]
 [ext_resource type="Texture2D" uid="uid://ckjauwg6fgfn6" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="2_376qj"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ockdp48rdr10" path="res://Assets/Art/Ball_Peg/Skins/CoinSkin.png" id="4_hk63f"]
 [ext_resource type="AudioStream" uid="uid://bdnyjvpvrwm28" path="res://Assets/Sound/SFX/stringy.wav" id="4_yk4cr"]
 [ext_resource type="Texture2D" uid="uid://gag1af72lmqw" path="res://Assets/Art/Ball_Peg/Skins/SmileSkin.png" id="5_vm4s8"]
+[ext_resource type="Texture2D" uid="uid://ic0ha4elj4yk" path="res://Assets/Art/Ball_Peg/Skins/rorofish's_Skin2White.png" id="6_hk63f"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d60mj"]
 bounce = 1.0
@@ -55,6 +56,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("CompressedTexture2D_hk63f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_hk63f")
 }],
 "loop": true,
 "name": &"Skins",
