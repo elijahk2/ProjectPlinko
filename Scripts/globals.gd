@@ -19,6 +19,7 @@ var score_changing = 0
 var score_to_add = 0
 var highscore = 0
 var max_possible_score = 0
+var player_skin = 0
 
 var last_played_drop_length = 0
 var last_played_density = 0
@@ -177,3 +178,7 @@ func get_end_y(value):
 
 func set_label_visibility(is_visible: bool):
 	toggle_leaderboard_label.emit(is_visible)
+
+func set_skin(id): #Func called when the player selects a skin from the Skins menu. Var is pulled from ball.tscn at game start
+	player_skin = id
+	

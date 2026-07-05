@@ -1,5 +1,8 @@
 extends RigidBody2D
 
+#NOTE: THE SKINS ARE SLIGHTLY OFFCENTER FROM THE ORIGINAL. SHOULDNT BE AN ISSUE, BUT MAYBE
+
+@onready var skins_display: AnimatedSprite2D = $AnimatedSprite2D
 @onready var particles: GPUParticles2D = $Particles
 @onready var hit_sound: AudioStreamPlayer = $BounceSFX
 @onready var dash_sfx: AudioStreamPlayer = $DashSFX
@@ -31,6 +34,7 @@ var scale_degree = 0
 var time_elapsed = 0
 
 func _ready():
+	skins_display.frame = Globals.player_skin #Get the skin from Globals
 	#Set random x position, reset pitch, reset collision management
 	position = Vector2(randi_range(-200, 200), -2500) #Place the ball randomly on the x-axis and above all the pegs
 	hit_sound.pitch_scale = 1

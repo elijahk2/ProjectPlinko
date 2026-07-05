@@ -11,4 +11,5 @@ func _process(delta: float) -> void:
 		get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
 		
 func _on_leaderboard_label_toggled(is_visible: bool):
-	loading_label.visible = is_visible
+	#loading_label.visible = is_visible
+	pass
