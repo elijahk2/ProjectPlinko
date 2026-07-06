@@ -63,11 +63,6 @@ func _ready() -> void:
 	else:
 		rank = "A+"
 	ranking_label.text = rank
-	print("POM " + str(percentage_of_max))
-	print("PG " + str(points_gained))
-	print("PR " + str(points_removed))
-	print("MS " + str(max_score))
-	
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("back"):

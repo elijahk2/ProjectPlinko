@@ -79,14 +79,8 @@ func create_peg_layout():
 					else:
 						instance = HurtPeg.instantiate()
 				instance.position = Vector2(75 * n - 340, y_offset * row) #340 = 375 - 1/2 Peg Width to fill row
-				if instance == GoldenPeg: #Add points to an array to calculate the max possible score
-					board_array.append(5)
-				elif instance == IronPeg:
-					board_array.append(10)
-				elif instance != HurtPeg: #Ignore Hurt Pegs to have the highest score w/o hazards hit
-					board_array.append(1)
-					
 				self.add_child(instance) #Finish node creation
+				board_array.append(instance.point_value) #Each peg has a point value set in their scenes
 				if row % spawn_chance_increase_row_interval == number_of_rows % spawn_chance_increase_row_interval:
 					spawn_chance += spawn_chance_increase
 	Globals.calculate_max_possible_score(board_array) #Send the board to Globals for it to then add it together for sanity checks.
@@ -96,7 +90,6 @@ func _ready():
 	spawn_chance = spawn_chance_array[Globals.settings[0]]
 	number_of_rows = number_of_rows_array[Globals.settings[1]]
 	current_augment = Globals.settings[2]
-	print("Current Augment: " + str(current_augment))
 	var end_y = y_offset * (number_of_rows + 1) #The y pos that the ball must reach to finish
 	create_peg_layout()
 	Globals.get_end_y(end_y)
