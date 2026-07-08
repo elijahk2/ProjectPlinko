@@ -16,12 +16,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_s532c")
 
-[node name="StatsLabelsContainer" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="StatsLabel1" type="Label" parent="StatsLabelsContainer"]
+[node name="StatsLabel1" type="Label" parent="."]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 85.0
@@ -30,7 +25,7 @@ offset_bottom = 128.0
 theme_override_font_sizes/font_size = 32
 text = "Pegs Hit:"
 
-[node name="StatsLabel2" type="Label" parent="StatsLabelsContainer"]
+[node name="StatsLabel2" type="Label" parent="."]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 138.0
@@ -39,7 +34,7 @@ offset_bottom = 181.0
 theme_override_font_sizes/font_size = 32
 text = "Points Gained:"
 
-[node name="StatsLabel3" type="Label" parent="StatsLabelsContainer"]
+[node name="StatsLabel3" type="Label" parent="."]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 193.0
@@ -48,7 +43,7 @@ offset_bottom = 236.0
 theme_override_font_sizes/font_size = 32
 text = "Points Removed:"
 
-[node name="StatsLabel4" type="Label" parent="StatsLabelsContainer"]
+[node name="StatsLabel4" type="Label" parent="."]
 layout_mode = 0
 offset_left = 10.0
 offset_top = 248.0
@@ -57,7 +52,7 @@ offset_bottom = 291.0
 theme_override_font_sizes/font_size = 32
 text = "Overall Score:"
 
-[node name="YourRankIsLabel" type="Label" parent="StatsLabelsContainer"]
+[node name="YourRankIsLabel" type="Label" parent="."]
 layout_mode = 0
 offset_left = 52.0
 offset_top = 399.0
@@ -66,7 +61,7 @@ offset_bottom = 464.0
 theme_override_font_sizes/font_size = 48
 text = "Rank:"
 
-[node name="RankingLabel" type="Label" parent="StatsLabelsContainer"]
+[node name="RankingLabel" type="Label" parent="."]
 layout_mode = 0
 offset_left = 114.0
 offset_top = 453.0
