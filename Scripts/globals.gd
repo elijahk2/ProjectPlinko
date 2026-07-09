@@ -193,3 +193,9 @@ func get_match_recap(num_pegs_hit, num_points_gained, num_points_removed):
 	points_gained = num_points_gained
 	points_removed = num_points_removed
 	max_score = max_possible_score
+	
+func _input(event):
+	if event.is_action_pressed("screenshot"):
+		var capture = get_viewport().get_texture().get_image()
+		capture.save_png("C:/Users/Hides2023/Desktop/Plinko Screenshots" + str(Time.get_unix_time_from_system()) + ".png")
+		print("Screenshot saved!")
