@@ -80,7 +80,8 @@ func _on_body_entered(body):
 				
 		#For some reason, collision layers of 2 were being registered as hits by mask 1 ball, so multiple safety checks are in place to prevent that.
 		var frame_count = animated_bg.sprite_frames.get_frame_count("BG Color Shift")
-		animated_bg.frame = (animated_bg.frame + 1) % frame_count
+		if num_pegs_hit > 0:
+			animated_bg.frame = (animated_bg.frame + 1) % frame_count
 		if animated_bg.frame == 0:
 			animated_bg.frame = 1
 		

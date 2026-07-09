@@ -15,7 +15,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	animation.scale = Vector2(scale_magnitude, scale_magnitude)
-	scale_magnitude += 2 * delta
+	scale_magnitude += 8 * delta
 	if scale_magnitude > limit:
 		queue_free()
 	
