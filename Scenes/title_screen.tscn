@@ -135,13 +135,13 @@ texture = ExtResource("1_klylv")
 
 [node name="TitleHeader" type="Label" parent="."]
 layout_mode = 0
-offset_left = 12.0
-offset_top = 110.0
-offset_right = 511.0
-offset_bottom = 218.0
+offset_left = 21.0
+offset_top = 111.0
+offset_right = 520.0
+offset_bottom = 219.0
 theme_override_fonts/font = ExtResource("2_p3fck")
 theme_override_font_sizes/font_size = 56
-text = "ProjectPlinko"
+text = "Partly Plinko"
 
 [node name="Cursor" type="Sprite2D" parent="."]
 position = Vector2(289, 432.99994)
