@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bc8bwi8ckrrqd"]
+[gd_scene load_steps=10 format=3 uid="uid://bc8bwi8ckrrqd"]
 
 [ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_klylv"]
 [ext_resource type="FontFile" uid="uid://kqa215m7xt8s" path="res://Assets/Art/Fonts/TexpiSans.ttf" id="2_p3fck"]
+[ext_resource type="Texture2D" uid="uid://cqscqepwknqj7" path="res://Assets/Art/Misc/SettingsIcon.png" id="3_4gxqj"]
+[ext_resource type="Texture2D" uid="uid://ctlq1f7wduowa" path="res://Assets/Art/Misc/Discord-Symbol-Blurple.png" id="4_twnyg"]
 
 [sub_resource type="GDScript" id="GDScript_rxejw"]
 resource_name = "titlescreen"
@@ -10,6 +12,7 @@ script/source = "extends Control
 #NOTE: Would be nice to remove hardcoded positioning values for label movement
 
 var cursor_y = 1
+var cursor_x = 1
 var is_title_ended = false
 var text_vel = 0
 
@@ -18,6 +21,9 @@ var title_header_vel = 0
 var play_label_done = false
 var play_label_vel = 0
 var cursor_vel = 0
+var rotation_speed = 4
+var scale_diff = 0.13 #Default scale for discord icon
+var scale_direction = 1 #Direction to scale the discord icon
 
 @onready var cursor: Sprite2D = $Cursor
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
@@ -31,6 +37,8 @@ var cursor_vel = 0
 @onready var quit_label: Label = $QuitLabel
 @onready var skins_label: Label = $SkinsLabel
 
+@onready var settings_icon: Sprite2D = $SettingsIcon
+@onready var discord_icon: Sprite2D = $DiscordIcon
 
 		
 func _ready():
@@ -51,15 +59,36 @@ func spawn_title_ball():
 		
 func _process(delta):
 	if is_title_ended == false:
-		if cursor_y == 1:
-			cursor.position = Vector2(289,431) #Hardcoded positions to display cursor at.
-		elif cursor_y == 2:
-			cursor.position = Vector2(289,485) # \" \"
-		elif cursor_y == 3:
-			cursor.position = Vector2(289, 539)
+		if cursor_y < 5: #manage whether the user is on the main options or the taskbar below
+			cursor.show()
+			if cursor_y == 1:
+				cursor.position = Vector2(289,431) #Hardcoded positions to display cursor at.
+			elif cursor_y == 2:
+				cursor.position = Vector2(289,485) # \" \"
+			elif cursor_y == 3:
+				cursor.position = Vector2(289, 539)
+			else:
+				cursor.position = Vector2(289, 593)
 		else:
-			cursor.position = Vector2(289, 593)
-		if Input.is_action_just_pressed(\"down\") and cursor_y < 3 or Input.is_action_just_pressed(\"up\") and cursor_y > 1:
+			cursor.hide()
+		if cursor_y == 5: #manage taskbar
+			if Input.is_action_just_pressed(\"right\") and cursor_x < 2:
+				cursor_x += 1
+			if Input.is_action_just_pressed(\"left\") and cursor_x > 1:
+				cursor_x -= 1
+			if cursor_x == 1:
+				discord_icon.scale = Vector2(0.13, 0.13) #Default scale for the discord icon
+				settings_icon.rotate(rotation_speed)
+			else:
+				settings_icon.rotation_degrees = 0
+				discord_icon.scale = Vector2(scale_diff, scale_diff)
+				scale_diff += scale_direction * scale_diff * delta
+				if scale_diff > 0.16: #Monitor size of discord icon to switch direction of scaling
+					scale_direction = -1
+				elif scale_diff < 0.1:
+					scale_direction = 1
+				
+		if Input.is_action_just_pressed(\"down\") and cursor_y < 5 or Input.is_action_just_pressed(\"up\") and cursor_y > 1:
 			spawn_title_ball()
 		if Input.is_action_just_pressed(\"push\"):
 			if cursor_y == 1 and is_title_ended == false:
@@ -71,9 +100,14 @@ func _process(delta):
 			elif cursor_y == 3:
 				Globals.play_cursor_move_sfx()
 				get_tree().change_scene_to_file(\"res://Scenes/skins.tscn\")
-			else:
+			elif cursor_y == 4:
 				get_tree().quit()
-		elif Input.is_action_just_pressed(\"down\") and cursor_y < 4:
+			else:
+				if cursor_x == 1:
+					get_tree().change_scene_to_file(\"res://Scenes/settings.tscn\")
+				elif cursor_x == 2:
+					OS.shell_open(\"https://discord.gg/R4JrmDj5n2\")
+		elif Input.is_action_just_pressed(\"down\") and cursor_y < 5:
 			cursor_y += 1
 			Globals.play_cursor_move_sfx()
 		elif Input.is_action_just_pressed(\"up\") and cursor_y > 1:
@@ -205,3 +239,13 @@ shape = SubResource("WorldBoundaryShape2D_twnyg")
 [node name="Right Bound" type="CollisionShape2D" parent="World Walls"]
 position = Vector2(498, 2)
 shape = SubResource("WorldBoundaryShape2D_55kwv")
+
+[node name="SettingsIcon" type="Sprite2D" parent="."]
+position = Vector2(39, 711)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("3_4gxqj")
+
+[node name="DiscordIcon" type="Sprite2D" parent="."]
+position = Vector2(121, 712)
+scale = Vector2(0.13, 0.13)
+texture = ExtResource("4_twnyg")
