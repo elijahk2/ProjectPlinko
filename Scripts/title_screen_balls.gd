@@ -5,6 +5,8 @@ var frame_count = 4 #Number of frames
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if not Globals.title_balls_toggle:
+		self.hide()
 	ball_frames_node.frame = randi_range(0, frame_count)
 	self.apply_central_impulse(Vector2(randi_range(-10,10), 0))
 	pass # Replace with function body.

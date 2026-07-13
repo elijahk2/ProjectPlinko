@@ -2,11 +2,14 @@ extends Node2D
 
 var color = 1
 var scale_magnitude = 0.1
+var scale_speed = 8
 var animated_bg = null
+var limit = 50
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	scale_speed = Globals.color_shift_speed
 	self.z_index = -101
 	color = (color + 1) % 7
 	animation.frame = color
@@ -14,7 +17,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	animation.scale = Vector2(scale_magnitude, scale_magnitude)
-	scale_magnitude += 0.05
-	if scale_magnitude > 50:
+	scale_magnitude += scale_speed * delta
+	if scale_magnitude > limit:
 		queue_free()
 	

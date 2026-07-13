@@ -20,10 +20,20 @@ var score_to_add = 0
 var highscore = 0
 var max_possible_score = 0
 var player_skin = 0
+var volume = 1
+var color_shift_speed = 8
+var title_balls_toggle = true
+var colorblind = false
 
 var last_played_drop_length = 0
 var last_played_density = 0
 var last_played_augment = 0
+
+#Vars for match recap
+var pegs_hit
+var points_gained
+var points_removed
+var max_score
 
 var max_name_length = 15
 
@@ -116,8 +126,10 @@ func on_scores_downloaded(message, this_board, result):
 				return
 			print("Your Highscore: " + str(highscore))
 			print("Your Recent Score: " + str(score_to_add))
-			if score_to_add > highscore:
+			if score_to_add > highscore and highscore != null:
 				Steam.uploadLeaderboardScore(score_to_add, true, [], boardHandle)
+			else:
+				score_changing = 0
 		leaderboard = []
 		for entry in result:
 			var name = Steam.getFriendPersonaName(entry["steam_id"])
@@ -181,4 +193,26 @@ func set_label_visibility(is_visible: bool):
 
 func set_skin(id): #Func called when the player selects a skin from the Skins menu. Var is pulled from ball.tscn at game start
 	player_skin = id
+	
+func get_match_recap(num_pegs_hit, num_points_gained, num_points_removed):
+	pegs_hit = num_pegs_hit
+	points_gained = num_points_gained
+	points_removed = num_points_removed
+	max_score = max_possible_score
+	
+func _input(event):
+	if event.is_action_pressed("screenshot"):
+		var capture = get_viewport().get_texture().get_image()
+		capture.save_png("C:/Users/Hides2023/Desktop/Plinko Screenshots" + str(Time.get_unix_time_from_system()) + ".png")
+		print("Screenshot saved!")
+
+func update_settings(volume_setting, color_shift_setting, title_balls_setting, colorblind_setting):
+	volume = volume_setting / 100.0
+	color_shift_speed = color_shift_setting
+	title_balls_toggle = title_balls_setting
+	colorblind = colorblind_setting
+	var bus_index = AudioServer.get_bus_index("Bounce SFX")
+	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
+	bus_index = AudioServer.get_bus_index("Title Cursor SFX")
+	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
 	

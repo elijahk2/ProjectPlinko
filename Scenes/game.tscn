@@ -2,14 +2,14 @@
 
 [ext_resource type="PackedScene" uid="uid://cbflfmyvv77qh" path="res://Scenes/ball.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://d1evh0y4dcen6" path="res://Scripts/game.tres.gd" id="1_rfjv2"]
-[ext_resource type="Texture2D" uid="uid://bf7v4rfynocwf" path="res://Assets/Art/Background/red_bg.png" id="2_i6g32"]
 [ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="2_wrm1d"]
-[ext_resource type="Texture2D" uid="uid://5l56cu8ioubg" path="res://Assets/Art/Background/orange_bg.png" id="3_rku1e"]
-[ext_resource type="Texture2D" uid="uid://dins4rvfc26ry" path="res://Assets/Art/Background/green_bg.png" id="4_o5yvi"]
-[ext_resource type="Texture2D" uid="uid://dlv8hjuacyx4n" path="res://Assets/Art/Background/light_blue_bg.png" id="5_rku1e"]
-[ext_resource type="Texture2D" uid="uid://cw3ljvvq85hnd" path="res://Assets/Art/Background/dark_blue_bg.png" id="6_rfjv2"]
-[ext_resource type="Texture2D" uid="uid://b6am1f5l1onb1" path="res://Assets/Art/Background/pink_bg.png" id="7_1phco"]
-[ext_resource type="Texture2D" uid="uid://b2apr10sqnkgt" path="res://Assets/Art/Background/purple_bg.png" id="8_nb51f"]
+[ext_resource type="Texture2D" uid="uid://bf7v4rfynocwf" path="res://Assets/Art/Background/red_bg.png" id="3_1phco"]
+[ext_resource type="Texture2D" uid="uid://5l56cu8ioubg" path="res://Assets/Art/Background/orange_bg.png" id="4_nb51f"]
+[ext_resource type="Texture2D" uid="uid://dins4rvfc26ry" path="res://Assets/Art/Background/green_bg.png" id="6_ewbju"]
+[ext_resource type="Texture2D" uid="uid://cw3ljvvq85hnd" path="res://Assets/Art/Background/dark_blue_bg.png" id="7_85qyi"]
+[ext_resource type="Texture2D" uid="uid://dlv8hjuacyx4n" path="res://Assets/Art/Background/light_blue_bg.png" id="8_iivbl"]
+[ext_resource type="Texture2D" uid="uid://b2apr10sqnkgt" path="res://Assets/Art/Background/purple_bg.png" id="9_7nbq1"]
+[ext_resource type="Texture2D" uid="uid://b6am1f5l1onb1" path="res://Assets/Art/Background/pink_bg.png" id="10_exi56"]
 [ext_resource type="FontFile" uid="uid://kqa215m7xt8s" path="res://Assets/Art/Fonts/TexpiSans.ttf" id="11_rfjv2"]
 [ext_resource type="AudioStream" uid="uid://bdnyjvpvrwm28" path="res://Assets/Sound/SFX/stringy.wav" id="12_rku1e"]
 [ext_resource type="AudioStream" uid="uid://4otrieqtiyw" path="res://Assets/Sound/Music/Humming.mp3" id="13_rfjv2"]
@@ -18,12 +18,9 @@
 resource_name = "background"
 script/source = "extends Sprite2D
 
-@onready var animated_bg: AnimatedSprite2D = $AnimatedSprite2D
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	animated_bg.frame = 0
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -37,25 +34,25 @@ animations = [{
 "texture": ExtResource("2_wrm1d")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_i6g32")
+"texture": ExtResource("3_1phco")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_rku1e")
+"texture": ExtResource("4_nb51f")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_o5yvi")
+"texture": ExtResource("6_ewbju")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_rku1e")
+"texture": ExtResource("7_85qyi")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_rfjv2")
+"texture": ExtResource("8_iivbl")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_nb51f")
+"texture": ExtResource("10_exi56")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_1phco")
+"texture": ExtResource("9_7nbq1")
 }],
 "loop": false,
 "name": &"BG Color Shift",
@@ -109,10 +106,7 @@ script = SubResource("GDScript_v158k")
 position = Vector2(-1.6363637, 4.7455654)
 sprite_frames = SubResource("SpriteFrames_h4fw4")
 animation = &"BG Color Shift"
-frame = 7
 frame_progress = 1.0
-
-[node name="TransitionContainer" type="Node" parent="Background Control"]
 
 [node name="ChargeDisplay" type="Label" parent="Background Control"]
 z_index = 2
@@ -125,6 +119,7 @@ theme_override_font_sizes/font_size = 32
 text = "100%"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ScoreDisplay" type="Label" parent="Background Control"]
 z_index = 2
@@ -142,6 +137,17 @@ label_settings = SubResource("LabelSettings_rfjv2")
 horizontal_alignment = 1
 vertical_alignment = 1
 script = SubResource("GDScript_wowpa")
+metadata/_edit_use_anchors_ = true
+
+[node name="BlackRectCoverup" type="AnimatedSprite2D" parent="Background Control"]
+z_index = 1000
+position = Vector2(0, 2024)
+scale = Vector2(5.5, 10.746876)
+sprite_frames = SubResource("SpriteFrames_h4fw4")
+animation = &"BG Color Shift"
+frame_progress = 1.0
+
+[node name="TransitionContainer" type="Node" parent="Background Control"]
 
 [node name="Player" parent="." instance=ExtResource("1_ebmjs")]
 z_index = 1

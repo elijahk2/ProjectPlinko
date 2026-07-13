@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1m7lt6rao85q"]
+
+[ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_4geyq"]
+[ext_resource type="Script" uid="uid://btj3bafvjul3w" path="res://Scripts/settings.gd" id="1_i44u3"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_i44u3"]
+load_path = "res://.godot/imported/white-ball-test.png-35516b9184f1c50989fd1bba4a0e619e.ctex"
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i44u3")
+
+[node name="BlackBg" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(185, 365.5)
+scale = Vector2(2.925, 5.11875)
+texture = ExtResource("1_4geyq")
+
+[node name="Volume" type="Label" parent="."]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 14.0
+offset_right = 280.0
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 48
+text = "Volume: 100"
+
+[node name="Color Shift" type="Label" parent="."]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 83.0
+offset_right = 341.0
+offset_bottom = 148.0
+theme_override_font_sizes/font_size = 40
+text = "Color Speed: 8"
+
+[node name="Title Balls" type="Label" parent="."]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 148.0
+offset_right = 341.0
+offset_bottom = 213.0
+theme_override_font_sizes/font_size = 40
+text = "Title Balls: ON"
+
+[node name="Colorblind" type="Label" parent="."]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 214.0
+offset_right = 341.0
+offset_bottom = 279.0
+theme_override_font_sizes/font_size = 40
+text = "Colorblind:"
+
+[node name="Cursor" type="Sprite2D" parent="."]
+position = Vector2(321.00003, 113.00001)
+scale = Vector2(0.07272223, 0.072722234)
+texture = SubResource("CompressedTexture2D_i44u3")
