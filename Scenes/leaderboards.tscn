@@ -47,6 +47,15 @@ offset_bottom = 427.0
 theme_override_font_sizes/font_size = 48
 text = "Loading..."
 
+[node name="UserScoreLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 713.0
+offset_right = 323.0
+offset_bottom = 746.0
+theme_override_font_sizes/font_size = 24
+text = "abcdefghijklmnopqrstuvwxyz"
+
 [node name="ModifierSelectManager" type="Node" parent="."]
 script = ExtResource("4_5yl7b")
 
@@ -114,6 +123,15 @@ texture = ExtResource("6_uswq1")
 
 [node name="HeaderUnderline" type="Line2D" parent="."]
 position = Vector2(0, 14.285713)
+scale = Vector2(1, 0.71428573)
+points = PackedVector2Array(315, 61.199997, 96.68875, 59.996704, 61, 59.799995)
+width = 5.0
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="HeaderUnderline2" type="Line2D" parent="."]
+position = Vector2(0, 665)
 scale = Vector2(1, 0.71428573)
 points = PackedVector2Array(315, 61.199997, 96.68875, 59.996704, 61, 59.799995)
 width = 5.0
