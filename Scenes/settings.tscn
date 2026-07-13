@@ -48,6 +48,15 @@ offset_bottom = 213.0
 theme_override_font_sizes/font_size = 40
 text = "Title Balls: ON"
 
+[node name="Colorblind" type="Label" parent="."]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 214.0
+offset_right = 341.0
+offset_bottom = 279.0
+theme_override_font_sizes/font_size = 40
+text = "Colorblind:"
+
 [node name="Cursor" type="Sprite2D" parent="."]
 position = Vector2(321.00003, 113.00001)
 scale = Vector2(0.07272223, 0.072722234)

@@ -35,7 +35,6 @@ var instance = 0 #Clear var for storing node to spawn
 var is_bullet_out = false
 var current_augment = -1
 var board_array = []
-
 var timescale = 1
 
 func create_peg_layout():
