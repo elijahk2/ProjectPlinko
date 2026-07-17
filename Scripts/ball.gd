@@ -31,6 +31,9 @@ var jackpot_multiplier = 1 #initialize at 1 so it doesn't affect any other modes
 var num_pegs_hit = 0
 var num_points_gained = 0
 var num_points_removed = 0
+var did_complete = 0
+var num_gold_pegs_hit = 0
+var num_peg_bounces = 0
 
 # scale settings
 const octave_limit = 3.0
@@ -51,13 +54,14 @@ func _ready():
 		tap_power = 10
 
 func end_game(result):
-	Globals.get_match_recap(num_pegs_hit, num_points_gained, num_points_removed)
+	Globals.get_match_recap(num_pegs_hit, num_points_gained, num_points_removed, result, num_gold_pegs_hit, num_peg_bounces)
 	Globals.add_item_to_leaderboard(score_display.score)
 	get_tree().change_scene_to_file("res://Scenes/match_recap.tscn")
 
 func _on_body_entered(body):
 	if body.is_in_group("all_pegs") and body.collision_layer == 1:
 		num_pegs_hit += 1
+		num_peg_bounces += 1
 		var instance = bg_transitions.instantiate() #instantiates a bg transition scene
 		instance.position = body.position
 		instance.color = animated_bg.frame
@@ -73,7 +77,6 @@ func _on_body_entered(body):
 			body.set_collision_layer_value(2, true)
 		else:
 			body.health -= 1
-			print("IRON PEG HEALTH: " + str(body.health))
 			if body.health < 1:
 				body.set_collision_layer_value(1, false) #Prevent re-colliding during fadeout animation
 				body.set_collision_layer_value(2, true)
@@ -97,7 +100,8 @@ func _on_body_entered(body):
 			apply_impulse(Vector2(0, -2500), Vector2(0,0))
 			
 		if body.is_in_group("kill_pegs"): #Management for game end on impact w/ killpegs
-			end_game("You failed...") #Edit to change the message displayed on the end game screen
+			did_complete = 0
+			end_game(did_complete) #Edit to change the message displayed on the end game screen
 		
 		if body.is_in_group("bullet_pegs") and is_bullet_out == false: #Management for bullet instantiation
 			is_bullet_out = true
@@ -113,6 +117,7 @@ func _on_body_entered(body):
 		if body.is_in_group("golden_pegs"): #Score increments for both gold and normal pegs
 			score_display.score = score_display.score + (5 * jackpot_multiplier) #Add 5 times whatever the jackpot multiplier is at
 			num_points_gained += 5
+			num_gold_pegs_hit += 1
 		elif body.is_in_group("hurt_pegs"):
 			score_display.score -= 5
 			num_points_removed += 5
@@ -123,9 +128,13 @@ func _on_body_entered(body):
 			dash_ready += 0.1
 		
 func _physics_process(_delta: float) -> void:
+	if self.position.y < -2500:
+		Globals.bounce_above_top()
+		print("Bounce skin unlocked")
 	overall_power = dash_power * dash_ready
 	if self.position.y > Globals.end_y + end_padding:
-		end_game("You made it!")  #Edit to change the message displayed on the end game screen
+		did_complete = 1
+		end_game(did_complete)  #Edit to change the message displayed on the end game screen
 	charge_display.text = str(100 * dash_ready) + "%" 
 	#Manage key presses (>= 0.99 is used to prevent non-exact values for dash_ready)
 	if time_elapsed < 60 and particles.emitting == true: #Time (1s) since started showing particles

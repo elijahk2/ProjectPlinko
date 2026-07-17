@@ -1,14 +1,26 @@
-[gd_scene load_steps=12 format=3 uid="uid://bopq452g6j6b5"]
+[gd_scene load_steps=24 format=3 uid="uid://bopq452g6j6b5"]
 
 [ext_resource type="Script" uid="uid://ba8idqf3tpajo" path="res://Scripts/skins.gd" id="1_2a2m2"]
 [ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_p4tl2"]
 [ext_resource type="Texture2D" uid="uid://ockdp48rdr10" path="res://Assets/Art/Ball_Peg/Skins/CoinSkin.png" id="3_u8to8"]
 [ext_resource type="Texture2D" uid="uid://bxtbt48ffv8oh" path="res://Assets/Art/Ball_Peg/white-ball-test.png" id="3_x8uvg"]
 [ext_resource type="Texture2D" uid="uid://gag1af72lmqw" path="res://Assets/Art/Ball_Peg/Skins/SmileSkin.png" id="4_pq553"]
+[ext_resource type="Texture2D" uid="uid://bn1xu3w8fkjb" path="res://Assets/Art/Ball_Peg/Skins/GreenSkin.png" id="4_s0vgd"]
+[ext_resource type="Texture2D" uid="uid://bvl1w1vbhuvt" path="res://Assets/Art/Ball_Peg/Skins/BrownBallSkin.png" id="5_npdc5"]
 [ext_resource type="Texture2D" uid="uid://lej2gjq1rlk1" path="res://Assets/Art/Ball_Peg/Skins/SoccerSkin.png" id="5_x8uvg"]
+[ext_resource type="Texture2D" uid="uid://dldl53bktfxhx" path="res://Assets/Art/Ball_Peg/Skins/5050Skin.png" id="6_rqnwi"]
+[ext_resource type="Texture2D" uid="uid://b1o733tsheal1" path="res://Assets/Art/Ball_Peg/Skins/BouncePegSkin.png" id="7_7uvbe"]
 [ext_resource type="Texture2D" uid="uid://7jjbu5nsku7w" path="res://Assets/Art/Ball_Peg/Skins/rorofish's_Skin.png" id="7_x8uvg"]
 [ext_resource type="Texture2D" uid="uid://x5drjljd31aw" path="res://Assets/Art/Misc/SelectedSkin.png" id="8_7hrwx"]
+[ext_resource type="Texture2D" uid="uid://qc5ayq08wvtq" path="res://Assets/Art/Ball_Peg/Skins/NeoSkin.png" id="8_70kot"]
 [ext_resource type="Texture2D" uid="uid://ic0ha4elj4yk" path="res://Assets/Art/Ball_Peg/Skins/rorofish's_Skin2White.png" id="8_gsxex"]
+[ext_resource type="Texture2D" uid="uid://c3na0q53mss4p" path="res://Assets/Art/Ball_Peg/Skins/PerfectScoreSkin.png" id="9_ofn5b"]
+[ext_resource type="Texture2D" uid="uid://des4flqa5ngn4" path="res://Assets/Art/Misc/SkinLocked.png" id="10_657b6"]
+[ext_resource type="Texture2D" uid="uid://dgo7qid3lmiuc" path="res://Assets/Art/Ball_Peg/Skins/BronzeStarSkin.png" id="15_7uvbe"]
+[ext_resource type="Texture2D" uid="uid://dlqfo8y6wuv6u" path="res://Assets/Art/Ball_Peg/Skins/BowlingBallSkin.png" id="15_ofn5b"]
+[ext_resource type="Texture2D" uid="uid://dgbl5x4rnfqik" path="res://Assets/Art/Ball_Peg/Skins/SilverStarSkin.png" id="16_70kot"]
+[ext_resource type="Texture2D" uid="uid://7h0dfjbkqw57" path="res://Assets/Art/Ball_Peg/Skins/GoldStarSkin.png" id="17_ofn5b"]
+[ext_resource type="Texture2D" uid="uid://cphkbxvn6dyik" path="res://Assets/Art/Ball_Peg/Skins/GoldDiggerSkin.png" id="18_70kot"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2a2m2"]
 load_path = "res://.godot/imported/white-ball-test.png-35516b9184f1c50989fd1bba4a0e619e.ctex"
@@ -20,7 +32,31 @@ animations = [{
 "texture": ExtResource("3_x8uvg")
 }, {
 "duration": 1.0,
+"texture": ExtResource("4_s0vgd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_npdc5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_rqnwi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_7uvbe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_70kot")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ofn5b")
+}, {
+"duration": 1.0,
 "texture": ExtResource("3_u8to8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_70kot")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_x8uvg")
 }, {
 "duration": 1.0,
 "texture": ExtResource("4_pq553")
@@ -29,7 +65,16 @@ animations = [{
 "texture": ExtResource("5_x8uvg")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_x8uvg")
+"texture": ExtResource("15_ofn5b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_7uvbe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_70kot")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_ofn5b")
 }, {
 "duration": 1.0,
 "texture": ExtResource("8_gsxex")
@@ -64,7 +109,6 @@ position = Vector2(25.715149, 26.5)
 scale = Vector2(0.073, 0.073)
 sprite_frames = SubResource("SpriteFrames_p4tl2")
 animation = &"SkinsAnimation"
-frame = 4
 frame_progress = 0.11420114
 
 [node name="SkinReqLabel" type="Label" parent="."]
@@ -76,9 +120,15 @@ offset_top = 538.0
 offset_right = 345.0
 offset_bottom = 591.0
 theme_override_font_sizes/font_size = 32
+autowrap_mode = 3
 
 [node name="SelectedSkinSymbol" type="Sprite2D" parent="."]
 z_index = 100
 position = Vector2(26.000004, 26.000004)
 scale = Vector2(0.073, 0.073)
 texture = ExtResource("8_7hrwx")
+
+[node name="SkinLockedSymbol" type="Sprite2D" parent="."]
+position = Vector2(-28.99997, -73.000015)
+scale = Vector2(0.073, 0.073)
+texture = ExtResource("10_657b6")

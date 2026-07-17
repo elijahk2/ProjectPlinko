@@ -41,32 +41,26 @@ func _ready() -> void:
 	stats_label_3.text = "Points Removed: " + str(points_removed)
 	stats_label_4.text = "Overall Score: " + str(points_gained - points_removed)
 	percentage_of_max = ((float(points_gained - points_removed)) / max_score * 100) + curve
-	if percentage_of_max <= 59: #Begin code to determine rank based on percentage
+	if percentage_of_max > 50: #Pre-curve check to see if they got a B or better
+		Globals.register_fiftyfifty_unlock()
+	if percentage_of_max >= 98: #Check if they got a near-perfect score
+		Globals.register_perfectionist_unlock()
+	if percentage_of_max <= 10:
 		rank = "F"
-	elif percentage_of_max <= 62:
-		rank = "D-"
-	elif percentage_of_max <= 66:
+	elif percentage_of_max <= 30:
 		rank = "D"
-	elif percentage_of_max <= 69:
-		rank = "D+"
-	elif percentage_of_max <= 72:
-		rank = "C-"
-	elif percentage_of_max <= 76:
+	elif percentage_of_max <= 50:
 		rank = "C"
-	elif percentage_of_max <= 79:
-		rank = "C+"
-	elif percentage_of_max <= 82:
-		rank = "B-"
-	elif percentage_of_max <= 86:
+	elif percentage_of_max <= 70:
 		rank = "B"
-	elif percentage_of_max <= 89:
-		rank = "B+"
-	elif percentage_of_max <= 92:
-		rank = "A-"
-	elif percentage_of_max <= 96:
+	elif percentage_of_max <= 85:
 		rank = "A"
+	elif percentage_of_max <= 93:
+		rank = "S"
+	elif percentage_of_max <= 98:
+		rank = "SS"
 	else:
-		rank = "A+"
+		rank = "SSS"
 	ranking_label.text = rank
 
 func _process(delta: float) -> void:
