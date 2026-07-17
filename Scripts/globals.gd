@@ -73,7 +73,7 @@ func _ready():
 	title_song_player.stream = title_song
 	add_child(sfx_player)
 	add_child(title_song_player)
-	title_song_player.play()
+	#title_song_player.play()
 func _process(delta: float) -> void:
 	Steam.run_callbacks()
 func _on_user_stats_recieved(game_id, result, user_id):
