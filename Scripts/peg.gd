@@ -35,16 +35,15 @@ func _ready() -> void:
 		point_value = 10
 		sprite_2d.texture = iron_texture
 	elif is_in_group("hurt_pegs"):
-		point_value = -5 # Adjust as needed for penalty
+		point_value = 0
 		sprite_2d.texture = hurt_texture
 	elif is_in_group("kill_pegs"):
-		point_value = 0 # Or whatever makes sense for a "kill" peg
+		point_value = 0
 		sprite_2d.texture = kill_texture
 	elif is_in_group("rocket_pegs"):
-		point_value = 15
+		point_value = 1
 		sprite_2d.texture = rocket_texture
 	else:
-		# Default fallback for regular pegs
 		point_value = 1
 		sprite_2d.texture = normal_texture
 		

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvt1xy4fmcrdg"]
+
+[ext_resource type="Script" uid="uid://csbcvato8ad57" path="res://Scripts/info_menu.gd" id="1_7ldmo"]
+[ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_hlwtc"]
+
+[node name="Info Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7ldmo")
+
+[node name="BlackBg" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(185, 365.5)
+scale = Vector2(2.925, 5.11875)
+texture = ExtResource("1_hlwtc")

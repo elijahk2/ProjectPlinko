@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cbflfmyvv77qh"]
+[gd_scene load_steps=23 format=3 uid="uid://cbflfmyvv77qh"]
 
 [ext_resource type="Script" uid="uid://gobi7yyesavl" path="res://Scripts/ball.gd" id="1_ij5cq"]
 [ext_resource type="Texture2D" uid="uid://ckjauwg6fgfn6" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="2_376qj"]
@@ -16,11 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://c3na0q53mss4p" path="res://Assets/Art/Ball_Peg/Skins/PerfectScoreSkin.png" id="9_cbcs7"]
 [ext_resource type="Texture2D" uid="uid://7jjbu5nsku7w" path="res://Assets/Art/Ball_Peg/Skins/rorofish's_Skin.png" id="12_gk2nl"]
 [ext_resource type="Texture2D" uid="uid://lej2gjq1rlk1" path="res://Assets/Art/Ball_Peg/Skins/SoccerSkin.png" id="14_gl0xx"]
-[ext_resource type="Texture2D" uid="uid://dlqfo8y6wuv6u" path="res://Assets/Art/Ball_Peg/Skins/BowlingBallSkin.png" id="15_cbcs7"]
-[ext_resource type="Texture2D" uid="uid://dgo7qid3lmiuc" path="res://Assets/Art/Ball_Peg/Skins/BronzeStarSkin.png" id="15_j0xqq"]
-[ext_resource type="Texture2D" uid="uid://dgbl5x4rnfqik" path="res://Assets/Art/Ball_Peg/Skins/SilverStarSkin.png" id="16_cbcs7"]
-[ext_resource type="Texture2D" uid="uid://7h0dfjbkqw57" path="res://Assets/Art/Ball_Peg/Skins/GoldStarSkin.png" id="17_gk2nl"]
-[ext_resource type="Texture2D" uid="uid://cphkbxvn6dyik" path="res://Assets/Art/Ball_Peg/Skins/GoldDiggerSkin.png" id="18_gl0xx"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d60mj"]
 bounce = 1.0
@@ -74,7 +69,7 @@ animations = [{
 "texture": ExtResource("4_hk63f")
 }, {
 "duration": 1.0,
-"texture": ExtResource("18_gl0xx")
+"texture": ExtResource("6_hk63f")
 }, {
 "duration": 1.0,
 "texture": ExtResource("12_gk2nl")
@@ -84,21 +79,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("14_gl0xx")
-}, {
-"duration": 1.0,
-"texture": ExtResource("15_cbcs7")
-}, {
-"duration": 1.0,
-"texture": ExtResource("15_j0xqq")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_cbcs7")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_gk2nl")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_hk63f")
 }],
 "loop": true,
 "name": &"Skins",

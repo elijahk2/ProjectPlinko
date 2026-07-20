@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b8vkec06mqpmg"]
+[gd_scene load_steps=13 format=3 uid="uid://b8vkec06mqpmg"]
 
 [ext_resource type="Texture2D" uid="uid://car2enqq87kti" path="res://Assets/Art/Ball_Peg/HurtPeg.png" id="1_5xh06"]
 [ext_resource type="Script" uid="uid://433luxgvcsfb" path="res://Scripts/title_screen_balls.gd" id="1_jhmnm"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://cm10gmaqrajmw" path="res://Assets/Art/Ball_Peg/GoldenPeg.png" id="3_02unv"]
 [ext_resource type="Texture2D" uid="uid://picxtttkm6tx" path="res://Assets/Art/Ball_Peg/IronPeg.png" id="5_npktw"]
 [ext_resource type="Texture2D" uid="uid://d081t0ufl8qtd" path="res://Assets/Art/Ball_Peg/RocketPeg.png" id="6_jqjla"]
+[ext_resource type="Texture2D" uid="uid://dgo7qid3lmiuc" path="res://Assets/Art/Ball_Peg/Skins/BronzeStarSkin.png" id="7_jqjla"]
+[ext_resource type="Texture2D" uid="uid://dgbl5x4rnfqik" path="res://Assets/Art/Ball_Peg/Skins/SilverStarSkin.png" id="8_7pu2i"]
+[ext_resource type="Texture2D" uid="uid://7h0dfjbkqw57" path="res://Assets/Art/Ball_Peg/Skins/GoldStarSkin.png" id="9_148y0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5xh06"]
 bounce = 1.0
@@ -30,6 +33,15 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("6_jqjla")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jqjla")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_7pu2i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_148y0")
 }],
 "loop": true,
 "name": &"Ball Frames",

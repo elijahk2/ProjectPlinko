@@ -13,24 +13,27 @@ const MiniBullet = preload("uid://csblsch6lhyfy")
 const bg_transitions = preload("res://Scenes/BGTransitions.tscn")
 
 var is_spent = false
-var dash_ready = 0 #Measure of dash energy (1.0 is 100%)
-var is_bullet_out = false #Will change to true when a green ball is launched to prevent many from spawning
-var end_padding = 50 #Ensures that the multiplier scripts run correctly before the scene changes
+var dash_ready = 0 # Measure of dash energy (1.0 is 100%)
+var is_bullet_out = false # Will change to true when a green ball is launched to prevent many from spawning
+var end_padding = 50 # Ensures that the multiplier scripts run correctly before the scene changes
 
-const dash_power = 1200 #Strength of the dash
-const energy_required = 0.1 #Minimum energy needed to dash
+const dash_power = 1200 # Strength of the dash
+const energy_required = 0.1 # Minimum energy needed to dash
 var overall_power = 0
-var tap_power = 2 #Strength of nudging
+var tap_power = 2 # Strength of nudging
 
 #Initialize Jackpot mod vars
 var i = 0
 var chance = 5
-var jackpot_multiplier = 1 #initialize at 1 so it doesn't affect any other modes
+var jackpot_multiplier = 1 # initialize at 1 so it doesn't affect any other modes
 
 #Vars that will be sent to Globals for match recap
 var num_pegs_hit = 0
 var num_points_gained = 0
 var num_points_removed = 0
+var did_complete = 0
+var num_gold_pegs_hit = 0
+var num_peg_bounces = 0
 
 # scale settings
 const octave_limit = 3.0
@@ -39,43 +42,43 @@ var scale_degree = 0
 var time_elapsed = 0
 
 func _ready():
-	skins_display.frame = Globals.player_skin #Get the skin from Globals
+	skins_display.frame = Globals.player_skin # Get the skin from Globals
 	#Set random x position, reset pitch, reset collision management
-	position = Vector2(randi_range(-200, 200), -2500) #Place the ball randomly on the x-axis and above all the pegs
+	position = Vector2(randi_range(-200, 200), -2500) # Place the ball randomly on the x-axis and above all the pegs
 	hit_sound.pitch_scale = 1
 	self.set_collision_mask_value(1, true)
 	self.set_collision_mask_value(2, false)
 	body_entered.connect(_on_body_entered)
-	charge_display.text = str(100 * dash_ready) + "%" 
+	charge_display.text = str(100 * dash_ready) + "%"
 	if Globals.last_played_augment == 3:
 		tap_power = 10
 
 func end_game(result):
-	Globals.get_match_recap(num_pegs_hit, num_points_gained, num_points_removed)
+	Globals.get_match_recap(num_pegs_hit, num_points_gained, num_points_removed, result, num_gold_pegs_hit, num_peg_bounces)
 	Globals.add_item_to_leaderboard(score_display.score)
 	get_tree().change_scene_to_file("res://Scenes/match_recap.tscn")
 
 func _on_body_entered(body):
 	if body.is_in_group("all_pegs") and body.collision_layer == 1:
 		num_pegs_hit += 1
-		var instance = bg_transitions.instantiate() #instantiates a bg transition scene
+		num_peg_bounces += 1
+		var instance = bg_transitions.instantiate() # instantiates a bg transition scene
 		instance.position = body.position
 		instance.color = animated_bg.frame
 		instance.animated_bg = animated_bg
 		instance.position = get_viewport().get_canvas_transform() * body.global_position
 		var target_node = get_tree().current_scene.get_node("Background Control/TransitionContainer")
 		target_node.add_child(instance)
-		if body.get("is_spent") == true: #Manage ONE and ONE ONLY iteration of code for each peg
+		if body.get("is_spent") == true: # Manage ONE and ONE ONLY iteration of code for each peg
 			return
 		body.set("is_spent", true)
-		if not body.is_in_group("iron_pegs"): #Safeguard against deleting iron pegs
-			body.set_collision_layer_value(1, false) #Prevent re-colliding during fadeout animation
+		if not body.is_in_group("iron_pegs"): # Safeguard against deleting iron pegs
+			body.set_collision_layer_value(1, false) # Prevent re-colliding during fadeout animation
 			body.set_collision_layer_value(2, true)
 		else:
 			body.health -= 1
-			print("IRON PEG HEALTH: " + str(body.health))
 			if body.health < 1:
-				body.set_collision_layer_value(1, false) #Prevent re-colliding during fadeout animation
+				body.set_collision_layer_value(1, false) # Prevent re-colliding during fadeout animation
 				body.set_collision_layer_value(2, true)
 				
 		#For some reason, collision layers of 2 were being registered as hits by mask 1 ball, so multiple safety checks are in place to prevent that.
@@ -91,15 +94,16 @@ func _on_body_entered(body):
 		else:
 			scale_degree += 1
 		hit_sound.play()
-		hit_sound.pitch_scale = init_pitch_scale * 2**(pitch_multiplier_power(scale_degree))
+		hit_sound.pitch_scale = init_pitch_scale * 2 ** (pitch_multiplier_power(scale_degree))
 		
-		if body.is_in_group("rocket_pegs"): #Management for impulse on impact with Rocket Pegs
-			apply_impulse(Vector2(0, -2500), Vector2(0,0))
+		if body.is_in_group("rocket_pegs"): # Management for impulse on impact with Rocket Pegs
+			apply_impulse(Vector2(0, -2500), Vector2(0, 0))
 			
-		if body.is_in_group("kill_pegs"): #Management for game end on impact w/ killpegs
-			end_game("You failed...") #Edit to change the message displayed on the end game screen
+		if body.is_in_group("kill_pegs"): # Management for game end on impact w/ killpegs
+			did_complete = 0
+			end_game(did_complete) # Edit to change the message displayed on the end game screen
 		
-		if body.is_in_group("bullet_pegs") and is_bullet_out == false: #Management for bullet instantiation
+		if body.is_in_group("bullet_pegs") and is_bullet_out == false: # Management for bullet instantiation
 			is_bullet_out = true
 			print(is_bullet_out)
 			set_deferred("collision_layer", 0)
@@ -110,56 +114,61 @@ func _on_body_entered(body):
 			body.queue_free()
 		
 		#JACKPOT NOT IN THE GAME CURRENTLY
-		if body.is_in_group("golden_pegs"): #Score increments for both gold and normal pegs
-			score_display.score = score_display.score + (5 * jackpot_multiplier) #Add 5 times whatever the jackpot multiplier is at
+		if body.is_in_group("golden_pegs"): # Score increments for both gold and normal pegs
+			score_display.score = score_display.score + (5 * jackpot_multiplier) # Add 5 times whatever the jackpot multiplier is at
 			num_points_gained += 5
+			num_gold_pegs_hit += 1
 		elif body.is_in_group("hurt_pegs"):
 			score_display.score -= 5
 			num_points_removed += 5
 		else:
-			score_display.score = score_display.score + jackpot_multiplier #Add points equal to the multiplier
+			score_display.score = score_display.score + jackpot_multiplier # Add points equal to the multiplier
 			num_points_gained += 1
 		if dash_ready < 0.9:
 			dash_ready += 0.1
 		
 func _physics_process(_delta: float) -> void:
+	if self.position.y < -2500:
+		Globals.bounce_above_top()
+		print("Bounce skin unlocked")
 	overall_power = dash_power * dash_ready
 	if self.position.y > Globals.end_y + end_padding:
-		end_game("You made it!")  #Edit to change the message displayed on the end game screen
-	charge_display.text = str(100 * dash_ready) + "%" 
+		did_complete = 1
+		end_game(did_complete) # Edit to change the message displayed on the end game screen
+	charge_display.text = str(100 * dash_ready) + "%"
 	#Manage key presses (>= 0.99 is used to prevent non-exact values for dash_ready)
-	if time_elapsed < 60 and particles.emitting == true: #Time (1s) since started showing particles
-		time_elapsed += 1 #ISSUE: DIFFERING FRAMERATES WILL SEE DIFFERENT PARTICLE TRAIL LENGTHS. USE DELTA TIMING
+	if time_elapsed < 60 and particles.emitting == true: # Time (1s) since started showing particles
+		time_elapsed += 1 # ISSUE: DIFFERING FRAMERATES WILL SEE DIFFERENT PARTICLE TRAIL LENGTHS. USE DELTA TIMING
 	else:
 		if linear_velocity.length() < 400:
 			particles.emitting = false
-	if Input.is_action_pressed("push") and dash_ready >= energy_required and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")): #Manage dash sfx playing and dash particle start/stop
-		dash_sfx.pitch_scale = randf_range(1.0, 1.2) #Random pitch to make each sound unique
+	if Input.is_action_pressed("push") and dash_ready >= energy_required and (Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right")): # Manage dash sfx playing and dash particle start/stop
+		dash_sfx.pitch_scale = randf_range(1.0, 1.2) # Random pitch to make each sound unique
 		#dash_sfx.play() Commented out until new sound developed
 		particles.emitting = true
-		time_elapsed = 0 #Start particle emission and reset timer
+		time_elapsed = 0 # Start particle emission and reset timer
 		
-	if Input.is_action_pressed("push") and dash_ready >= energy_required  and Input.is_action_pressed("up") and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
-		apply_impulse(Vector2(0,(-1 * overall_power)), Vector2(0,0))
+	if Input.is_action_pressed("push") and dash_ready >= energy_required and Input.is_action_pressed("up") and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
+		apply_impulse(Vector2(0, (-1 * overall_power)), Vector2(0, 0))
 		dash_ready = 0
-	if Input.is_action_pressed("push") and dash_ready >= energy_required  and Input.is_action_pressed("down") and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
-		apply_impulse(Vector2(0,(overall_power)), Vector2(0,0))
+	if Input.is_action_pressed("push") and dash_ready >= energy_required and Input.is_action_pressed("down") and not Input.is_action_pressed("left") and not Input.is_action_pressed("right"):
+		apply_impulse(Vector2(0, (overall_power)), Vector2(0, 0))
 		dash_ready = 0
 		scale_degree = 0
 	if Input.is_action_pressed("left") and dash_ready >= energy_required:
 		if Input.is_action_pressed("push"):
-			apply_impulse(Vector2((-1 * overall_power), 0),Vector2(0,0))
+			apply_impulse(Vector2((-1 * overall_power), 0), Vector2(0, 0))
 			dash_ready = 0
 			scale_degree = 0
 		else:
-			apply_impulse(Vector2((-1 * tap_power),0),Vector2(0,0))
+			apply_impulse(Vector2((-1 * tap_power), 0), Vector2(0, 0))
 	if Input.is_action_pressed("right"):
 		if Input.is_action_pressed("push") and dash_ready >= energy_required:
-			apply_impulse(Vector2(overall_power, 0),Vector2(0,0))
+			apply_impulse(Vector2(overall_power, 0), Vector2(0, 0))
 			dash_ready = 0
 			scale_degree = 0
 		else:
-			apply_impulse(Vector2(tap_power,0),Vector2(0,0))
+			apply_impulse(Vector2(tap_power, 0), Vector2(0, 0))
 		
 # major scale
 func pitch_multiplier_power(degree: int) -> float:
