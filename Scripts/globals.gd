@@ -14,6 +14,9 @@ var neo_unlocked
 var perfectionist_unlocked
 var num_gold_pegs_hit
 var num_peg_bounces
+var bronze_star_unlocked
+var silver_star_unlocked
+var gold_star_unlocked
 
 var leaderboard_modifiers = [0,0,0]
 var leaderboard = []
@@ -31,11 +34,12 @@ var score_to_add = 0
 var highscore = 0
 var max_possible_score = 0
 var player_skin = 0
-var volume = 1
+var volume = 1.0
 var color_shift_speed = 8
 var title_balls_toggle = true
 var colorblind = false
 var title_song = preload("res://Assets/Sound/Music/Plinko Title Song V1.mp3") #CHANGE THIS TO NEW SONGS
+var current_star = 0 #Manage which star it sees on screen
 
 var last_played_drop_length = 0
 var last_played_density = 0
@@ -54,7 +58,7 @@ signal score_changed(new_score) # Define a signal to modify ScoreDisplay's score
 
 var AppID = "4865760"
 var boardHandle: int
-var id
+var id = 0
 
 func _init():
 	OS.set_environment("SteamAppID", AppID)
@@ -65,6 +69,8 @@ func _init():
 	Steam.leaderboard_scores_downloaded.connect(on_scores_downloaded)
 	Steam.user_stats_received.connect(_on_user_stats_recieved)
 	user_steam_id = Steam.getSteamID()
+	req_stats()
+func req_stats():
 	Steam.requestUserStats(user_steam_id)
 func _ready():
 	sfx_player = AudioStreamPlayer.new()
@@ -74,6 +80,11 @@ func _ready():
 	add_child(sfx_player)
 	add_child(title_song_player)
 	#title_song_player.play()
+	var bus_index = AudioServer.get_bus_index("Bounce SFX")
+	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
+	bus_index = AudioServer.get_bus_index("Title Cursor SFX")
+	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
+	
 func _process(delta: float) -> void:
 	Steam.run_callbacks()
 func _on_user_stats_recieved(game_id, result, user_id):
@@ -87,6 +98,9 @@ func _on_user_stats_recieved(game_id, result, user_id):
 		perfectionist_unlocked = Steam.getStatInt("ACH_6")
 		num_gold_pegs_hit = Steam.getStatInt("ACH_7/8")
 		num_peg_bounces = Steam.getStatInt("ACH_11") #Achievements 9 and 10 use ACH_1
+		bronze_star_unlocked = Steam.getStatInt("ACH_15")
+		silver_star_unlocked = Steam.getStatInt("ACH_16")
+		gold_star_unlocked = Steam.getStatInt("ACH_17")
 	else:
 		print("Stats retrieval failed. Result: " + str(result))
 func set_last_settings(density, length, augment):
@@ -233,7 +247,7 @@ func register_fiftyfifty_unlock():
 	Steam.storeStats()
 func register_perfectionist_unlock():
 	Steam.setStatInt("ACH_6", 1) #update whether or not the player has gotton an sss rank
-	Steam.storeStats()	
+	Steam.storeStats()
 func _input(event):
 	if event.is_action_pressed("screenshot") and user_steam_id == 0: #replace with your steam id
 		var capture = get_viewport().get_texture().get_image()
@@ -248,3 +262,16 @@ func update_settings(volume_setting, color_shift_setting, title_balls_setting, c
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
 	bus_index = AudioServer.get_bus_index("Title Cursor SFX")
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
+
+func claim_star():
+	if current_star == 1:
+		bronze_star_unlocked = 1
+		Steam.setStatInt("ACH_15", 1)
+	if current_star == 2:
+		silver_star_unlocked = 1
+		Steam.setStatInt("ACH_16", 1)
+	if current_star == 3:
+		gold_star_unlocked = 1
+		Steam.setStatInt("ACH_17", 1)
+	Steam.storeStats()
+	current_star = 0

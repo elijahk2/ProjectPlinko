@@ -80,7 +80,7 @@ func _process(delta):
 		else:
 			cursor.hide()
 		if cursor_y == 5: #manage taskbar
-			if Input.is_action_just_pressed(\"right\") and cursor_x < 3:
+			if Input.is_action_just_pressed(\"right\") and cursor_x < 2: #Change to 3 to allow info icon select
 				cursor_x += 1
 			if Input.is_action_just_pressed(\"left\") and cursor_x > 1:
 				cursor_x -= 1
@@ -105,24 +105,27 @@ func _process(delta):
 		if Input.is_action_just_pressed(\"down\") and cursor_y < 5 or Input.is_action_just_pressed(\"up\") and cursor_y > 1:
 			spawn_title_ball()
 		if Input.is_action_just_pressed(\"push\"):
-			if cursor_y == 1 and is_title_ended == false:
-				Globals.play_cursor_move_sfx()
-				end_title()
-			elif cursor_y == 2:
-				Globals.play_cursor_move_sfx()
-				get_tree().change_scene_to_file(\"res://Scenes/leaderboards.tscn\")
-			elif cursor_y == 3:
-				Globals.play_cursor_move_sfx()
-				get_tree().change_scene_to_file(\"res://Scenes/skins.tscn\")
-			elif cursor_y == 4:
-				get_tree().quit()
+			if Globals.current_star == 0:
+				if cursor_y == 1 and is_title_ended == false:
+					Globals.play_cursor_move_sfx()
+					end_title()
+				elif cursor_y == 2:
+					Globals.play_cursor_move_sfx()
+					get_tree().change_scene_to_file(\"res://Scenes/leaderboards.tscn\")
+				elif cursor_y == 3:
+					Globals.play_cursor_move_sfx()
+					get_tree().change_scene_to_file(\"res://Scenes/skins.tscn\")
+				elif cursor_y == 4:
+					get_tree().quit()
+				else:
+					if cursor_x == 1:
+						get_tree().change_scene_to_file(\"res://Scenes/settings.tscn\")
+					elif cursor_x == 2:
+						OS.shell_open(\"https://discord.gg/R4JrmDj5n2\")
+					elif cursor_x == 3:
+						get_tree().change_scene_to_file(\"res://Scenes/info_menu.tscn\")
 			else:
-				if cursor_x == 1:
-					get_tree().change_scene_to_file(\"res://Scenes/settings.tscn\")
-				elif cursor_x == 2:
-					OS.shell_open(\"https://discord.gg/R4JrmDj5n2\")
-				elif cursor_x == 3:
-					get_tree().change_scene_to_file(\"res://Scenes/info_menu.tscn\")
+				Globals.claim_star()
 		elif Input.is_action_just_pressed(\"down\") and cursor_y < 5:
 			cursor_y += 1
 			Globals.play_cursor_move_sfx()
@@ -262,6 +265,7 @@ scale = Vector2(0.15, 0.15)
 texture = ExtResource("3_4gxqj")
 
 [node name="InfoIcon" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(168, 712)
 scale = Vector2(0.08, 0.08)
 texture = ExtResource("4_55kwv")
