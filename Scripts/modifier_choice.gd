@@ -11,6 +11,7 @@ extends Control
 @onready var cursor: Sprite2D = $Cursor
 @onready var header_1: Label = $Header1
 @onready var drop_label: Label = $"DROP!"
+@onready var header_underline: Line2D = $HeaderUnderline
 
 var cursor_y = 1 #Use 1 for Density row, 2 for Length, 3 for Augment
 var intro_done = false
@@ -36,6 +37,7 @@ func _ready() -> void:
 	augment_id = Globals.last_played_augment
 	cursor.position.x = 400 #slightly higher than the right edge of the screen
 	header_1.position.y = label_init_offset
+	header_underline.position.y = label_init_offset + 77 #The distance of the offset from header to underline
 	drop_label.position.y = 775
 	peg_density_header.position.x = label_init_offset
 	drop_length_header.position.x = label_init_offset
@@ -70,6 +72,8 @@ func _process(delta: float) -> void:
 			augment_display.position.x += label_vel * delta
 		if header_1.position.y < 10:
 			header_1.position.y += label_vel * delta
+		if header_underline.position.y < 35:
+			header_underline.position.y += label_vel * delta
 		if drop_label.position.y > 557:
 			drop_label.position.y -= label_vel * delta
 		if cursor.position.x > 292:
@@ -78,6 +82,7 @@ func _process(delta: float) -> void:
 	if game_starting_animation == true:
 		label_vel += 5
 		header_1.position.y -= 4 * label_vel * delta
+		header_underline.position.y -= 4 * label_vel * delta
 		drop_label.position.y -= label_vel * delta
 		peg_density_display.position.y -= label_vel * delta
 		peg_density_header.position.y -= label_vel * delta

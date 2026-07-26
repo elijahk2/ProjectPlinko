@@ -1,3 +1,9 @@
+#TO ADD A NEW SKIN:
+#Add the frame to the animated sprite in skins.tscn AND the ball.tscn scene.
+#Add the appropriate trail color in ball.tscn/particle node.
+#Ensure there is a tick variable in Globals for whether or not it has been unlocked.
+#Add an unlock function and setStat. Then, add an elif statement below for if Globals.tick_var == 1: and then unlock the skin!
+
 extends Control
 
 @onready var skin_locked: Sprite2D = $SkinLockedSymbol
@@ -14,6 +20,7 @@ var cursor_x = 0
 var cursor_y = 0
 var selected_skin_x = 0
 var selected_skin_y = 0
+var id
 
 var skin_req_text: Array = [
 	"Get going! There are skins to unlock!",
@@ -32,26 +39,26 @@ var skin_req_text: Array = [
 	"Claim the Bronze Star from the title screen.",
 	"Claim the Silver Star from the title screen.",
 	"Claim the Gold Star from the title screen.",
-	"17",
-	"18",
-	"19",
-	"20",
-	"21",
-	"22",
-	"23",
-	"24",
-	"25",
-	"26",
-	"27",
-	"28",
-	"29",
-	"30",
-	"31",
-	"32",
-	"33",
-	"34",
-	"35",
-	"36"
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon",
+	"Coming Soon"
 ]
 var skin_unlock_status: Array = [
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -67,7 +74,7 @@ func _ready() -> void:
 	cursor.position = Vector2(cursor_start_x, cursor_start_y)
 
 func _process(delta: float) -> void:
-	var id = cursor_x + (cursor_y * 6)
+	id = cursor_x + (cursor_y * 6)
 	skin_req_label.text = skin_req_text[id]
 	cursor.position = Vector2(cursor_start_x + (cursor_offset_x * cursor_x), cursor_start_y + (cursor_offset_y * cursor_y)) # Move the cursor based on the cursor_x/cursor_y values
 	selected_skin.position = Vector2(cursor_start_x + (cursor_offset_x * selected_skin_x), cursor_start_y + (cursor_offset_y * selected_skin_y)) # Place the translucent grey check on the location of the selected skin
@@ -87,6 +94,7 @@ func _process(delta: float) -> void:
 		Globals.play_cursor_move_sfx()
 	if Input.is_action_just_pressed("push") and skin_unlock_status[id] == 1:
 		Globals.set_skin(id)
+		Globals.id = id
 		selected_skin_x = cursor_x
 		selected_skin_y = cursor_y
 		Globals.play_cursor_move_sfx()

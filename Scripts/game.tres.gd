@@ -20,6 +20,8 @@ const KillPeg = preload("uid://bp4cvbqoaw20s")
 @onready var endzone: CollisionShape2D = $Endzone/CollisionShape2D
 @onready var camera_2d: Camera2D = $Player/Camera2D
 @onready var bounce_sfx: AudioStreamPlayer = $BounceSFX
+@onready var charge_display: Label = $"Background Control/ChargeDisplay"
+@onready var score_display: Label = $"Background Control/ScoreDisplay"
 
 var number_of_rows_array = [100, 200, 300] #Arrays will set their corresponding variable based on the settings chosen in mod menu
 var spawn_chance_array = [8, 5, 3]
@@ -91,9 +93,18 @@ func _ready():
 	number_of_rows = number_of_rows_array[Globals.settings[1]]
 	current_augment = Globals.settings[2]
 	var end_y = y_offset * (number_of_rows + 1) #The y pos that the ball must reach to finish
+	score_display.position.x = -100
+	charge_display.position.x = -100
 	create_peg_layout()
 	Globals.get_end_y(end_y)
 	Globals.update_searched_for_leaderboard()
 	camera_2d.limit_bottom = end_y - y_offset * 3 #Add 3 rows padding so the ball falls offscreen
 	#background_music.play()
 	
+func _process(delta: float) -> void:
+	if score_display.position.x < 96.5:
+		score_display.position.x += 4
+		charge_display.position.x += 4
+	else:
+		score_display.position.x = 96.5
+		charge_display.position.x = 96.5

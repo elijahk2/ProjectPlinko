@@ -11,7 +11,6 @@ func _ready() -> void:
 	
 	var user_id = Steam.getSteamID()
 	var name = Steam.getFriendPersonaName(user_id)
-	print("Your Steam name is " + name)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

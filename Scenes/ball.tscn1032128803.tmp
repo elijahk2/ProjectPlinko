@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://cbflfmyvv77qh"]
+[gd_scene load_steps=31 format=3 uid="uid://cbflfmyvv77qh"]
 
 [ext_resource type="Script" uid="uid://gobi7yyesavl" path="res://Scripts/ball.gd" id="1_ij5cq"]
 [ext_resource type="Texture2D" uid="uid://ckjauwg6fgfn6" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="2_376qj"]
@@ -24,14 +24,6 @@
 [ext_resource type="Texture2D" uid="uid://cphkbxvn6dyik" path="res://Assets/Art/Ball_Peg/Skins/GoldDiggerSkin.png" id="18_gl0xx"]
 [ext_resource type="Texture2D" uid="uid://b60cx01shuhmj" path="res://Assets/Art/Ball_Peg/Skins/BlackoutSkin.png" id="20_gl0xx"]
 [ext_resource type="Texture2D" uid="uid://uphtyms5ppr0" path="res://Assets/Art/Ball_Peg/Skins/FrownSkin.png" id="21_gf6gl"]
-[ext_resource type="Texture2D" uid="uid://cnf286brdn76q" path="res://Assets/Art/Ball_Peg/Skins/3PartShapeSkin.png" id="23_t67ne"]
-[ext_resource type="Texture2D" uid="uid://bkrna4v18qd1v" path="res://Assets/Art/Ball_Peg/Skins/NukeSkin.png" id="24_yo6mx"]
-[ext_resource type="Texture2D" uid="uid://cafqckndsv7gy" path="res://Assets/Art/Ball_Peg/Skins/SchismSkin.png" id="25_doafl"]
-[ext_resource type="Texture2D" uid="uid://b05hya2o56ym3" path="res://Assets/Art/Ball_Peg/Skins/SmashBallSkin.png" id="26_dof7j"]
-[ext_resource type="Texture2D" uid="uid://dqje4wtqhpci4" path="res://Assets/Art/Ball_Peg/Skins/SunsetSkin.png" id="27_trwih"]
-[ext_resource type="Texture2D" uid="uid://biu6j262jgfu6" path="res://Assets/Art/Ball_Peg/Skins/TealCircle.png" id="28_rm4wi"]
-[ext_resource type="Texture2D" uid="uid://debrmoygat3xm" path="res://Assets/Art/Ball_Peg/Skins/WeirdFaceSkin.png" id="29_bafht"]
-[ext_resource type="Texture2D" uid="uid://ed4ju7ipf17i" path="res://Assets/Art/Ball_Peg/Skins/EK2Skin.png" id="30_yo6mx"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d60mj"]
 bounce = 1.0
@@ -116,30 +108,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("21_gf6gl")
-}, {
-"duration": 1.0,
-"texture": ExtResource("23_t67ne")
-}, {
-"duration": 1.0,
-"texture": ExtResource("24_yo6mx")
-}, {
-"duration": 1.0,
-"texture": ExtResource("25_doafl")
-}, {
-"duration": 1.0,
-"texture": ExtResource("26_dof7j")
-}, {
-"duration": 1.0,
-"texture": ExtResource("27_trwih")
-}, {
-"duration": 1.0,
-"texture": ExtResource("28_rm4wi")
-}, {
-"duration": 1.0,
-"texture": ExtResource("29_bafht")
-}, {
-"duration": 1.0,
-"texture": ExtResource("30_yo6mx")
 }],
 "loop": true,
 "name": &"Skins",

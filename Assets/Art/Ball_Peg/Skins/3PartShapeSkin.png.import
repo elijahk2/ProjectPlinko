@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cm10gmaqrajmw"
-path="res://.godot/imported/GoldenPeg.png-4ab4427c712efb8bf23241c04ea82614.ctex"
+uid="uid://cnf286brdn76q"
+path="res://.godot/imported/3PartShapeSkin.png-3faffbd91ff9445e8055e0afdab62258.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/Ball_Peg/GoldenPeg.png"
-dest_files=["res://.godot/imported/GoldenPeg.png-4ab4427c712efb8bf23241c04ea82614.ctex"]
+source_file="res://Assets/Art/Ball_Peg/Skins/3PartShapeSkin.png"
+dest_files=["res://.godot/imported/3PartShapeSkin.png-3faffbd91ff9445e8055e0afdab62258.ctex"]
 
 [params]
 

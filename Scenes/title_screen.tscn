@@ -146,6 +146,8 @@ func _process(delta):
 		cursor.position.y += 5 * play_label_vel / 2 * delta
 		quit_label.position.x -= play_label_vel / 3 * delta
 		skins_label.position.x -= play_label_vel / 4 * delta
+		settings_icon.position.y += play_label_vel / 2 * delta
+		discord_icon.position.y += play_label_vel / 3 * delta
 		if Globals.num_balls == 0 and skins_label.position.x < -250 and cursor.position.y > 850:
 			play_label_done = true
 			get_tree().change_scene_to_file(\"res://Scenes/modifier_choice.tscn\")

@@ -42,6 +42,7 @@ func _physics_process(delta: float) -> void:
 		return
 	if Globals.current_star > 0 and Input.is_action_just_pressed("push"):
 		if self.ball_frames_node.frame > frame_count:
+			Globals.play_star_collect_sfx()
 			self.apply_central_impulse(Vector2(randi_range(-200, 200), -1500))
 			#Maybe get a sound effect for this??
 			self.is_dying = 1
