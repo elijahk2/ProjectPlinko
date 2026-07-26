@@ -84,7 +84,31 @@ func _ready():
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
 	bus_index = AudioServer.get_bus_index("Title Cursor SFX")
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
+	bus_index = AudioServer.get_bus_index("Title Play SFX")
+	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
 	
+func play_title_start_sfx():
+	sfx_player.bus = "Title Play SFX"
+	sfx_player.pitch_scale = 1
+	sfx_player.stream = load("res://Assets/Sound/SFX/stringy.wav")
+	sfx_player.play()
+func play_cursor_move_sfx():
+	sfx_player.bus = "Bounce SFX"
+	song_notes_id += 1
+	sfx_player.pitch_scale = song_notes[song_notes_id % song_notes.size()] - 0.2 #Select the proper note to play for the title scale
+	sfx_player.stream = load("res://Assets/Sound/SFX/BounceSound.wav")
+	sfx_player.play()
+func play_star_collect_sfx():
+	sfx_player.bus = "Bounce SFX"
+	sfx_player.pitch_scale = 1
+	sfx_player.stream = load("res://Assets/Sound/SFX/StarCollectSFX.wav")
+	sfx_player.play()
+func play_bounce_sfx(): #Called when a ball on the title screen hits the ground
+	
+	sfx_player.bus = "Title Bounce SFX"
+	sfx_player.pitch_scale = randf_range(1, 1.4)
+	sfx_player.stream = load("res://Assets/Sound/SFX/BounceSound.wav")
+	sfx_player.play()
 func _process(delta: float) -> void:
 	Steam.run_callbacks()
 func _on_user_stats_recieved(game_id, result, user_id):
@@ -149,8 +173,8 @@ func report_suspicious_score(score: int, max_possible: int) -> void: #HOLY VIBEC
 	http.request(url, ["Content-Type: application/json"], HTTPClient.METHOD_POST, body)
 func on_scores_downloaded(message, this_board, result):
 	print("Leaderboard returns: " + str(result))
-	if score_to_add <= max_possible_score:
-		if score_changing == 1:
+	if score_changing == 1:
+		if score_to_add <= max_possible_score:
 			var current_player_score = null
 			for entry in result:
 				if entry["steam_id"] == user_steam_id:
@@ -158,54 +182,36 @@ func on_scores_downloaded(message, this_board, result):
 					break
 			if current_player_score != null:
 				highscore = current_player_score
+				print("Your Highscore: " + str(highscore))
+				print("Your Recent Score: " + str(score_to_add))
+				if score_to_add > highscore:
+					Steam.uploadLeaderboardScore(score_to_add, true, [], boardHandle)
 			else:
 				Steam.uploadLeaderboardScore(score_to_add, true, [], boardHandle)
-				return
-			print("Your Highscore: " + str(highscore))
-			print("Your Recent Score: " + str(score_to_add))
-			if score_to_add > highscore and highscore != null:
-				Steam.uploadLeaderboardScore(score_to_add, true, [], boardHandle)
-			else:
-				score_changing = 0
-		leaderboard = []
-		for entry in result:
-			var name = Steam.getFriendPersonaName(entry["steam_id"])
-			var name_limited = "stuff"
-			if name.length() > 15:
-				name_limited = name.left(max_name_length) + "..."
-			else:
-				name_limited = name
-			leaderboard.append({
-				"name": name_limited,
-				"score": entry["score"],
-				"steam_id": entry["steam_id"]
-			})
-		leaderboard_updated.emit()
-		score_changing = 0
-	else:
-		print("Score rejected. Exceeds max possible.")
-		report_suspicious_score(score_to_add, max_possible_score)
+		else:
+			print("Score rejected. Exceeds max possible.")
+			report_suspicious_score(score_to_add, max_possible_score)
+	leaderboard = []
+	for entry in result:
+		var name = Steam.getFriendPersonaName(entry["steam_id"])
+		var name_limited = "stuff"
+		if name.length() > 15:
+			name_limited = name.left(max_name_length) + "..."
+		else:
+			name_limited = name
+		leaderboard.append({
+			"name": name_limited,
+			"score": entry["score"],
+			"steam_id": entry["steam_id"]
+		})
+	leaderboard_updated.emit()
+	score_changing = 0
+	score_to_add = 0
 func on_score_uploaded(success, was_changed, this_score): #Handle response for uploaded scores
 	if success:
 		print("Score uploaded!")
 	else:
 		print("Score upload failed.")
-func play_title_start_sfx():
-	sfx_player.bus = "Title Play SFX"
-	sfx_player.pitch_scale = 1
-	sfx_player.stream = load("res://Assets/Sound/SFX/stringy.wav")
-	sfx_player.play()
-func play_cursor_move_sfx():
-	sfx_player.bus = "Bounce SFX"
-	song_notes_id += 1
-	sfx_player.pitch_scale = song_notes[song_notes_id % song_notes.size()] - 0.2 #Select the proper note to play for the title scale
-	sfx_player.stream = load("res://Assets/Sound/SFX/BounceSound.wav")
-	sfx_player.play()
-func play_bounce_sfx(): #Called when a ball on the title screen hits the ground
-	sfx_player.bus = "Title Bounce SFX"
-	sfx_player.pitch_scale = randf_range(1, 1.4)
-	sfx_player.stream = load("res://Assets/Sound/SFX/BounceSound.wav")
-	sfx_player.play()
 func bullet_peg_point_increment():
 	score_changed.emit(1) #Send 1 so the label knows to increase score by one
 func prepare_settings(density, length, augment):
@@ -239,6 +245,7 @@ func get_match_recap(num_pegs_hit, num_points_gained, num_points_removed, win_lo
 		if settings == [2, 2, 2]:
 			Steam.setStatInt("ACH_5", 1) #Update the user's number of completed drops bc this runs at the end of each round
 			Steam.storeStats()
+			
 func bounce_above_top():
 	Steam.setStatInt("ACH_4", 1) #Called by the Ball scene to unlock the purple skin.
 	Steam.storeStats()
@@ -246,8 +253,22 @@ func register_fiftyfifty_unlock():
 	Steam.setStatInt("ACH_3", 1) #update whether or not the player has gotton a B or higher
 	Steam.storeStats()
 func register_perfectionist_unlock():
+	
 	Steam.setStatInt("ACH_6", 1) #update whether or not the player has gotton an sss rank
 	Steam.storeStats()
+func claim_star():
+	if current_star == 1:
+		bronze_star_unlocked = 1
+		Steam.setStatInt("ACH_15", 1)
+	if current_star == 2:
+		silver_star_unlocked = 1
+		Steam.setStatInt("ACH_16", 1)
+	if current_star == 3:
+		gold_star_unlocked = 1
+		Steam.setStatInt("ACH_17", 1)
+	Steam.storeStats()
+	current_star = 0
+
 func _input(event):
 	if event.is_action_pressed("screenshot") and user_steam_id == 0: #replace with your steam id
 		var capture = get_viewport().get_texture().get_image()
@@ -262,16 +283,3 @@ func update_settings(volume_setting, color_shift_setting, title_balls_setting, c
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
 	bus_index = AudioServer.get_bus_index("Title Cursor SFX")
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
-
-func claim_star():
-	if current_star == 1:
-		bronze_star_unlocked = 1
-		Steam.setStatInt("ACH_15", 1)
-	if current_star == 2:
-		silver_star_unlocked = 1
-		Steam.setStatInt("ACH_16", 1)
-	if current_star == 3:
-		gold_star_unlocked = 1
-		Steam.setStatInt("ACH_17", 1)
-	Steam.storeStats()
-	current_star = 0

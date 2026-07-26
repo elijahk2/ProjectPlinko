@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cm10gmaqrajmw"
-path="res://.godot/imported/GoldenPeg.png-4ab4427c712efb8bf23241c04ea82614.ctex"
+uid="uid://cafqckndsv7gy"
+path="res://.godot/imported/SchismSkin.png-fb5da5b42b6b285d3f8048612273d38a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/Ball_Peg/GoldenPeg.png"
-dest_files=["res://.godot/imported/GoldenPeg.png-4ab4427c712efb8bf23241c04ea82614.ctex"]
+source_file="res://Assets/Art/Ball_Peg/Skins/SchismSkin.png"
+dest_files=["res://.godot/imported/SchismSkin.png-fb5da5b42b6b285d3f8048612273d38a.ctex"]
 
 [params]
 
