@@ -17,6 +17,11 @@ var num_peg_bounces
 var bronze_star_unlocked
 var silver_star_unlocked
 var gold_star_unlocked
+var f_tier_controlfreak_unlocked
+var top_ten_unlocked
+var top_five_unlocked
+var first_place_unlocked
+var no_pegs_killbox_unlocked
 
 var leaderboard_modifiers = [0,0,0]
 var leaderboard = []
@@ -40,6 +45,7 @@ var title_balls_toggle = true
 var colorblind = false
 var title_song = preload("res://Assets/Sound/Music/Plinko Title Song V1.mp3") #CHANGE THIS TO NEW SONGS
 var current_star = 0 #Manage which star it sees on screen
+var rank
 
 var last_played_drop_length = 0
 var last_played_density = 0
@@ -125,6 +131,11 @@ func _on_user_stats_recieved(game_id, result, user_id):
 		bronze_star_unlocked = Steam.getStatInt("ACH_15")
 		silver_star_unlocked = Steam.getStatInt("ACH_16")
 		gold_star_unlocked = Steam.getStatInt("ACH_17")
+		f_tier_controlfreak_unlocked = Steam.getStatInt("ACH_18")
+		no_pegs_killbox_unlocked = Steam.getStatInt("ACH_19")
+		top_ten_unlocked = Steam.getStatInt("ACH_20")
+		top_five_unlocked = Steam.getStatInt("ACH_21")
+		first_place_unlocked = Steam.getStatInt("ACH_22")
 	else:
 		print("Stats retrieval failed. Result: " + str(result))
 func set_last_settings(density, length, augment):
@@ -238,6 +249,8 @@ func get_match_recap(num_pegs_hit, num_points_gained, num_points_removed, win_lo
 	Steam.setStatInt("ACH_7/8", num_gold_pegs_hit)
 	Steam.setStatInt("ACH_11", num_peg_bounces)
 	Steam.storeStats()
+	print(settings[2])
+	print(rank)
 	if result:
 		num_completed_drops += 1
 		Steam.setStatInt("ACH_2", num_completed_drops) #Update the user's number of completed drops bc this runs at the end of each round
@@ -245,8 +258,12 @@ func get_match_recap(num_pegs_hit, num_points_gained, num_points_removed, win_lo
 		if settings == [2, 2, 2]:
 			Steam.setStatInt("ACH_5", 1) #Update the user's number of completed drops bc this runs at the end of each round
 			Steam.storeStats()
+	if settings[2] == 2 and peg_bounces == 1:
+		print("complete")
+		Steam.setStatInt("ACH_19", 1)
+		Steam.storeStats()
 			
-func bounce_above_top():
+func bounce_above_top(): #All functions called from OUTSIDE GLOBALS to unlock skins
 	Steam.setStatInt("ACH_4", 1) #Called by the Ball scene to unlock the purple skin.
 	Steam.storeStats()
 func register_fiftyfifty_unlock():
@@ -268,6 +285,22 @@ func claim_star():
 		Steam.setStatInt("ACH_17", 1)
 	Steam.storeStats()
 	current_star = 0
+func check_register_f_tier_controlfreak_unlock():
+	if settings[2] == 3 and rank == "F":
+			Steam.setStatInt("ACH_18", 1)
+			Steam.storeStats()
+func register_top_ten_unlock():
+	Steam.setStatInt("ACH_20", 1)
+	top_ten_unlocked = 1
+	Steam.storeStats()
+func register_top_five_unlock():
+	Steam.setStatInt("ACH_21", 1)
+	top_five_unlocked = 1
+	Steam.storeStats()
+func register_first_place_unlock():
+	Steam.setStatInt("ACH_22", 1)
+	first_place_unlocked = 1
+	Steam.storeStats()
 
 func _input(event):
 	if event.is_action_pressed("screenshot") and user_steam_id == 0: #replace with your steam id

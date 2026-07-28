@@ -93,8 +93,8 @@ func _ready():
 	number_of_rows = number_of_rows_array[Globals.settings[1]]
 	current_augment = Globals.settings[2]
 	var end_y = y_offset * (number_of_rows + 1) #The y pos that the ball must reach to finish
-	score_display.position.x = -100
-	charge_display.position.x = -100
+	score_display.position.x = -300
+	charge_display.position.x = -300
 	create_peg_layout()
 	Globals.get_end_y(end_y)
 	Globals.update_searched_for_leaderboard()

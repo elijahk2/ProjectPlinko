@@ -40,6 +40,7 @@ const octave_limit = 3.0
 const init_pitch_scale = 0.7
 var scale_degree = 0
 var time_elapsed = 0
+var current_bg_color = 0
 
 func _ready():
 	skins_display.frame = Globals.player_skin # Get the skin from Globals
@@ -64,7 +65,8 @@ func _on_body_entered(body):
 		num_peg_bounces += 1
 		var instance = bg_transitions.instantiate() # instantiates a bg transition scene
 		instance.position = body.position
-		instance.color = animated_bg.frame
+		current_bg_color += 1
+		instance.color = current_bg_color
 		instance.animated_bg = animated_bg
 		instance.position = get_viewport().get_canvas_transform() * body.global_position
 		var target_node = get_tree().current_scene.get_node("Background Control/TransitionContainer")
@@ -80,13 +82,6 @@ func _on_body_entered(body):
 			if body.health < 1:
 				body.set_collision_layer_value(1, false) # Prevent re-colliding during fadeout animation
 				body.set_collision_layer_value(2, true)
-				
-		#For some reason, collision layers of 2 were being registered as hits by mask 1 ball, so multiple safety checks are in place to prevent that.
-		var frame_count = animated_bg.sprite_frames.get_frame_count("BG Color Shift")
-		if num_pegs_hit > 0:
-			animated_bg.frame = (animated_bg.frame + 1) % frame_count
-		if animated_bg.frame == 0:
-			animated_bg.frame = 1
 		
 		# hit sound logic
 		if body.is_in_group("hurt_pegs"):

@@ -27,34 +27,34 @@ offset_left = 14.0
 offset_top = 14.0
 offset_right = 280.0
 offset_bottom = 79.0
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 40
 text = "Volume: 100"
 
 [node name="Color Shift" type="Label" parent="."]
 layout_mode = 0
 offset_left = 14.0
-offset_top = 83.0
+offset_top = 85.0
 offset_right = 341.0
-offset_bottom = 148.0
+offset_bottom = 150.0
 theme_override_font_sizes/font_size = 40
 text = "Color Speed: 8"
 
 [node name="Title Balls" type="Label" parent="."]
 layout_mode = 0
 offset_left = 14.0
-offset_top = 148.0
+offset_top = 153.0
 offset_right = 341.0
-offset_bottom = 213.0
+offset_bottom = 218.0
 theme_override_font_sizes/font_size = 40
 text = "Title Balls: ON"
 
 [node name="Colorblind" type="Label" parent="."]
 layout_mode = 0
 offset_left = 14.0
-offset_top = 214.0
+offset_top = 222.0
 offset_right = 341.0
-offset_bottom = 279.0
-theme_override_font_sizes/font_size = 40
+offset_bottom = 287.0
+theme_override_font_sizes/font_size = 38
 text = "Colorblind:"
 
 [node name="Cursor" type="Sprite2D" parent="."]
