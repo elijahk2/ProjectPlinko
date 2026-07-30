@@ -1,7 +1,6 @@
 extends RigidBody2D
 
-#NOTE: THE SKINS ARE SLIGHTLY OFFCENTER FROM THE ORIGINAL. SHOULDNT BE AN ISSUE, BUT MAYBE
-
+@onready var tutorial_label: Label = $TutorialLabel
 @onready var skins_display: AnimatedSprite2D = $AnimatedSprite2D
 @onready var particles: GPUParticles2D = $Particles
 @onready var hit_sound: AudioStreamPlayer = $BounceSFX
@@ -9,6 +8,7 @@ extends RigidBody2D
 @onready var score_display: Label = $"../Background Control/ScoreDisplay"
 @onready var animated_bg: AnimatedSprite2D = $"../Background Control/Background/AnimatedSprite2D"
 @onready var charge_display: Label = $"../Background Control/ChargeDisplay"
+@onready var dropshadow: Sprite2D = $Dropshadow
 const MiniBullet = preload("uid://csblsch6lhyfy")
 const bg_transitions = preload("res://Scenes/BGTransitions.tscn")
 
@@ -40,8 +40,10 @@ const octave_limit = 3.0
 const init_pitch_scale = 0.7
 var scale_degree = 0
 var time_elapsed = 0
+var current_bg_color = 0
 
 func _ready():
+	dropshadow.top_level = true
 	skins_display.frame = Globals.player_skin # Get the skin from Globals
 	#Set random x position, reset pitch, reset collision management
 	position = Vector2(randi_range(-200, 200), -2500) # Place the ball randomly on the x-axis and above all the pegs
@@ -57,6 +59,7 @@ func end_game(result):
 	Globals.get_match_recap(num_pegs_hit, num_points_gained, num_points_removed, result, num_gold_pegs_hit, num_peg_bounces)
 	Globals.add_item_to_leaderboard(score_display.score)
 	get_tree().change_scene_to_file("res://Scenes/match_recap.tscn")
+	Engine.time_scale = 1
 
 func _on_body_entered(body):
 	if body.is_in_group("all_pegs") and body.collision_layer == 1:
@@ -64,7 +67,8 @@ func _on_body_entered(body):
 		num_peg_bounces += 1
 		var instance = bg_transitions.instantiate() # instantiates a bg transition scene
 		instance.position = body.position
-		instance.color = animated_bg.frame
+		current_bg_color += 1
+		instance.color = current_bg_color
 		instance.animated_bg = animated_bg
 		instance.position = get_viewport().get_canvas_transform() * body.global_position
 		var target_node = get_tree().current_scene.get_node("Background Control/TransitionContainer")
@@ -80,13 +84,6 @@ func _on_body_entered(body):
 			if body.health < 1:
 				body.set_collision_layer_value(1, false) # Prevent re-colliding during fadeout animation
 				body.set_collision_layer_value(2, true)
-				
-		#For some reason, collision layers of 2 were being registered as hits by mask 1 ball, so multiple safety checks are in place to prevent that.
-		var frame_count = animated_bg.sprite_frames.get_frame_count("BG Color Shift")
-		if num_pegs_hit > 0:
-			animated_bg.frame = (animated_bg.frame + 1) % frame_count
-		if animated_bg.frame == 0:
-			animated_bg.frame = 1
 		
 		# hit sound logic
 		if body.is_in_group("hurt_pegs"):
@@ -128,6 +125,12 @@ func _on_body_entered(body):
 			dash_ready += 0.1
 		
 func _physics_process(_delta: float) -> void:
+	if Globals.dropshadows:
+		dropshadow.show()
+		dropshadow.global_position = global_position + Vector2(0.5, 1)
+		dropshadow.rotation = 0
+	else:
+		dropshadow.hide()
 	if self.position.y < -2500:
 		Globals.bounce_above_top()
 		print("Bounce skin unlocked")
@@ -169,7 +172,11 @@ func _physics_process(_delta: float) -> void:
 			scale_degree = 0
 		else:
 			apply_impulse(Vector2(tap_power, 0), Vector2(0, 0))
-		
+
+func run_tutorial():
+	Engine.time_scale = 0.3
+	tutorial_label.text = "Left/right to nudge the ball"
+
 # major scale
 func pitch_multiplier_power(degree: int) -> float:
 	# major scale

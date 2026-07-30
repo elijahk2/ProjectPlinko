@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://jxo4i4rmh0c1"]
+[gd_scene load_steps=6 format=3 uid="uid://jxo4i4rmh0c1"]
 
 [ext_resource type="Script" uid="uid://cdys0fiqyqfxt" path="res://Scripts/peg.gd" id="1_nehny"]
 [ext_resource type="Texture2D" uid="uid://car2enqq87kti" path="res://Assets/Art/Ball_Peg/HurtPeg.png" id="2_nehny"]
+[ext_resource type="Texture2D" uid="uid://c7wurnd5g8vlt" path="res://Assets/Art/Ball_Peg/KillPeg.png" id="3_gr8bg"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qwx1w"]
 
@@ -12,6 +13,10 @@ radius = 35.014282
 z_index = -1
 physics_material_override = SubResource("PhysicsMaterial_qwx1w")
 script = ExtResource("1_nehny")
+
+[node name="Dropshadow" type="Sprite2D" parent="."]
+scale = Vector2(0.121, 0.121)
+texture = ExtResource("3_gr8bg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-2.800054, 2.861023e-06)

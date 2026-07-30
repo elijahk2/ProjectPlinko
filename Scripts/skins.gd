@@ -28,25 +28,25 @@ var skin_req_text: Array = [
 	"Bottom Breakout:\nComplete your first drop.",
 	"The Bee's Knees:\nObtain a B rank or higher.",
 	"High Riser:\nBounce off the top of the screen.",
-	"Neo:\nHave invincibility and endurance.",
+	"SECRET - Neo:\nHave invincibility and endurance.",
 	"Perfectionist:\nObtain an SSS rank.",
-	"Making Bank:\nHit a total of 100 Golden Pegs",
-	"Gold Digger:\nHit a total of 500 Golden Pegs",
-	"Insanity:\nComplete 25 drops.",
-	"Touch Grass:\nComplete 100 drops.",
-	"Baller:\nBounce off 1000 pegs.",
-	"Ball Knowledge:\nBounce off 5000 pegs",
+	"Making Bank:\nHit Golden Pegs\n" + str(Globals.num_gold_pegs_hit) + "/100",
+	"Gold Digger:\nHit Golden Pegs\n" + str(Globals.num_gold_pegs_hit) + "/500",
+	"Insanity:\nComplete drops.\n" + str(Globals.num_completed_drops) + "/25",
+	"Touch Grass:\nComplete drops.\n" + str(Globals.num_completed_drops) + "/100",
+	"Baller:\nBounce off pegs.\n" + str(Globals.num_peg_bounces) + "/1000",
+	"Ball Knowledge:\nBounce off pegs.\n" + str(Globals.num_peg_bounces) + "/5000",
 	"Claim the Bronze Star from the title screen.",
 	"Claim the Silver Star from the title screen.",
 	"Claim the Gold Star from the title screen.",
-	"Coming Soon",
-	"Coming Soon",
-	"Coming Soon",
-	"Coming Soon",
-	"Coming Soon",
-	"Coming Soon",
-	"Coming Soon",
-	"Coming Soon",
+	"Hit Golden Pegs\n" + str(Globals.num_gold_pegs_hit) + "/10000",
+	"Complete drops.\n" + str(Globals.num_completed_drops) + "/1000",
+	"Bounce off pegs.\n" + str(Globals.num_peg_bounces) + "/100000",
+	"SECRET - Reverse:\nMisuse your control.",
+	"Instakill:\nDie before hitting any pegs in Killbox",
+	"Podium for Losers:\nReach Top 10 on any leaderboard.",
+	"Now we're Talking:\nReach Top 5 on any leaderboard.",
+	"Plinko Prodigy:\nReach #1 on any leaderboard.",
 	"Coming Soon",
 	"Coming Soon",
 	"Coming Soon",
@@ -79,6 +79,7 @@ func _process(delta: float) -> void:
 	cursor.position = Vector2(cursor_start_x + (cursor_offset_x * cursor_x), cursor_start_y + (cursor_offset_y * cursor_y)) # Move the cursor based on the cursor_x/cursor_y values
 	selected_skin.position = Vector2(cursor_start_x + (cursor_offset_x * selected_skin_x), cursor_start_y + (cursor_offset_y * selected_skin_y)) # Place the translucent grey check on the location of the selected skin
 	if Input.is_action_just_pressed("back"):
+		Globals.play_cursor_move_sfx()
 		get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
 	if Input.is_action_just_pressed("up") and cursor_y > 0:
 		cursor_y -= 1
@@ -173,4 +174,28 @@ func set_unlock_status():
 				skin_unlock_status[i] = 1
 		elif i == 15:
 			if Globals.gold_star_unlocked == 1:
+				skin_unlock_status[i] = 1
+		elif i == 16:
+			if Globals.num_gold_pegs_hit >= 10000:
+				skin_unlock_status[i] = 1
+		elif i == 17:
+			if Globals.num_completed_drops >= 1000:
+				skin_unlock_status[i] = 1
+		elif i == 18:
+			if Globals.num_peg_bounces >= 100000:
+				skin_unlock_status[i] = 1
+		elif i == 19:
+			if Globals.f_tier_controlfreak_unlocked == 1:
+				skin_unlock_status[i] = 1
+		elif i == 20:
+			if Globals.no_pegs_killbox_unlocked == 1:
+				skin_unlock_status[i] = 1
+		elif i == 21:
+			if Globals.top_ten_unlocked == 1:
+				skin_unlock_status[i] = 1
+		elif i == 22:
+			if Globals.top_five_unlocked == 1:
+				skin_unlock_status[i] = 1
+		elif i == 23:
+			if Globals.first_place_unlocked == 1:
 				skin_unlock_status[i] = 1

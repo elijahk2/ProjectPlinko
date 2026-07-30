@@ -22,6 +22,8 @@ const KillPeg = preload("uid://bp4cvbqoaw20s")
 @onready var bounce_sfx: AudioStreamPlayer = $BounceSFX
 @onready var charge_display: Label = $"Background Control/ChargeDisplay"
 @onready var score_display: Label = $"Background Control/ScoreDisplay"
+@onready var player: RigidBody2D = $Player
+@onready var tutorial_label: Label = $TutorialLabel
 
 var number_of_rows_array = [100, 200, 300] #Arrays will set their corresponding variable based on the settings chosen in mod menu
 var spawn_chance_array = [8, 5, 3]
@@ -38,6 +40,7 @@ var is_bullet_out = false
 var current_augment = -1
 var board_array = []
 var timescale = 1
+var is_in_tutorial = 0
 
 func create_peg_layout():
 	while row < number_of_rows: #Repeat until all rows generated
@@ -88,23 +91,69 @@ func create_peg_layout():
 	Globals.calculate_max_possible_score(board_array) #Send the board to Globals for it to then add it together for sanity checks.
 	
 func _ready():
+	#tutorial_label.add_theme_color_override("font_outline_color", Color.BLACK)
+	#tutorial_label.add_theme_constant_override("outline_size", 6)
+	#charge_display.add_theme_color_override("font_outline_color", Color.BLACK)
+	#charge_display.add_theme_constant_override("outline_size", 6)
+	#score_display.add_theme_color_override("font_outline_color", Color.BLACK)
+	#score_display.add_theme_constant_override("outline_size", 6)
+	score_display.add_theme_constant_override("shadow_offset_x", 1)
+	score_display.add_theme_constant_override("shadow_offset_y", 2)
+	score_display.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.6))
+	charge_display.add_theme_constant_override("shadow_offset_x", 1)
+	charge_display.add_theme_constant_override("shadow_offset_y", 2)
+	charge_display.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 1.0))
 	Engine.time_scale = timescale
 	spawn_chance = spawn_chance_array[Globals.settings[0]]
 	number_of_rows = number_of_rows_array[Globals.settings[1]]
 	current_augment = Globals.settings[2]
 	var end_y = y_offset * (number_of_rows + 1) #The y pos that the ball must reach to finish
-	score_display.position.x = -100
-	charge_display.position.x = -100
+	score_display.position.x = -300
+	charge_display.position.x = -300
 	create_peg_layout()
 	Globals.get_end_y(end_y)
 	Globals.update_searched_for_leaderboard()
 	camera_2d.limit_bottom = end_y - y_offset * 3 #Add 3 rows padding so the ball falls offscreen
 	#background_music.play()
 	
+func _physics_process(delta: float) -> void:
+	var half_width = tutorial_label.size.x / 2
+	var target_x = player.position.x - half_width
+	tutorial_label.position = Vector2(
+		clamp(target_x, -340, 335 - tutorial_label.size.x),
+		player.position.y + 150
+	)
+	
 func _process(delta: float) -> void:
 	if score_display.position.x < 96.5:
 		score_display.position.x += 4
-		charge_display.position.x += 4
 	else:
 		score_display.position.x = 96.5
-		charge_display.position.x = 96.5
+	if charge_display.position.x < 112:
+		charge_display.position.x += 4
+	else:
+		charge_display.position.x = 112
+	if Globals.num_drops == 1 and player.position.y > 1000 and is_in_tutorial == 0:
+		run_tutorial1()
+	if Globals.num_drops == 1 and player.position.y > 3000 and is_in_tutorial == 2:
+		run_tutorial2()
+	if is_in_tutorial == 1:
+		if Input.is_action_just_pressed("left") or Input.is_action_just_pressed("right"):
+			tutorial_label.text = ""
+			Engine.time_scale = timescale
+			is_in_tutorial = 2
+	if is_in_tutorial == 3:
+		if Input.is_action_just_pressed("push") and (Input.is_action_pressed("left") or Input.is_action_pressed("right") or Input.is_action_pressed("up") or Input.is_action_pressed("down")):
+			tutorial_label.text = ""
+			Engine.time_scale = timescale
+			is_in_tutorial = 4
+			
+func run_tutorial1():
+	Engine.time_scale = 0.3
+	tutorial_label.text = "Left/Right to nudge the ball"
+	is_in_tutorial = 1
+
+func run_tutorial2():
+	Engine.time_scale = 0.3
+	tutorial_label.text = "Dash using Jump + Left/Right/Up/Down"
+	is_in_tutorial = 3

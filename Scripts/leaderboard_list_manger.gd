@@ -20,6 +20,7 @@ func generate_leaderboard_table():
 		child.queue_free()
 	var score_data = Globals.get_leaderboard()
 	var leaderboard_length = score_data.size()
+	var user_placement
 	for i in leaderboard_length:
 		if i < 10:
 			var new_label = Label.new()
@@ -35,6 +36,12 @@ func generate_leaderboard_table():
 			add_child(new_label)
 			if score_data[i]["steam_id"] == user_steam_id:
 				new_label.add_theme_color_override("font_color", Color(0.185, 0.416, 1.0, 1.0))
+				if not Globals.top_ten_unlocked:
+					Globals.register_top_ten_unlock()
+				if not Globals.top_five_unlocked and i <= 4:
+					Globals.register_top_five_unlock()
+				if not Globals.first_place_unlocked and i == 0:
+					Globals.register_first_place_unlock()
 		if i > 10 and score_data[i]["steam_id"] == user_steam_id:
 			user_score_label.text = str(i+1) + ". " + score_data[i]["name"] + " - " + str(score_data[i]["score"])
 			user_score_label.show()

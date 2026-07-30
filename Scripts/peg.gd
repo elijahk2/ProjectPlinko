@@ -11,9 +11,10 @@ var rocket_texture
 var normal_texture = load("res://Assets/Art/Ball_Peg/white-ball-test.png")
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var dropshadow: Sprite2D = $Dropshadow
 
 func _ready() -> void:
-		#Code to load textures:
+	#Code to load textures:
 	if colorblind:
 		gold_texture = load("res://Assets/Art/Ball_Peg/GoldenPeg_CB.png")
 		hurt_texture = load("res://Assets/Art/Ball_Peg/HurtPeg_CB.png")
@@ -26,7 +27,7 @@ func _ready() -> void:
 		iron_texture = load("res://Assets/Art/Ball_Peg/IronPeg.png")
 		kill_texture = load("res://Assets/Art/Ball_Peg/KillPeg.png")
 		rocket_texture = load("res://Assets/Art/Ball_Peg/RocketPeg.png")
-
+		
 	# 2. Assign point values and textures based on groups
 	if is_in_group("golden_pegs"):
 		point_value = 5
@@ -46,7 +47,11 @@ func _ready() -> void:
 	else:
 		point_value = 1
 		sprite_2d.texture = normal_texture
-		
+	if Globals.dropshadows:
+		dropshadow.show()
+		dropshadow.position = Vector2(0.5, 1)
+	else:
+		dropshadow.hide()
 func _process(delta):
 	#Manage peg break special effect when ball.gd modifies collision_layer property of peg hit
 	if self.collision_layer == 2:

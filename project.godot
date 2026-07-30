@@ -10,10 +10,12 @@ config_version=5
 
 [application]
 
-config/name="ProjectPlinko"
+config/name="PartlyPlinko"
+config/description="Indie game developed by Dog Knows Devs, a unique take on classic pachinko mechanics that gives the player nudge-and-shove control, allowing them to compete on 45 different leaderboards for the top spot."
 run/main_scene="uid://bc8bwi8ckrrqd"
 config/features=PackedStringArray("4.5", "Forward Plus")
 run/max_fps=60
+config/icon="uid://b36fpky8se3w"
 
 [autoload]
 
