@@ -57,6 +57,15 @@ offset_bottom = 287.0
 theme_override_font_sizes/font_size = 38
 text = "Colorblind:"
 
+[node name="Dropshadows" type="Label" parent="."]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 293.0
+offset_right = 385.0
+offset_bottom = 359.0
+theme_override_font_sizes/font_size = 32
+text = "Dropshadows:"
+
 [node name="Cursor" type="Sprite2D" parent="."]
 position = Vector2(321.00003, 113.00001)
 scale = Vector2(0.07272223, 0.072722234)

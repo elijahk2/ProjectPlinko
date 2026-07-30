@@ -1,8 +1,9 @@
-[gd_scene load_steps=39 format=3 uid="uid://cbflfmyvv77qh"]
+[gd_scene load_steps=40 format=3 uid="uid://cbflfmyvv77qh"]
 
 [ext_resource type="Script" uid="uid://gobi7yyesavl" path="res://Scripts/ball.gd" id="1_ij5cq"]
 [ext_resource type="Texture2D" uid="uid://ckjauwg6fgfn6" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="2_376qj"]
 [ext_resource type="Texture2D" uid="uid://bxtbt48ffv8oh" path="res://Assets/Art/Ball_Peg/white-ball-test.png" id="2_aw2wy"]
+[ext_resource type="Texture2D" uid="uid://do0jwh4inaqbw" path="res://Assets/Art/Ball_Peg/white-ball-test_dropshadow.png" id="2_doafl"]
 [ext_resource type="AudioStream" uid="uid://g2eobh7xpvig" path="res://Assets/Sound/SFX/BounceSound.wav" id="3_376qj"]
 [ext_resource type="Script" uid="uid://mj1edjadqxyk" path="res://Scripts/particles.gd" id="3_gf6gl"]
 [ext_resource type="Texture2D" uid="uid://ockdp48rdr10" path="res://Assets/Art/Ball_Peg/Skins/CoinSkin.png" id="4_hk63f"]
@@ -36,9 +37,6 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d60mj"]
 bounce = 1.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_d60mj"]
-radius = 50.0
-
 [sub_resource type="Curve" id="Curve_yk4cr"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
@@ -56,6 +54,9 @@ gravity = Vector3(0, 98, 0)
 scale_min = 0.099999994
 scale_max = 0.099999994
 scale_curve = SubResource("CurveTexture_aw2wy")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d60mj"]
+radius = 50.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cx4d7"]
 animations = [{
@@ -152,9 +153,6 @@ contact_monitor = true
 max_contacts_reported = 5
 script = ExtResource("1_ij5cq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_d60mj")
-
 [node name="Particles" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 50
@@ -162,6 +160,13 @@ texture = ExtResource("2_376qj")
 lifetime = 0.4
 process_material = SubResource("ParticleProcessMaterial_vblhy")
 script = ExtResource("3_gf6gl")
+
+[node name="Dropshadow" type="Sprite2D" parent="."]
+scale = Vector2(0.173, 0.173)
+texture = ExtResource("2_doafl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_d60mj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-4, 5.9604645e-08)

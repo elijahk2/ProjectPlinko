@@ -79,6 +79,7 @@ func _process(delta: float) -> void:
 	cursor.position = Vector2(cursor_start_x + (cursor_offset_x * cursor_x), cursor_start_y + (cursor_offset_y * cursor_y)) # Move the cursor based on the cursor_x/cursor_y values
 	selected_skin.position = Vector2(cursor_start_x + (cursor_offset_x * selected_skin_x), cursor_start_y + (cursor_offset_y * selected_skin_y)) # Place the translucent grey check on the location of the selected skin
 	if Input.is_action_just_pressed("back"):
+		Globals.play_cursor_move_sfx()
 		get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
 	if Input.is_action_just_pressed("up") and cursor_y > 0:
 		cursor_y -= 1

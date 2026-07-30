@@ -13,6 +13,9 @@ z_index = -1
 physics_material_override = SubResource("PhysicsMaterial_qwx1w")
 script = ExtResource("1_xybn8")
 
+[node name="Dropshadow" type="Sprite2D" parent="."]
+texture = ExtResource("2_xybn8")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-2.800054, 2.861023e-06)
 scale = Vector2(0.12104313, 0.11855105)

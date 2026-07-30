@@ -43,6 +43,7 @@ var volume = 1.0
 var color_shift_speed = 8
 var title_balls_toggle = true
 var colorblind = false
+var dropshadows = false
 var title_song = preload("res://Assets/Sound/Music/Plinko Title Song V1.mp3") #CHANGE THIS TO NEW SONGS
 var current_star = 0 #Manage which star it sees on screen
 var rank
@@ -307,11 +308,12 @@ func _input(event):
 		var capture = get_viewport().get_texture().get_image()
 		capture.save_png("C:/Users/Hides2023/Desktop/Plinko Screenshots" + str(Time.get_unix_time_from_system()) + ".png")
 		print("Screenshot saved!")
-func update_settings(volume_setting, color_shift_setting, title_balls_setting, colorblind_setting):
+func update_settings(volume_setting, color_shift_setting, title_balls_setting, colorblind_setting, dropshadows_setting):
 	volume = volume_setting / 100.0
 	color_shift_speed = color_shift_setting
 	title_balls_toggle = title_balls_setting
 	colorblind = colorblind_setting
+	dropshadows = dropshadows_setting
 	var bus_index = AudioServer.get_bus_index("Bounce SFX")
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
 	bus_index = AudioServer.get_bus_index("Title Cursor SFX")

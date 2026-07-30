@@ -4,22 +4,25 @@ var volume_setting = 100
 var color_shift_speed_setting = 8
 var title_screen_balls_toggle = true
 var colorblind_toggle = true
+var dropshadows_toggle = false
 var cursor_y = 0
 var settings_offset = 67
 var delay = 0 #How many frames until the setting can be changed again
-var delay_reset = 30 #What to set delat to each change
+var delay_reset = 15 #What to set delat to each change
 
 @onready var volume_label: Label = $Volume
 @onready var color_shift_label: Label = $"Color Shift"
 @onready var title_balls_label: Label = $"Title Balls"
 @onready var colorblind_label: Label = $Colorblind
 @onready var cursor: Sprite2D = $Cursor
+@onready var dropshadows_label: Label = $Dropshadows
 
 func _ready() -> void:
 	volume_setting = int(Globals.volume * 100)
 	color_shift_speed_setting = Globals.color_shift_speed
 	title_screen_balls_toggle = Globals.title_balls_toggle
 	colorblind_toggle = Globals.colorblind
+	dropshadows_toggle = Globals.dropshadows
 	pass
 
 func _process(delta: float) -> void:
@@ -35,15 +38,22 @@ func _process(delta: float) -> void:
 		title_balls_label.text = "Title Balls: ON"
 	else:
 		title_balls_label.text = "Title Balls: OFF"
+	if dropshadows_toggle:
+		dropshadows_label.text = "Dropshadows: ON"
+	else:
+		dropshadows_label.text = "Dropshadows: OFF"
 	
 	cursor.position.y = 47.5 + settings_offset * cursor_y
 	
 	if Input.is_action_just_pressed("back"):
+		Globals.play_cursor_move_sfx()
 		get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
 	if Input.is_action_just_pressed("up") and cursor_y > 0:
 		cursor_y -= 1
-	if Input.is_action_just_pressed("down") and cursor_y < 3:
+		Globals.play_cursor_move_sfx()
+	if Input.is_action_just_pressed("down") and cursor_y < 4:
 		cursor_y += 1
+		Globals.play_cursor_move_sfx()
 	if Input.is_action_pressed("left"): #Keystroke management for Left
 		if cursor_y == 0: #Volume setting
 			volume_setting -= 1
@@ -61,6 +71,12 @@ func _process(delta: float) -> void:
 				colorblind_toggle = false
 			else:
 				colorblind_toggle = true
+			delay = delay_reset
+		elif cursor_y == 4 and delay == 0:
+			if dropshadows_toggle:
+				dropshadows_toggle = false
+			else:
+				dropshadows_toggle = true
 			delay = delay_reset
 	if Input.is_action_pressed("right"): #Keystroke management for Right
 		if cursor_y == 0:
@@ -80,6 +96,12 @@ func _process(delta: float) -> void:
 			else:
 				colorblind_toggle = true
 			delay = delay_reset
+		elif cursor_y == 4 and delay == 0:
+			if dropshadows_toggle:
+				dropshadows_toggle = false
+			else:
+				dropshadows_toggle = true
+			delay = delay_reset
 	if volume_setting > 200.0:
 		volume_setting = 200
 	if volume_setting < 0:
@@ -89,5 +111,5 @@ func _process(delta: float) -> void:
 	if color_shift_speed_setting < 1:
 		color_shift_speed_setting = 1
 		
-	Globals.update_settings(volume_setting, color_shift_speed_setting, title_screen_balls_toggle, colorblind_toggle)
+	Globals.update_settings(volume_setting, color_shift_speed_setting, title_screen_balls_toggle, colorblind_toggle, dropshadows_toggle)
 	#Send the  variables to Globals  so that they can be  distributed to scenes and utilized

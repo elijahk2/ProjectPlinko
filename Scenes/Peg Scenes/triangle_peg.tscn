@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dl2qmuenjes50"]
+[gd_scene load_steps=8 format=3 uid="uid://dl2qmuenjes50"]
 
 [ext_resource type="Script" uid="uid://cdys0fiqyqfxt" path="res://Scripts/peg.gd" id="1_ptoa1"]
 [ext_resource type="Texture2D" uid="uid://vb1emwdhl33y" path="res://Assets/Art/Ball_Peg/TrianglePeg.png" id="2_ptoa1"]
+[ext_resource type="Texture2D" uid="uid://c7wurnd5g8vlt" path="res://Assets/Art/Ball_Peg/KillPeg.png" id="3_6rg3d"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qwx1w"]
 
@@ -22,6 +23,9 @@ z_index = -1
 physics_material_override = SubResource("PhysicsMaterial_qwx1w")
 script = ExtResource("1_ptoa1")
 
+[node name="Dropshadow" type="Sprite2D" parent="."]
+texture = ExtResource("3_6rg3d")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0.14487267, -2.1532965)
 rotation = -0.013644908
@@ -38,4 +42,5 @@ shape = SubResource("SegmentShape2D_f4gjb")
 
 [node name="Hypotenuse" type="CollisionShape2D" parent="."]
 position = Vector2(1, 4)
+scale = Vector2(0.121, 0.121)
 shape = SubResource("SegmentShape2D_2kbf5")
