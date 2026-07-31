@@ -287,7 +287,7 @@ func claim_star():
 	Steam.storeStats()
 	current_star = 0
 func check_register_f_tier_controlfreak_unlock():
-	if settings[2] == 3 and rank == "F":
+	if settings[2] == 3 and rank == "F" or rank == "D":
 			Steam.setStatInt("ACH_18", 1)
 			Steam.storeStats()
 func register_top_ten_unlock():
@@ -317,4 +317,6 @@ func update_settings(volume_setting, color_shift_setting, title_balls_setting, c
 	var bus_index = AudioServer.get_bus_index("Bounce SFX")
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
 	bus_index = AudioServer.get_bus_index("Title Cursor SFX")
+	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
+	bus_index = AudioServer.get_bus_index("Title Play SFX")
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))

@@ -28,6 +28,7 @@ func get_match_recap_from_globals():
 	max_score = Globals.max_score
 
 func _ready() -> void:
+	var curve = 20
 	stats_label_1.position.x = label_start_x
 	stats_label_2.position.x = label_start_x
 	stats_label_3.position.x = label_start_x
@@ -39,10 +40,10 @@ func _ready() -> void:
 	stats_label_2.text = "Points Gained: " + str(points_gained)
 	stats_label_3.text = "Points Removed: " + str(points_removed)
 	stats_label_4.text = "Overall Score: " + str(points_gained - points_removed)
-	percentage_of_max = ((float(points_gained - points_removed)) / max_score * 100)
-	if percentage_of_max > 50: #Pre-curve check to see if they got a B or better
+	percentage_of_max = ((float(points_gained - points_removed)) / max_score * 100) + curve
+	if percentage_of_max > 50:
 		Globals.register_fiftyfifty_unlock()
-	if percentage_of_max >= 98: #Check if they got a near-perfect score
+	if percentage_of_max >= 98:
 		Globals.register_perfectionist_unlock()
 	if percentage_of_max <= 10:
 		rank = "F"

@@ -6,7 +6,7 @@ var title_screen_balls_toggle = true
 var colorblind_toggle = true
 var dropshadows_toggle = false
 var cursor_y = 0
-var settings_offset = 67
+var settings_offset = 41
 var delay = 0 #How many frames until the setting can be changed again
 var delay_reset = 15 #What to set delat to each change
 
@@ -43,7 +43,7 @@ func _process(delta: float) -> void:
 	else:
 		dropshadows_label.text = "Dropshadows: OFF"
 	
-	cursor.position.y = 47.5 + settings_offset * cursor_y
+	cursor.position.y = 21 + settings_offset * cursor_y
 	
 	if Input.is_action_just_pressed("back"):
 		Globals.play_cursor_move_sfx()
