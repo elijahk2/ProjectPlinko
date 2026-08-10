@@ -4,13 +4,18 @@ var scale_magnitude = 0.1
 var scale_speed = 8
 var animated_bg = null
 var limit = 50
+var is_death_transition = 0
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready() -> void:
 	scale_speed = Globals.color_shift_speed
 	self.z_index = -101
-	color = (color) % 7
-	animation.frame = color
+	if is_death_transition:
+		color = -1 #Ensure when 1 is added it lands on frame 0
+		self.z_index = 1000
+	else:
+		color = (color + 1) % 6
+	animation.frame = color + 1
 
 func _process(delta: float) -> void:
 	animation.scale = Vector2(scale_magnitude, scale_magnitude)

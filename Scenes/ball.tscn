@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://cbflfmyvv77qh"]
+[gd_scene load_steps=38 format=3 uid="uid://cbflfmyvv77qh"]
 
 [ext_resource type="Script" uid="uid://gobi7yyesavl" path="res://Scripts/ball.gd" id="1_ij5cq"]
 [ext_resource type="Texture2D" uid="uid://ckjauwg6fgfn6" path="res://Assets/Art/Ball_Peg/Vector_Ball(WhiteBorder).png" id="2_376qj"]
@@ -31,8 +31,6 @@
 [ext_resource type="Texture2D" uid="uid://b05hya2o56ym3" path="res://Assets/Art/Ball_Peg/Skins/SmashBallSkin.png" id="26_dof7j"]
 [ext_resource type="Texture2D" uid="uid://dqje4wtqhpci4" path="res://Assets/Art/Ball_Peg/Skins/SunsetSkin.png" id="27_trwih"]
 [ext_resource type="Texture2D" uid="uid://biu6j262jgfu6" path="res://Assets/Art/Ball_Peg/Skins/TealCircle.png" id="28_rm4wi"]
-[ext_resource type="Texture2D" uid="uid://debrmoygat3xm" path="res://Assets/Art/Ball_Peg/Skins/WeirdFaceSkin.png" id="29_bafht"]
-[ext_resource type="Texture2D" uid="uid://ed4ju7ipf17i" path="res://Assets/Art/Ball_Peg/Skins/EK2Skin.png" id="30_yo6mx"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d60mj"]
 bounce = 1.0
@@ -135,12 +133,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("28_rm4wi")
-}, {
-"duration": 1.0,
-"texture": ExtResource("29_bafht")
-}, {
-"duration": 1.0,
-"texture": ExtResource("30_yo6mx")
 }],
 "loop": true,
 "name": &"Skins",

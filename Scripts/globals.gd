@@ -47,6 +47,8 @@ var dropshadows = false
 var title_song = preload("res://Assets/Sound/Music/Plinko Title Song V1.mp3") #CHANGE THIS TO NEW SONGS
 var current_star = 0 #Manage which star it sees on screen
 var rank
+var dead
+var cutoff_y = 1000000
 
 var last_played_drop_length = 0
 var last_played_density = 0
@@ -235,6 +237,7 @@ func get_end_y(value):
 	num_drops += 1
 	Steam.setStatInt("ACH_1", num_drops) #Increment the number of drops initiated as this code runs at each drop start
 	Steam.storeStats()
+	dead = false #Reset the dead toggle at the start of each round
 func set_label_visibility(is_visible: bool):
 	toggle_leaderboard_label.emit(is_visible)
 func set_skin(id): #Func called when the player selects a skin from the Skins menu. Var is pulled from ball.tscn at game start
@@ -287,7 +290,7 @@ func claim_star():
 	Steam.storeStats()
 	current_star = 0
 func check_register_f_tier_controlfreak_unlock():
-	if settings[2] == 3 and rank == "F":
+	if settings[2] == 3 and rank == "F" or rank == "D":
 			Steam.setStatInt("ACH_18", 1)
 			Steam.storeStats()
 func register_top_ten_unlock():
@@ -317,4 +320,6 @@ func update_settings(volume_setting, color_shift_setting, title_balls_setting, c
 	var bus_index = AudioServer.get_bus_index("Bounce SFX")
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
 	bus_index = AudioServer.get_bus_index("Title Cursor SFX")
+	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
+	bus_index = AudioServer.get_bus_index("Title Play SFX")
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
