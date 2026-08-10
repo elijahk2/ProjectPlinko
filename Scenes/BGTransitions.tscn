@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://bipep6iop5joa"]
+[gd_scene load_steps=11 format=3 uid="uid://bipep6iop5joa"]
 
 [ext_resource type="Script" uid="uid://chmxtk605gvi8" path="res://Scripts/bg_transitions.gd" id="1_t5csp"]
+[ext_resource type="Texture2D" uid="uid://ce5jyrwe48sx7" path="res://Assets/Art/Background/BG Transition Sprites/blackcircle.png" id="2_5qwn4"]
 [ext_resource type="Texture2D" uid="uid://cv6h4hf2n73ra" path="res://Assets/Art/Background/BG Transition Sprites/redcircle.png" id="2_t5csp"]
 [ext_resource type="Texture2D" uid="uid://cbbt3wqsgvni1" path="res://Assets/Art/Background/BG Transition Sprites/orangecircle.png" id="3_5qwn4"]
 [ext_resource type="Texture2D" uid="uid://b2xvxo7nigtq7" path="res://Assets/Art/Background/BG Transition Sprites/greencircle.png" id="5_slgxy"]
@@ -12,6 +13,9 @@
 [sub_resource type="SpriteFrames" id="SpriteFrames_5w7mu"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5qwn4")
+}, {
 "duration": 1.0,
 "texture": ExtResource("2_t5csp")
 }, {

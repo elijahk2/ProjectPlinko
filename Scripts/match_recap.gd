@@ -70,6 +70,7 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("back"):
 		get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
 	if Input.is_action_just_pressed("push") and is_intro_done == 1:
+		Globals.play_cursor_move_sfx()
 		get_tree().change_scene_to_file("res://Scenes/title_screen.tscn")
 	if is_intro_done == 0:
 		if stats_label_1.position.x < 10:

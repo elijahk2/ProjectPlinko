@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bopq452g6j6b5"]
+[gd_scene load_steps=32 format=3 uid="uid://bopq452g6j6b5"]
 
 [ext_resource type="Script" uid="uid://ba8idqf3tpajo" path="res://Scripts/skins.gd" id="1_2a2m2"]
 [ext_resource type="Texture2D" uid="uid://dm76c83lnic4g" path="res://Assets/Art/Background/black_bg.png" id="1_p4tl2"]
@@ -29,8 +29,6 @@
 [ext_resource type="Texture2D" uid="uid://b05hya2o56ym3" path="res://Assets/Art/Ball_Peg/Skins/SmashBallSkin.png" id="25_s3bno"]
 [ext_resource type="Texture2D" uid="uid://dqje4wtqhpci4" path="res://Assets/Art/Ball_Peg/Skins/SunsetSkin.png" id="26_mjtm5"]
 [ext_resource type="Texture2D" uid="uid://biu6j262jgfu6" path="res://Assets/Art/Ball_Peg/Skins/TealCircle.png" id="27_eyir0"]
-[ext_resource type="Texture2D" uid="uid://debrmoygat3xm" path="res://Assets/Art/Ball_Peg/Skins/WeirdFaceSkin.png" id="28_k766o"]
-[ext_resource type="Texture2D" uid="uid://ed4ju7ipf17i" path="res://Assets/Art/Ball_Peg/Skins/EK2Skin.png" id="29_frosf"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2a2m2"]
 load_path = "res://.godot/imported/white-ball-test.png-35516b9184f1c50989fd1bba4a0e619e.ctex"
@@ -112,12 +110,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("27_eyir0")
-}, {
-"duration": 1.0,
-"texture": ExtResource("28_k766o")
-}, {
-"duration": 1.0,
-"texture": ExtResource("29_frosf")
 }],
 "loop": true,
 "name": &"SkinsAnimation",

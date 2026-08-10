@@ -125,6 +125,9 @@ func _physics_process(delta: float) -> void:
 	)
 	
 func _process(delta: float) -> void:
+	if Globals.dead:
+		charge_display.hide()
+		score_display.hide()
 	if score_display.position.x < 96.5:
 		score_display.position.x += 4
 	else:
