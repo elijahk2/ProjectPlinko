@@ -58,5 +58,5 @@ func _process(delta):
 		modulate.a -= delta * 4
 		if modulate.a <= 0:
 			queue_free()
-	if Globals.dead and not self.is_in_group("normal_pegs"):
+	if Globals.dead: # and not self.is_in_group("normal_pegs"):
 		self.collision_layer = 2

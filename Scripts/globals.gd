@@ -48,7 +48,7 @@ var title_song = preload("res://Assets/Sound/Music/Plinko Title Song V1.mp3") #C
 var current_star = 0 #Manage which star it sees on screen
 var rank
 var dead
-var cutoff_y = 1000000
+var cutoff_y = 1000000000000
 
 var last_played_drop_length = 0
 var last_played_density = 0
@@ -238,6 +238,7 @@ func get_end_y(value):
 	Steam.setStatInt("ACH_1", num_drops) #Increment the number of drops initiated as this code runs at each drop start
 	Steam.storeStats()
 	dead = false #Reset the dead toggle at the start of each round
+	cutoff_y = 1000000000000 #Reset to prevent removing the kill transition
 func set_label_visibility(is_visible: bool):
 	toggle_leaderboard_label.emit(is_visible)
 func set_skin(id): #Func called when the player selects a skin from the Skins menu. Var is pulled from ball.tscn at game start

@@ -12,4 +12,4 @@ func lock_position() -> void:
 	top_level = true
 	global_position = current_global_pos
 	var viewport_height: float = get_viewport_rect().size.y
-	Globals.cutoff_y = global_position.y + (viewport_height / (2.0 * zoom.y)) + 750
+	Globals.cutoff_y = global_position.y + 1500
