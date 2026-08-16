@@ -60,6 +60,7 @@ func _ready():
 func end_game(result):
 		Globals.get_match_recap(num_pegs_hit, num_points_gained, num_points_removed, result, num_gold_pegs_hit, num_peg_bounces)
 		Globals.add_item_to_leaderboard(score_display.score)
+		MusicManager.change_to_main_scene()
 		get_tree().change_scene_to_file("res://Scenes/match_recap.tscn")
 		Engine.time_scale = 1
 
