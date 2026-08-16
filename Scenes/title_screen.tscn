@@ -104,7 +104,7 @@ func _process(delta):
 		if discord_icon.position.y < 672.5:
 			discord_icon.position.y = 672.5
 
-	if is_title_ended == false and is_intro_done == 1: #If statement covering the cursor movement/select
+	if is_title_ended == false: #If statement covering the cursor movement/select
 		if cursor_y < 5: #manage whether the user is on the main options or the taskbar below
 			cursor.show()
 			if cursor_y == 1:
@@ -146,6 +146,8 @@ func _process(delta):
 			spawn_title_ball()
 		if Input.is_action_just_pressed(\"push\"):
 			if Globals.current_star == 0:
+				is_intro_done = 1
+			if Globals.current_star == 0:
 				if cursor_y == 1 and is_title_ended == false:
 					Globals.play_cursor_move_sfx()
 					end_title()
@@ -184,13 +186,13 @@ func _process(delta):
 			title_header_done = true
 	if title_header_done == true:
 		play_label_vel += 10
-		play_label.position.x -= play_label_vel * delta
-		leaderboard_label.position.x -= play_label_vel / 2 * delta
-		cursor.position.y += 5 * play_label_vel / 2 * delta
-		quit_label.position.x -= play_label_vel / 3 * delta
-		skins_label.position.x -= play_label_vel / 4 * delta
-		settings_icon.position.y += play_label_vel / 2 * delta
-		discord_icon.position.y += play_label_vel / 3 * delta
+		play_label.position.x -= play_label_vel / 3* delta
+		leaderboard_label.position.x -= play_label_vel / 4 * delta
+		cursor.position.y += 5 * play_label_vel / 4  * delta
+		quit_label.position.x -= play_label_vel / 5 * delta
+		skins_label.position.x -= play_label_vel / 6 * delta
+		settings_icon.position.y += play_label_vel / 1.5 * delta
+		discord_icon.position.y += play_label_vel / 2 * delta
 		if Globals.num_balls == 0 and skins_label.position.x < -250 and cursor.position.y > 850:
 			play_label_done = true
 			get_tree().change_scene_to_file(\"res://Scenes/modifier_choice.tscn\")

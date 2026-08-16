@@ -20,6 +20,7 @@ config/icon="uid://b36fpky8se3w"
 [autoload]
 
 Globals="*res://Scripts/globals.gd"
+MusicManager="*res://Scripts/MusicManager.gd"
 
 [display]
 

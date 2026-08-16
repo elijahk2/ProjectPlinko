@@ -91,12 +91,6 @@ func create_peg_layout():
 	Globals.calculate_max_possible_score(board_array) #Send the board to Globals for it to then add it together for sanity checks.
 	
 func _ready():
-	#tutorial_label.add_theme_color_override("font_outline_color", Color.BLACK)
-	#tutorial_label.add_theme_constant_override("outline_size", 6)
-	#charge_display.add_theme_color_override("font_outline_color", Color.BLACK)
-	#charge_display.add_theme_constant_override("outline_size", 6)
-	#score_display.add_theme_color_override("font_outline_color", Color.BLACK)
-	#score_display.add_theme_constant_override("outline_size", 6)
 	score_display.add_theme_constant_override("shadow_offset_x", 1)
 	score_display.add_theme_constant_override("shadow_offset_y", 2)
 	score_display.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.6))
@@ -104,6 +98,7 @@ func _ready():
 	charge_display.add_theme_constant_override("shadow_offset_y", 2)
 	charge_display.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 1.0))
 	Engine.time_scale = timescale
+	MusicManager.change_to_game_scene()
 	spawn_chance = spawn_chance_array[Globals.settings[0]]
 	number_of_rows = number_of_rows_array[Globals.settings[1]]
 	current_augment = Globals.settings[2]
