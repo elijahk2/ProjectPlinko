@@ -87,17 +87,6 @@ func _on_body_entered(body):
 			instance.position = get_viewport().get_canvas_transform() * body.global_position
 			var target_node = get_tree().current_scene.get_node("Background Control/TransitionContainer")
 			target_node.add_child(instance)
-			if body.get("is_spent") == true: # Manage ONE and ONE ONLY iteration of code for each peg
-				return
-			body.set("is_spent", true)
-			if not body.is_in_group("iron_pegs"): # Safeguard against deleting iron pegs
-				body.set_collision_layer_value(1, false) # Prevent re-colliding during fadeout animation
-				body.set_collision_layer_value(2, true)
-			else:
-				body.health -= 1
-				if body.health < 1:
-					body.set_collision_layer_value(1, false) # Prevent re-colliding during fadeout animation
-					body.set_collision_layer_value(2, true)
 			
 			# hit sound logic
 			if body.is_in_group("hurt_pegs"):
@@ -133,6 +122,18 @@ func _on_body_entered(body):
 				num_points_gained += 1
 			if dash_ready < 0.9:
 				dash_ready += 0.1
+		if body.get("is_spent") == true: # Manage ONE and ONE ONLY iteration of code for each peg
+			return
+		body.set("is_spent", true)
+		if not body.is_in_group("iron_pegs"): # Safeguard against deleting iron pegs
+			body.set_collision_layer_value(1, false) # Prevent re-colliding during fadeout animation
+			body.set_collision_layer_value(2, true)
+		else:
+			body.health -= 1
+			if body.health < 1:
+				body.set_collision_layer_value(1, false) # Prevent re-colliding during fadeout animation
+				body.set_collision_layer_value(2, true)
+			
 		
 func _physics_process(_delta: float) -> void:
 	if Globals.dead and self.position.y > Globals.cutoff_y: #End the game when the ball falls below the level of the camera after it locks on a killpeg hit

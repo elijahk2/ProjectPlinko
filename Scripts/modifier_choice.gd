@@ -129,7 +129,8 @@ func _process(delta: float) -> void:
 			Globals.get_modifiers_for_leaderboard(modifiers)
 			Globals.prepare_settings(density_id % density.size(), length_id % length.size(), augment_id % augment.size())
 			Globals.set_last_settings(density_id % density.size(), length_id % length.size(), augment_id % augment.size())
-			Globals.play_title_start_sfx()
+			#Globals.play_title_start_sfx()
+			Globals.play_cursor_move_sfx()
 			#get_tree().change_scene_to_file("res://Scenes/game.tscn")
 			label_vel = 0
 			game_starting_animation = true

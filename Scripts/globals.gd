@@ -44,11 +44,10 @@ var color_shift_speed = 8
 var title_balls_toggle = true
 var colorblind = false
 var dropshadows = false
-var title_song = preload("res://Assets/Sound/Music/Plinko Title Song V1.mp3") #CHANGE THIS TO NEW SONGS
 var current_star = 0 #Manage which star it sees on screen
 var rank
 var dead
-var cutoff_y = 1000000
+var cutoff_y = 1000000000000
 
 var last_played_drop_length = 0
 var last_played_density = 0
@@ -84,10 +83,7 @@ func req_stats():
 func _ready():
 	sfx_player = AudioStreamPlayer.new()
 	title_song_player = AudioStreamPlayer.new()
-	title_song.loop = true
-	title_song_player.stream = title_song
 	add_child(sfx_player)
-	add_child(title_song_player)
 	#title_song_player.play()
 	var bus_index = AudioServer.get_bus_index("Bounce SFX")
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume / 2))
@@ -113,7 +109,6 @@ func play_star_collect_sfx():
 	sfx_player.stream = load("res://Assets/Sound/SFX/StarCollectSFX.wav")
 	sfx_player.play()
 func play_bounce_sfx(): #Called when a ball on the title screen hits the ground
-	
 	sfx_player.bus = "Title Bounce SFX"
 	sfx_player.pitch_scale = randf_range(1, 1.4)
 	sfx_player.stream = load("res://Assets/Sound/SFX/BounceSound.wav")
@@ -238,6 +233,7 @@ func get_end_y(value):
 	Steam.setStatInt("ACH_1", num_drops) #Increment the number of drops initiated as this code runs at each drop start
 	Steam.storeStats()
 	dead = false #Reset the dead toggle at the start of each round
+	cutoff_y = 1000000000000 #Reset to prevent removing the kill transition
 func set_label_visibility(is_visible: bool):
 	toggle_leaderboard_label.emit(is_visible)
 func set_skin(id): #Func called when the player selects a skin from the Skins menu. Var is pulled from ball.tscn at game start
