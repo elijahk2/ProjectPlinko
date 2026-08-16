@@ -109,6 +109,7 @@ func play_star_collect_sfx():
 	sfx_player.stream = load("res://Assets/Sound/SFX/StarCollectSFX.wav")
 	sfx_player.play()
 func play_bounce_sfx(): #Called when a ball on the title screen hits the ground
+	
 	sfx_player.bus = "Title Bounce SFX"
 	sfx_player.pitch_scale = randf_range(1, 1.4)
 	sfx_player.stream = load("res://Assets/Sound/SFX/BounceSound.wav")
