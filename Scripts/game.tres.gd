@@ -41,6 +41,7 @@ var current_augment = -1
 var board_array = []
 var timescale = 1
 var is_in_tutorial = 0
+var tutorial_req_drops
 
 func create_peg_layout():
 	while row < number_of_rows: #Repeat until all rows generated
@@ -131,9 +132,10 @@ func _process(delta: float) -> void:
 		charge_display.position.x += 4
 	else:
 		charge_display.position.x = 112
-	if Globals.num_drops == 1 and player.position.y > 1000 and is_in_tutorial == 0:
+	tutorial_req_drops = Globals.num_drops #Set the number of drops required before tutorial runs. For testing. Set to 1 for release.
+	if Globals.num_drops == tutorial_req_drops and player.position.y > 1000 and is_in_tutorial == 0:
 		run_tutorial1()
-	if Globals.num_drops == 1 and player.position.y > 3000 and is_in_tutorial == 2:
+	if Globals.num_drops == tutorial_req_drops and player.position.y > 3000 and is_in_tutorial == 2:
 		run_tutorial2()
 	if is_in_tutorial == 1:
 		if Input.is_action_just_pressed("left") or Input.is_action_just_pressed("right"):
